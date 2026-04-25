@@ -1,14 +1,13 @@
-<?php
+<?php 
+
+//unset($_SESSION['games']);
+session_start();
+// Código para rodar servidor no terminal: php -S localhost:8000 -t public
 
 require "../app/core/Router.php";
 $router = new Router();
 
 require "../routes/web.php";
-
-// rota simples de teste
-$router->get('/', function() {
-    echo "Home funcionando!";
-});
 
 // Garantindo que vai rodar a URL no Laragon -------
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
