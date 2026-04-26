@@ -27,29 +27,75 @@ O projeto foi criado com foco em aprendizado de arquitetura, organização de c�
 ---
 
 ## 📂 Estrutura do Projeto
-│
-├── app/
-│ ├── controllers/
-│ │ └── GameController.php
-│ │
-│ ├── core/
-│ │ └── Router.php
-│ │
-│ ├── models/
-│ │ └── Game.php
-│ │
-│ └── views/
-│ └── games/
-│ ├── index.php
-│ └── edit.php
-│
-├── config/
-│ └── database.php
-│
-├── public/
-│ └── index.php
-│
-└── routes/
-  └── web.php
+<img width="373" height="476" alt="image" src="https://github.com/user-attachments/assets/e37207c0-37d8-4744-92d6-bfa789ac6ff8" />
 
-  <img width="223" height="477" alt="image" src="https://github.com/user-attachments/assets/82f419ee-31f0-4eab-a94c-ea5616a8aa05" />
+
+---
+
+## 🚀 Como Executar o Projeto
+
+### 1️⃣ Clone o repositório
+git clone https://github.com/seu-usuario/game-tracker.git
+
+
+### 2️⃣ Acesse a pasta do projeto
+cd game-tracker
+
+### 3️⃣ Inicie o servidor PHP
+php -S localhost:8000 -t public
+
+### 4️⃣ Acesse no navegador
+http://localhost:8000/games
+
+---
+
+## 🗄 Banco de Dados
+O projeto utiliza MySQL com conexão via PDO. A configuração está em:
+config/database.php
+
+---
+
+## 🔄 Funcionalidades
+✅ Listar jogos
+✅ Adicionar novo jogo
+✅ Editar jogo existente
+✅ Excluir jogo
+
+---
+
+## 🧠 Diferencial do Projeto
+
+O sistema também possui uma alternativa de funcionamento sem banco de dados, utilizando $_SESSION (código comentado), permitindo simular persistência diretamente no navegador para fins de estudo.
+
+---
+
+## 📚 Conceitos Praticados
+- CRUD completo em PHP
+- Arquitetura MVC simplificada
+- Roteamento manual
+- Manipulação de banco com PDO
+- Separação de responsabilidades
+- Organização de projeto backend
+
+---
+
+## ⚠️ Observações
+
+Este projeto foi desenvolvido com fins educacionais.
+
+Possíveis melhorias futuras (26/04/2026):
+
+- Implementar validação de dados
+- Adicionar autenticação de usuários
+- Criar sistema de categorias/gêneros
+- Adicionar paginação
+- Melhorar UI/UX
+- Criar API para integração futura
+
+---
+
+## 👨‍💻 Autor
+
+Desenvolvido por Pedro Salemi
+Projeto criado para aprimorar habilidades em PHP e desenvolvimento backend sem frameworks.
+
