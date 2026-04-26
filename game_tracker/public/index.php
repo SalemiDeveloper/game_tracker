@@ -1,7 +1,6 @@
 <?php 
 
-//unset($_SESSION['games']);
-session_start();
+//session_start();
 // Código para rodar servidor no terminal: php -S localhost:8000 -t public
 
 require "../app/core/Router.php";
