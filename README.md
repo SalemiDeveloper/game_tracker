@@ -51,15 +51,16 @@ http://localhost:8000/games
 
 ## 🗄 Banco de Dados
 O projeto utiliza MySQL com conexão via PDO. A configuração está em:
+
 config/database.php
 
 ---
 
 ## 🔄 Funcionalidades
-✅ Listar jogos
-✅ Adicionar novo jogo
-✅ Editar jogo existente
-✅ Excluir jogo
+✅ Listar jogos.
+✅ Adicionar novo jogo.
+✅ Editar jogo existente.
+✅ Excluir jogo.
 
 ---
 
@@ -70,12 +71,12 @@ O sistema também possui uma alternativa de funcionamento sem banco de dados, ut
 ---
 
 ## 📚 Conceitos Praticados
-- CRUD completo em PHP
-- Arquitetura MVC simplificada
-- Roteamento manual
-- Manipulação de banco com PDO
-- Separação de responsabilidades
-- Organização de projeto backend
+- CRUD completo em PHP.
+- Arquitetura MVC simplificada.
+- Roteamento manual.
+- Manipulação de banco com PDO.
+- Separação de responsabilidades.
+- Organização de projeto backend.
 
 ---
 
@@ -85,17 +86,18 @@ Este projeto foi desenvolvido com fins educacionais.
 
 Possíveis melhorias futuras (26/04/2026):
 
-- Implementar validação de dados
-- Adicionar autenticação de usuários
-- Criar sistema de categorias/gêneros
-- Adicionar paginação
-- Melhorar UI/UX
-- Criar API para integração futura
+- Implementar validação de dados.
+- Adicionar autenticação de usuários.
+- Criar sistema de categorias/gêneros.
+- Adicionar paginação.
+- Melhorar UI/UX.
+- Criar API para integração futura.
 
 ---
 
 ## 👨‍💻 Autor
 
-Desenvolvido por Pedro Salemi
+Desenvolvido por Pedro Salemi.
+
 Projeto criado para aprimorar habilidades em PHP e desenvolvimento backend sem frameworks.
 
