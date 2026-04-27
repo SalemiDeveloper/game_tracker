@@ -1,33 +1,23 @@
 <?php
 
 require_once "../app/models/Game.php";
+require_once "../app/core/Controller.php";
 
-class GameController {
+class GameController extends Controller{
     
     public function index() {
 
-        // $games = $_SESSION['games'] ?? [];
-        // require "../app/views/games/index.php";
-
         $games = (new Game())->all();
-        require "../app/views/games/index.php";
+        $this->view('games.index', [
+            'games' => $games
+        ]);
     }
 
     public function store() {
-        // $game = [
-        //     "id"     => uniqid(),
-        //     "titulo" => $_POST['titulo'] ,
-        //     "nota"   => $_POST['nota']
-        // ];
-        // // aqui vai criar array caso não exista
-        // if (!isset($_SESSION['games'])) {
-        //     $_SESSION['games'] = [];
-        // }
-        // // adicionando jogo
-        // $_SESSION['games'][] = $game;
-
+        
         (new Game())->create($_POST);
 
+        $_SESSION['success'] = "Jogo criado com sucesso!";
         header("Location: /games");
         exit;
     }
@@ -40,15 +30,6 @@ class GameController {
             exit;
         }
 
-        // $games = $_SESSION['games'] ?? [];
-        // $game = null;
-        // foreach ($games as $g) {
-        //     if ($g['id'] === $id) {
-        //         $game = $g;
-        //         break;
-        //     }
-        // }
-
         $game = (new Game())->find($id);
 
         if (!$game) {
@@ -56,22 +37,12 @@ class GameController {
             exit;
         }
 
-        require "../app/views/games/edit.php";
+        $this->view('games.edit', [
+            'game' => $game
+        ]);
     }
 
     public function update() {
-
-        //die(var_dump($_SESSION));
-        // $id = $_POST['id'];
-        // foreach($_SESSION['games'] as &$game) {
-        //     if ($game['id'] === $id) {
-        //         $game['titulo'] = $_POST['titulo'];
-        //         $game['nota']   = $_POST['nota'];
-        //         //die($game['nota'].' '.$_POST['nota']);
-        //         break;
-        //     }
-        // }
-        // unset($game);
 
         (new Game())->update($_POST);
 
@@ -81,14 +52,6 @@ class GameController {
 
     public function delete() {
         $id = $_GET['id'] ?? null;
-
-        // if (!$id) {
-        //     header("Location: /games");
-        //     exit;
-        // }
-        // $_SESSION['games'] = array_filter($_SESSION['games'], function($game) use ($id) {
-        //     return $game['id'] !== $id;
-        // });
 
         if ($id) {
             (new Game())->delete($id);

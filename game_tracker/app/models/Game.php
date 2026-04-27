@@ -1,13 +1,9 @@
 <?php
 
-require_once "../config/database.php";
+//require_once "../config/database.php";
+require_once "../app/core/Model.php";
 
-class Game {
-    private $db;
-
-    public function __construct() {
-        $this->db = Database::connect();
-    }
+class Game extends Model{
 
     public function all() {
         return $this->db
