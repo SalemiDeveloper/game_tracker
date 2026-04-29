@@ -2,6 +2,7 @@
 
 require_once "../app/models/Game.php";
 require_once "../app/core/Controller.php";
+require_once "../app/core/Validator.php";
 
 class GameController extends Controller{
     
@@ -14,6 +15,19 @@ class GameController extends Controller{
     }
 
     public function store() {
+
+        $errors = Validator::validate($_POST, [
+            'titulo' => ['required'],
+            'nota'   => ['required', 'number', 'min:0', 'max:10']
+        ]);
+
+        if (!empty($errors)) {
+            $_SESSION['errors'] = $errors;
+            $_SESSION['old'] = $_POST;
+
+            header("Location: /games");
+            exit;
+        }
         
         (new Game())->create($_POST);
 
@@ -44,7 +58,22 @@ class GameController extends Controller{
 
     public function update() {
 
+        $errors = Validator::validate($_POST, [
+            'titulo' => ['required'],
+            'nota'   => ['required', 'number', 'min:0', 'max:10']
+        ]);
+
+        if (!empty($errors)) {
+            $_SESSION['errors'] = $errors;
+            $_SESSION['old'] = $_POST;
+
+            header("Location: /games/edit?id=".$_POST['id']);
+            exit;
+        }
+
         (new Game())->update($_POST);
+
+        $_SESSION['success'] = "Jogo atualizado com sucesso!";
 
         header("Location: /games");
         exit;

@@ -1,3 +1,9 @@
+<?php
+function error($field) {
+    return $_SESSION['errors'][$field][0] ?? null;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -13,23 +19,44 @@
     <ul>
         <?php foreach($games as $game): ?>
             <li>
-                <?=  $game['titulo'] ?> - Nota: <?= $game['nota'] ?>
+                <?= htmlspecialchars($game['titulo']) ?> 
+            - Nota: <?= htmlspecialchars($game['nota']) ?>
 
-                <a href="/games/edit?id=<?= $game['id'] ?? '' ?>">Editar</a>
+                <a href="/games/edit?id=<?= htmlspecialchars($game['id'] ?? '') ?>">Editar</a>
 
-                <a href="/games/delete?id=<?= $game['id'] ?? '' ?>">
+                <a href="/games/delete?id=<?= htmlspecialchars($game['id'] ?? '') ?>">
                     Deletar
                 </a>
             </li>
         <?php endforeach; ?>
     </ul>
 
+    
+
     <h2>Adicionar novo jogo</h2>
 
     <form method="POST" action="/games">
-        <input name="titulo" placeholder="Título" required>
-        <input name="nota" placeholder="Nota" required>
+        <div style="margin-bottom: 10px;">
+            <input name="titulo" placeholder="Título"
+                value="<?= htmlspecialchars($_SESSION['old']['titulo'] ?? '') ?>">
+            <?php if ($msg = error('titulo')): ?>
+                <p style="color:red;"><?= htmlspecialchars($msg) ?></p>
+            <?php endif; ?>
+        </div>
+
+        <div style="margin-bottom: 10px;">
+            <input name="nota" placeholder="0 a 10"
+                value="<?= htmlspecialchars($_SESSION['old']['nota'] ?? '') ?>">
+            <?php if ($msg = error('nota')): ?>
+                <p style="color:red;"><?= htmlspecialchars($msg) ?></p>
+            <?php endif; ?>
+        </div>
+
         <button type="submit">Salvar</button>
     </form>
+    <?php 
+    unset($_SESSION['old']); 
+    unset($_SESSION['errors']); 
+    ?>
 </body>
 </html>
