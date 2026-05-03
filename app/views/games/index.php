@@ -36,6 +36,8 @@ function error($field) {
     <h2>Adicionar novo jogo</h2>
 
     <form method="POST" action="/games">
+        <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
+        
         <div style="margin-bottom: 10px;">
             <input name="titulo" placeholder="Título"
                 value="<?= htmlspecialchars($_SESSION['old']['titulo'] ?? '') ?>">

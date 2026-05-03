@@ -16,6 +16,10 @@ class GameController extends Controller{
 
     public function store() {
 
+        if (!isset($_POST['csrf']) || $_POST['csrf'] !== $_SESSION['csrf']) {
+            die('CSRF token inválido.');
+        }
+
         $errors = Validator::validate($_POST, [
             'titulo' => ['required'],
             'nota'   => ['required', 'number', 'min:0', 'max:10']
@@ -57,6 +61,10 @@ class GameController extends Controller{
     }
 
     public function update() {
+
+        if (!isset($_POST['csrf']) || $_POST['csrf'] !== $_SESSION['csrf']) {
+            die('CSRF token inválido.');
+        }    
 
         $errors = Validator::validate($_POST, [
             'titulo' => ['required'],

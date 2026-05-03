@@ -3,6 +3,10 @@
 session_start();
 // Código para rodar servidor no terminal: php -S localhost:8000 -t public
 
+if (empty($_SESSION['csrf'])) {
+    $_SESSION['csrf'] = bin2hex(random_bytes(32));
+}
+
 require "../app/core/Router.php";
 $router = new Router();
 

@@ -3,6 +3,11 @@
 class Controller {
     protected function view($path, $data) {
 
+        // garante toke CSRF
+        if (empty($_SESSION['csrf'])) {
+            $_SESSION['csrf'] = bin2hex(random_bytes(32));
+        }
+
         // transformando array em variáveis
         extract($data);
 
