@@ -3,6 +3,7 @@
 require_once "../app/models/Game.php";
 require_once "../app/core/Controller.php";
 require_once "../app/core/Validator.php";
+require_once "../app/services/GameService.php";
 
 class GameController extends Controller{
     
@@ -20,22 +21,39 @@ class GameController extends Controller{
             die('CSRF token inválido.');
         }
 
-        $errors = Validator::validate($_POST, [
-            'titulo' => ['required'],
-            'nota'   => ['required', 'number', 'min:0', 'max:10']
-        ]);
+        // $errors = Validator::validate($_POST, [
+        //     'titulo' => ['required'],
+        //     'nota'   => ['required', 'number', 'min:0', 'max:10']
+        // ]);
 
-        if (!empty($errors)) {
-            $_SESSION['errors'] = $errors;
-            $_SESSION['old'] = $_POST;
+        // if (!empty($errors)) {
+        //     $_SESSION['errors'] = $errors;
+        //     $_SESSION['old'] = $_POST;
+
+        //     header("Location: /games");
+        //     exit;
+        // }
+        
+        // (new Game())->create($_POST);
+
+        // $_SESSION['success'] = "Jogo criado com sucesso!";
+        // header("Location: /games");
+        // exit;
+
+        $service = new GameService();
+
+        $result = $service->create($_POST);
+
+        if (!$result['success']) {
+            $_SESSION['errors'] = $result['errors'];
+            $_SESSION['old'] = $result['old'];
 
             header("Location: /games");
             exit;
         }
-        
-        (new Game())->create($_POST);
 
         $_SESSION['success'] = "Jogo criado com sucesso!";
+
         header("Location: /games");
         exit;
     }
@@ -66,20 +84,37 @@ class GameController extends Controller{
             die('CSRF token inválido.');
         }    
 
-        $errors = Validator::validate($_POST, [
-            'titulo' => ['required'],
-            'nota'   => ['required', 'number', 'min:0', 'max:10']
-        ]);
+        // $errors = Validator::validate($_POST, [
+        //     'titulo' => ['required'],
+        //     'nota'   => ['required', 'number', 'min:0', 'max:10']
+        // ]);
 
-        if (!empty($errors)) {
-            $_SESSION['errors'] = $errors;
-            $_SESSION['old'] = $_POST;
+        // if (!empty($errors)) {
+        //     $_SESSION['errors'] = $errors;
+        //     $_SESSION['old'] = $_POST;
+
+        //     header("Location: /games/edit?id=".$_POST['id']);
+        //     exit;
+        // }
+
+        // (new Game())->update($_POST);
+
+        // $_SESSION['success'] = "Jogo atualizado com sucesso!";
+
+        // header("Location: /games");
+        // exit;
+
+        $service = new GameService();
+
+        $result = $service->update($_POST);
+
+        if (!$result['success']) {
+            $_SESSION['errors'] = $result['errors'];
+            $_SESSION['old'] = $result['old'];
 
             header("Location: /games/edit?id=".$_POST['id']);
             exit;
         }
-
-        (new Game())->update($_POST);
 
         $_SESSION['success'] = "Jogo atualizado com sucesso!";
 

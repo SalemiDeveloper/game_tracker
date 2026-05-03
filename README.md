@@ -26,8 +26,8 @@ O projeto foi criado com foco em aprendizado de arquitetura, organização de c�
 
 ---
 
-## 📂 Estrutura do Projeto
-<img width="666" height="638" alt="image" src="https://github.com/user-attachments/assets/88e2ca22-8882-45f0-8857-df1a740e2fee" />
+<!-- ## 📂 Estrutura do Projeto
+<img width="666" height="638" alt="image" src="https://github.com/user-attachments/assets/88e2ca22-8882-45f0-8857-df1a740e2fee" /> -->
 
 ---
 
