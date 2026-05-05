@@ -21,25 +21,6 @@ class GameController extends Controller{
             die('CSRF token inválido.');
         }
 
-        // $errors = Validator::validate($_POST, [
-        //     'titulo' => ['required'],
-        //     'nota'   => ['required', 'number', 'min:0', 'max:10']
-        // ]);
-
-        // if (!empty($errors)) {
-        //     $_SESSION['errors'] = $errors;
-        //     $_SESSION['old'] = $_POST;
-
-        //     header("Location: /games");
-        //     exit;
-        // }
-        
-        // (new Game())->create($_POST);
-
-        // $_SESSION['success'] = "Jogo criado com sucesso!";
-        // header("Location: /games");
-        // exit;
-
         $service = new GameService();
 
         $result = $service->create($_POST);
@@ -82,27 +63,7 @@ class GameController extends Controller{
 
         if (!isset($_POST['csrf']) || $_POST['csrf'] !== $_SESSION['csrf']) {
             die('CSRF token inválido.');
-        }    
-
-        // $errors = Validator::validate($_POST, [
-        //     'titulo' => ['required'],
-        //     'nota'   => ['required', 'number', 'min:0', 'max:10']
-        // ]);
-
-        // if (!empty($errors)) {
-        //     $_SESSION['errors'] = $errors;
-        //     $_SESSION['old'] = $_POST;
-
-        //     header("Location: /games/edit?id=".$_POST['id']);
-        //     exit;
-        // }
-
-        // (new Game())->update($_POST);
-
-        // $_SESSION['success'] = "Jogo atualizado com sucesso!";
-
-        // header("Location: /games");
-        // exit;
+        }
 
         $service = new GameService();
 
