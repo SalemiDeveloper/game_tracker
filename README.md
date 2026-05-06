@@ -1,4 +1,4 @@
-# 🎮 Game Tracker
+# 🎮 Game Tracker (a ser atualizado)
 
 O **Game Tracker** é uma aplicação web desenvolvida em **PHP** com o objetivo de gerenciar os jogos que você já jogou, utilizando operações básicas de **CRUD (Create, Read, Update, Delete)**.
 
@@ -23,11 +23,6 @@ O projeto foi criado com foco em aprendizado de arquitetura, organização de c�
 - PDO (PHP Data Objects)
 - HTML / CSS
 - Servidor PHP nativo (Laragon)
-
----
-
-<!-- ## 📂 Estrutura do Projeto
-<img width="666" height="638" alt="image" src="https://github.com/user-attachments/assets/88e2ca22-8882-45f0-8857-df1a740e2fee" /> -->
 
 ---
 
@@ -60,12 +55,6 @@ config/database.php
 ✅ Adicionar novo jogo.
 ✅ Editar jogo existente.
 ✅ Excluir jogo.
-
----
-
-## 🧠 Diferencial do Projeto
-
-O sistema também possui uma alternativa de funcionamento sem banco de dados, utilizando $_SESSION (código comentado), permitindo simular persistência diretamente no navegador para fins de estudo.
 
 ---
 
