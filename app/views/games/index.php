@@ -24,9 +24,11 @@ function error($field) {
 
                 <a href="/games/edit?id=<?= htmlspecialchars($game['id'] ?? '') ?>">Editar</a>
 
-                <a href="/games/delete?id=<?= htmlspecialchars($game['id'] ?? '') ?>">
-                    Deletar
-                </a>
+                <form method="POST" action="/games/delete">
+                    <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
+                    <input type="hidden" name="id" value="<?= $game['id'] ?>">
+                    <button type="submit">Deletar</button>
+                </form>
             </li>
         <?php endforeach; ?>
     </ul>

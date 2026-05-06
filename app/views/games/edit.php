@@ -9,6 +9,7 @@
     <h1>Editar Jogo</h1>
 
     <form method="POST" action="/games/update">
+        <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
         <input type="hidden" name="id" value="<?= $game['id'] ?>">
 
         <input name="titulo" value="<?= $game['titulo'] ?>">

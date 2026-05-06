@@ -46,5 +46,9 @@ class GameService {
 
         return ['success' => true];
     }
+
+    public function all() {
+        return $this->model->all();
+    }
 }
 ?>
