@@ -56,6 +56,21 @@ class Router {
         return $this;
     }
 
+    public function delete($uri, $action) {
+
+        $this->routes['DELETE'][$uri] = [
+            'action' => $action,
+            'middlewares' => []
+        ];
+
+        $this->currentRoute = [
+            'method' => 'DELETE',
+            'uri' => $uri
+        ];
+
+        return $this;
+    }
+
     public function dispatch($uri, $method) {
 
         $found = $this->findRouter($uri, $method);

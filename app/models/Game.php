@@ -24,8 +24,13 @@ class Game extends Model{
     }
 
     public function delete($id) {
-        $stmt = $this->db->prepare("DELETE FROM games WHERE id = ?");
-        return $stmt->execute([$id]);
+        $stmt = $this->db->prepare(
+            "DELETE FROM games WHERE id = :id"
+        );
+
+        return $stmt->execute([
+            'id' => $id
+        ]);
     }
 
     public function find($id) {

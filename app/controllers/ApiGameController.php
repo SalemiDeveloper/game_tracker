@@ -83,6 +83,24 @@ class ApiGameController {
             'success' => true
         ]);
     }
+
+    public function destroy($id) {
+        header('Content-Type: application/json');
+
+        $service = new GameService();
+        $result = $service->delete($id);
+
+        if (!$result['success']) {
+            http_response_code(404);
+            echo json_encode($result);
+
+            return;
+        }
+
+        echo json_encode([
+            'success' => true
+        ]);
+    }
 }
 
 ?>

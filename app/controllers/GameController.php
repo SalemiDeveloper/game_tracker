@@ -84,13 +84,11 @@ class GameController extends Controller{
     }
 
     public function delete() {
-        $id = $_GET['id'] ?? null;
 
-        if ($id) {
-            (new Game())->delete($id);
-        }
+        $service = new GameService();
+        $service->delete($_POST['id']);
 
-        header("Location: /games");
+        header('Location: /games');
         exit;
     }
 }

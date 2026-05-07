@@ -47,6 +47,24 @@ class GameService {
         return ['success' => true];
     }
 
+    public function delete($id) {
+
+        $game = $this->model->find($id);
+
+        if (!$game) {
+            return [
+                'success' => false,
+                'message' => 'Jogo não encontrado'
+            ];
+        }
+
+        $this->model->delete($id);
+
+        return [
+            'success' => true
+        ];
+    }
+
     public function all() {
         return $this->model->all();
     }

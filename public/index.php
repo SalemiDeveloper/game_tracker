@@ -1,6 +1,4 @@
-<?php 
-// ini_set('display_errors', 1);
-// error_reporting(E_ALL);
+<?php
 session_start();
 // Código para rodar servidor no terminal: php -S localhost:8000 -t public
 

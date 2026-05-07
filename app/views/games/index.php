@@ -26,7 +26,7 @@ function error($field) {
 
                 <form method="POST" action="/games/delete">
                     <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
-                    <input type="hidden" name="id" value="<?= $game['id'] ?>">
+                    <input type="hidden" name="id" value="<?= htmlspecialchars($game['id']) ?>">
                     <button type="submit">Deletar</button>
                 </form>
             </li>
