@@ -40,6 +40,49 @@ class ApiGameController {
             'success' => true
         ]);
     }
+
+    public function show($id) {
+        header('Content-Type: application/json');
+        $service = new GameService();
+        $game = $service->find($id);
+
+        if (!$game) {
+            http_response_code(404);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Jogo não encontrado'
+            ]);
+
+            return;
+        }
+
+        echo json_encode($game);
+    }
+
+    public function update($id) {
+        header('Content-Type: application/json');
+
+        $input = json_decode(file_get_contents('php://input'), true);
+        $input['id'] = $id;
+
+        $service = new GameService();
+        $result = $service->update($input);
+
+        if (!$result['success']) {
+            http_response_code(422);
+
+            echo json_encode([
+                'success' => false,
+                'errors'  => $result['errors']
+            ]);
+
+            return;
+        }
+
+        echo json_encode([
+            'success' => true
+        ]);
+    }
 }
 
 ?>

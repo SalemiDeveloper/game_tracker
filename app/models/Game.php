@@ -29,9 +29,16 @@ class Game extends Model{
     }
 
     public function find($id) {
-        $stmt = $this->db->prepare("SELECT * FROM games WHERE id = ?");
-        $stmt->execute([$id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $stmt = $this->db->prepare(
+            "SELECT * FROM games WHERE id = :id"
+        );
+
+        $stmt->execute([
+            'id' => $id
+        ]);
+
+        return $stmt->fetch();
     }
 
     public function update($data) {

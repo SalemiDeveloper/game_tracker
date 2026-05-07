@@ -42,15 +42,33 @@ class Router {
         return $this;
     }
 
-    public function dispatch($uri, $method) {
-        if (!isset($this->routes[$method][$uri])) {
+    public function put($uri, $action) {
+        $this->routes['PUT'][$uri] = [
+            'action' => $action,
+            'middlewares' => []
+        ];
 
+        $this->currentRoute = [
+            'method' => 'PUT',
+            'uri' => $uri
+        ];
+
+        return $this;
+    }
+
+    public function dispatch($uri, $method) {
+
+        $found = $this->findRouter($uri, $method);
+
+        if (!$found) {
             http_response_code(404);
             echo "Página não encontrada.";
             return;
         }
 
-        $route = $this->routes[$method][$uri];
+        $route = $found['route'];
+        $params = $found['params'];
+
         $action = $route['action'];
 
         foreach ($route['middlewares'] as $middleware) {
@@ -69,7 +87,31 @@ class Router {
 
             $controllerInstance = new $controller();
 
-            return $controllerInstance->$actionMethod();
+            //return $controllerInstance->$actionMethod();
+            return call_user_func_array(
+                [$controllerInstance, $actionMethod],
+                $params
+            );
         }
+    }
+
+    private function findRouter($uri, $method) {
+
+        foreach ($this->routes[$method] as $route => $data) {
+
+            $pattern = preg_replace('/\{[a-zA-Z]+\}/', '([0-9]+)', $route);
+            $pattern = "#^" . $pattern . "$#";
+
+            if (preg_match($pattern, $uri, $matches)) {
+                array_shift($matches);
+
+                return [
+                    'route'  => $data,
+                    'params' => $matches
+                ];
+            }
+        }
+
+        return null;
     }
 }
