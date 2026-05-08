@@ -91,6 +91,11 @@ class Router {
                 require_once "../app/middlewares/CsrfMiddleware.php";
                 (new CrsfMiddleware())->handle();
             }
+
+            if ($middleware === 'auth') {
+                require_once "../app/middlewares/AuthMiddleware.php";
+                (new AuthMiddleware())->handle();
+            }
         }
 
         // Se for uma string tipo "Controller@method"
