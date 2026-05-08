@@ -14,5 +14,6 @@ $router->get('/register', 'AuthController@showRegister');
 $router->post('/register', 'AuthController@register')->middleware('csrf');
 $router->get('/login', 'AuthController@showLogin');
 $router->post('/login', 'AuthController@login')->middleware('csrf');
+$router->post('/logout', 'AuthController@logout')->middleware('auth')->middleware('csrf');
 
 ?>

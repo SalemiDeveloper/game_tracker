@@ -48,6 +48,13 @@ class AuthController {
         header("Location: /games");
         exit;
     }
+
+    public function logout() {
+        unset($_SESSION['user']);
+
+        header('Location: /login');
+        exit;
+    }
 }
 
 

@@ -12,6 +12,21 @@ function error($field) {
     <title>Teste View</title>
 </head>
 <body>
+
+    <p>Olá,
+        <?=  htmlspecialchars($_SESSION['user']['name']) ?>
+    </p>
+
+    <form method="POST" action="/logout">
+        <input type="hidden"
+               name="csrf"
+               value="<?= $_SESSION['csrf'] ?>">
+
+        <button type="submit">
+            Sair
+        </button>
+    </form>
+
     <h1>Meus jogos</h1>
 
     <p>Lista de jogos que já zerei.</p>
