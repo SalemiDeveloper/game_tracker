@@ -96,6 +96,11 @@ class Router {
                 require_once "../app/middlewares/AuthMiddleware.php";
                 (new AuthMiddleware())->handle();
             }
+
+            if ($middleware === 'jwt') {
+                require_once "../app/middlewares/JWTMiddleware.php";
+                (new JWTMiddleware())->handle();
+            }
         }
 
         // Se for uma string tipo "Controller@method"
