@@ -65,8 +65,8 @@ class GameService {
         ];
     }
 
-    public function all() {
-        return $this->model->all();
+    public function all($userId) {
+        return $this->model->all($userId);
     }
 
     public function find($id) {

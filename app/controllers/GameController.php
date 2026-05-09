@@ -9,7 +9,8 @@ class GameController extends Controller{
     
     public function index() {
 
-        $games = (new Game())->all();
+        $userId = $_SESSION['user']['id'];
+        $games = (new Game())->all($userId);
         $this->view('games.index', [
             'games' => $games
         ]);
@@ -23,6 +24,7 @@ class GameController extends Controller{
 
         $service = new GameService();
 
+        $_POST['user_id'] = $_SESSION['user']['id'];
         $result = $service->create($_POST);
 
         if (!$result['success']) {

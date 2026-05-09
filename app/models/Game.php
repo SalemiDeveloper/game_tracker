@@ -5,21 +5,29 @@ require_once "../app/core/Model.php";
 
 class Game extends Model{
 
-    public function all() {
-        return $this->db
-        ->query("SELECT * FROM games ORDER BY id DESC")
-        ->fetchAll(PDO::FETCH_ASSOC);
+    public function all($userId) {
+        $stmt = $this->db->prepare("
+            SELECT * FROM games
+            WHERE user_id = :user_id
+        ");
+
+        $stmt->execute([
+            'user_id' => $userId
+        ]);
+
+        return $stmt->fetchAll();
     }
 
     public function create($data) {
         $stmt = $this->db->prepare("
-            INSERT INTO games (titulo, nota)
-            VALUES (?, ?)
+            INSERT INTO games (titulo, nota, user_id)
+            VALUES (:titulo, :nota, :user_id)
         ");
 
         return $stmt->execute([
-            $data['titulo'],
-            $data['nota']
+            'titulo'  => $data['titulo'],
+            'nota'    => $data['nota'],
+            'user_id' => $data['user_id']
         ]);
     }
 
