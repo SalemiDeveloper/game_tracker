@@ -42,6 +42,7 @@ class GameController extends Controller{
     }
 
     public function edit() {
+        $userId = $_SESSION['user']['id'];
         $id = $_GET['id'] ?? null;
 
         if (!$id) {
@@ -49,10 +50,11 @@ class GameController extends Controller{
             exit;
         }
 
-        $game = (new Game())->find($id);
+        $game = (new Game())->findOwned($id, $userId);
 
         if (!$game) {
-            header("Location: /games");
+            http_response_code(403);
+            echo "Acesso negado";
             exit;
         }
 
@@ -66,8 +68,16 @@ class GameController extends Controller{
         if (!isset($_POST['csrf']) || $_POST['csrf'] !== $_SESSION['csrf']) {
             die('CSRF token inválido.');
         }
-
+        
+        $userId = $_SESSION['user']['id'];
         $service = new GameService();
+        $game = $service->findOwned($_POST['id'], $userId);
+
+        if (!$game) {
+            http_response_code(403);
+            echo "Acesso Negado";
+            exit;
+        }
 
         $result = $service->update($_POST);
 
@@ -87,7 +97,16 @@ class GameController extends Controller{
 
     public function delete() {
 
+        $userId = $_SESSION['user']['id'];
         $service = new GameService();
+        $game = $service->findOwned($_POST['id'], $userId);
+
+        if (!$game) {
+            http_response_code(403);
+            echo "Acesso Negado";
+            exit;
+        }
+
         $service->delete($_POST['id']);
 
         header('Location: /games');

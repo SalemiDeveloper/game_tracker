@@ -28,7 +28,7 @@ class GameService {
         return ['success' => true];
     }
 
-    public function update($data) {
+    public function update(array $data) {
         $errors = Validator::validate($data, [
             'titulo' => ['required'],
             'nota'   => ['required', 'number', 'min:0', 'max:10']
@@ -71,6 +71,10 @@ class GameService {
 
     public function find($id) {
         return $this->model->find($id);
+    }
+
+    public function findOwned($id, $userId) {
+        return $this->model->findOwned($id, $userId);
     }
 }
 ?>

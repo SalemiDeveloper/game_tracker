@@ -7,7 +7,8 @@ class ApiGameController {
     public function index() {
         $service = new GameService();
 
-        $games = $service->all();
+        $userId = $_SERVER['user']['id'];
+        $games = $service->all($userId);
 
         header('Content-Type: application/json');
 
@@ -18,6 +19,7 @@ class ApiGameController {
         header('Content-Type: application/json');
 
         $input = json_decode(file_get_contents('php://input'), true);
+        $input['user_id'] = $_SERVER['user']['id'];
 
         $service = new GameService();
 
@@ -43,14 +45,16 @@ class ApiGameController {
 
     public function show($id) {
         header('Content-Type: application/json');
-        $service = new GameService();
-        $game = $service->find($id);
+
+        $userId  = $_SERVER['user']['id'];
+        $service = new GameService();        
+        $game    = $service->findOwned($id, $userId);
 
         if (!$game) {
-            http_response_code(404);
+            http_response_code(403);
             echo json_encode([
                 'success' => false,
-                'message' => 'Jogo não encontrado'
+                'message' => 'Acesso negado'
             ]);
 
             return;
@@ -62,10 +66,26 @@ class ApiGameController {
     public function update($id) {
         header('Content-Type: application/json');
 
+        $userId = $_SERVER['user']['id'];
+
         $input = json_decode(file_get_contents('php://input'), true);
         $input['id'] = $id;
 
         $service = new GameService();
+
+        $game = $service->findOwned($id, $userId);
+
+        if (!$game) {
+
+            http_response_code(403);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Acesso negado ou jogo não encontrado.'
+            ]);
+
+            return;
+        }
+
         $result = $service->update($input);
 
         if (!$result['success']) {
@@ -87,7 +107,23 @@ class ApiGameController {
     public function destroy($id) {
         header('Content-Type: application/json');
 
+        $userId = $_SERVER['user']['id'];
+
         $service = new GameService();
+
+        $game = $service->findOwned($id, $userId);
+
+        if (!$game) {
+
+            http_response_code(403);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Acesso negado ou jogo não encontrado.'
+            ]);
+
+            return;
+        }
+
         $result = $service->delete($id);
 
         if (!$result['success']) {

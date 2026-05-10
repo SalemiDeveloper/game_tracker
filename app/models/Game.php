@@ -54,7 +54,24 @@ class Game extends Model{
         return $stmt->fetch();
     }
 
+    public function findOwned($id, $userId) {
+
+        $stmt = $this->db->prepare("
+            SELECT * FROM games
+            WHERE id = :id 
+            AND user_id = :user_id
+        ");
+
+        $stmt->execute([
+            'id' => $id, 
+            'user_id' => $userId
+        ]);
+
+        return $stmt->fetch();
+    }
+
     public function update($data) {
+
         $stmt = $this->db->prepare("
             UPDATE games
             SET titulo = ?, nota = ?
