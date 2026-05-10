@@ -6,7 +6,9 @@ class JWTMiddleware {
     public function handle() {
         $headers = getallheaders();
 
-        if (!isset($headers['Authorization'])) {
+        $authHeader = $headers['Authorization'] ?? $headers['authorization'] ?? null;
+
+        if (!$authHeader) {
             http_response_code(401);
             echo json_encode([
                 'success' => false,
@@ -14,8 +16,6 @@ class JWTMiddleware {
             ]);
             exit;
         }
-
-        $authHeader = $headers['Authorization'];
 
         $token = str_replace('Bearer ', '', $authHeader);
         $payload = JWT::validate($token);

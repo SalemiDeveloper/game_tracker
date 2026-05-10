@@ -2,9 +2,14 @@
 
 class JWT {
 
-    private static $secret = 'SUA_CHAVE_SECRETA';
+    // Temporariamente usar isso, depois mudar para .env
+    private static $secret = 'EM_TESTE_123';
 
     public static function generate($payload) {
+
+        $payload['iat'] = time();
+        //$payload['exp'] = time() + (60 * 15);
+        $payload['exp'] = time() + 20;
 
         $header = json_encode([
             'typ' => 'JWT',
@@ -51,10 +56,16 @@ class JWT {
             return false;
         }
 
-        return json_decode(
+        $decodedPayload = json_decode(
             base64_decode($payload),
             true
         );
+
+        if (isset($decodedPayload['exp']) && time() > $decodedPayload['exp']) {
+            return false;
+        }
+
+        return $decodedPayload;
     }
 
     private static function base64UrlEncode($data) {

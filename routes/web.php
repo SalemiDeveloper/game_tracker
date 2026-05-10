@@ -21,5 +21,6 @@ $router->get('/api/games/{id}', 'ApiGameController@show')->middleware('jwt');
 $router->post('/api/games', 'ApiGameController@store')->middleware('jwt');
 $router->put('/api/games/{id}', 'ApiGameController@update')->middleware('jwt');
 $router->delete('/api/games/{id}', 'ApiGameController@destroy')->middleware('jwt');
+$router->post('/api/refresh', 'ApiAuthController@refresh');
 
 ?>
