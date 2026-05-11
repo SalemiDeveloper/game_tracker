@@ -34,6 +34,7 @@ class ApiAuthController {
 
         $refreshToken = bin2hex(random_bytes(64));
         $model = new RefreshToken();
+        $model->deleteExpired();
         $model->create([
             'user_id' => $user['id'],
             'token' => $refreshToken,

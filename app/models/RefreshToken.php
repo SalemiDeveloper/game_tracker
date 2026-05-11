@@ -32,6 +32,27 @@ class RefreshToken extends Model {
 
         return $stmt->fetch();
     }
+
+    public function deleteExpired() {
+         $stmt = $this->db->prepare("
+            DELETE FROM refresh_tokens
+            WHERE expires_at < NOW()
+        ");
+
+        return $stmt->execute();
+    }
+
+    public function delete($token) {
+
+        $stmt = $this->db->prepare("
+            DELETE FROM refresh_tokens
+            WHERE token = :token
+        ");
+
+        return $stmt->execute([
+            'token' => $token
+        ]);
+    }
 }
 
 ?>
