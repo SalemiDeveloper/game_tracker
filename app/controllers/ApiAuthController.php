@@ -7,7 +7,6 @@ require_once "../app/models/RefreshToken.php";
 class ApiAuthController {
 
     public function login() {
-
         header('Content-Type: application/json');
 
         $input = json_decode(
@@ -97,6 +96,40 @@ class ApiAuthController {
 
         echo json_encode([
             'access_token' => $newAccessToken
+        ]);
+    }
+
+    public function logout() {
+        header('Content-Type: application/json');
+
+        $input = json_decode(file_get_contents('php://input'), true);
+
+        if (!isset($input['refresh_token'])) {
+            http_response_code(400);
+            echo json_encode([
+                'success' => false,
+                'message' => "Refresh token obrigatório."
+            ]);
+
+            return;
+        }
+
+        $model = new RefreshToken();
+        $deleted = $model->delete($input['refresh_token']);
+
+        if (!$deleted) {
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'message' => "Erro ao fazer logout."
+            ]);
+
+            return;
+        }
+
+        echo json_encode([
+            'success' => true,
+            'message' => "Logout realizado."
         ]);
     }
 }
