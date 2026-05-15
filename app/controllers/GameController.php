@@ -1,16 +1,18 @@
 <?php
 
+namespace App\Controllers;
+
 require_once "../app/models/Game.php";
 require_once "../app/core/Controller.php";
 require_once "../app/core/Validator.php";
 use App\Services\GameService;
 
-class GameController extends Controller{
+class GameController extends \Controller{
     
     public function index() {
 
         $userId = $_SESSION['user']['id'];
-        $games = (new Game())->all($userId);
+        $games = (new \Game())->all($userId);
         $this->view('games.index', [
             'games' => $games
         ]);
@@ -50,7 +52,7 @@ class GameController extends Controller{
             exit;
         }
 
-        $game = (new Game())->findOwned($id, $userId);
+        $game = (new \Game())->findOwned($id, $userId);
 
         if (!$game) {
             http_response_code(403);

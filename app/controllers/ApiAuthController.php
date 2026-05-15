@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Controllers;
+
 use App\Services\AuthService;
 use App\Helpers\JWT;
 require_once "../app/models/RefreshToken.php";
@@ -32,7 +34,7 @@ class ApiAuthController {
         ]);
 
         $refreshToken = bin2hex(random_bytes(64));
-        $model = new RefreshToken();
+        $model = new \RefreshToken();
         $model->deleteExpired();
         $model->create([
             'user_id' => $user['id'],
@@ -66,7 +68,7 @@ class ApiAuthController {
             return;
         }
 
-        $model = new RefreshToken();
+        $model = new \RefreshToken();
 
         $storedToken = $model->find($input['refresh_token']);
 
@@ -114,7 +116,7 @@ class ApiAuthController {
             return;
         }
 
-        $model = new RefreshToken();
+        $model = new \RefreshToken();
         $deleted = $model->delete($input['refresh_token']);
 
         if (!$deleted) {

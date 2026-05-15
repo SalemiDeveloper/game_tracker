@@ -108,11 +108,9 @@ class Router {
 
             list($controller, $actionMethod) = explode('@', $action);
 
-            require "../app/controllers/{$controller}.php";
-
+            $controller = "App\\Controllers\\{$controller}";
             $controllerInstance = new $controller();
-
-            //return $controllerInstance->$actionMethod();
+            
             return call_user_func_array(
                 [$controllerInstance, $actionMethod],
                 $params
