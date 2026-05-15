@@ -10,7 +10,7 @@ if (empty($_SESSION['csrf'])) {
     $_SESSION['csrf'] = bin2hex(random_bytes(32));
 }
 
-require "../app/core/Router.php";
+use App\Core\Router;
 $router = new Router();
 
 require "../routes/web.php";

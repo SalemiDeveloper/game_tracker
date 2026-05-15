@@ -1,5 +1,7 @@
 <?php 
 
+namespace App\Core;
+
 class Validator {
 
     public static function validate($data, $rules) {

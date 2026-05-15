@@ -3,11 +3,11 @@
 namespace App\Controllers;
 
 require_once "../app/models/Game.php";
-require_once "../app/core/Controller.php";
-require_once "../app/core/Validator.php";
+use App\Core\Controller;
+use App\Core\Validator;
 use App\Services\GameService;
 
-class GameController extends \Controller{
+class GameController extends Controller{
     
     public function index() {
 

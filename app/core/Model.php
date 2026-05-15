@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Core;
+
 require_once "../config/database.php";
 
 class Model {
@@ -7,7 +9,7 @@ class Model {
     protected $db;
 
     public function __construct() {
-        $this->db = Database::connect();
+        $this->db = \Database::connect();
     }
 }
 

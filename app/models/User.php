@@ -1,7 +1,6 @@
 <?php 
 
-//require_once "../config/database.php";
-require_once "../app/core/Model.php";
+use App\Core\Model;
 
 class User extends Model{
 

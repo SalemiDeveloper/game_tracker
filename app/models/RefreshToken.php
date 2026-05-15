@@ -1,6 +1,6 @@
 <?php 
 
-require_once "../app/core/Model.php";
+use App\Core\Model;
 
 class RefreshToken extends Model {
 

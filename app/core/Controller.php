@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Core;
+
 class Controller {
     protected function view($path, $data) {
 
@@ -11,7 +13,7 @@ class Controller {
         // transformando array em variáveis
         extract($data);
 
-        // converte "games.index" -> "games/idex.php"
+        // converte "games.index" -> "games/index.php"
         $path = str_replace('.', '/', $path);
         
         $content = "../app/views/{$path}.php";
