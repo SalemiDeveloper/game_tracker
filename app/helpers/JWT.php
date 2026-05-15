@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Helpers;
+
 class JWT {
 
     // Temporariamente usar isso, depois mudar para .env

@@ -3,7 +3,7 @@
 require_once "../app/models/Game.php";
 require_once "../app/core/Controller.php";
 require_once "../app/core/Validator.php";
-require_once "../app/services/GameService.php";
+use App\Services\GameService;
 
 class GameController extends Controller{
     

@@ -1,7 +1,7 @@
 <?php
 
-require_once "../app/services/AuthService.php";
-require_once "../app/helpers/JWT.php";
+use App\Services\AuthService;
+use App\Helpers\JWT;
 require_once "../app/models/RefreshToken.php";
 
 class ApiAuthController {

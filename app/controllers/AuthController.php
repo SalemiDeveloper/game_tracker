@@ -1,6 +1,6 @@
 <?php
 
-require_once "../app/services/AuthService.php";
+use App\Services\AuthService;
 
 class AuthController {
 

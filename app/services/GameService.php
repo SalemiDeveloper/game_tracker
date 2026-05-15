@@ -1,4 +1,5 @@
 <?php
+namespace App\Services;
 require_once "../app/models/Game.php";
 require_once "../app/core/Validator.php";
 
@@ -6,11 +7,11 @@ class GameService {
     private $model;
 
     public function __construct() {
-        $this->model = new Game();
+        $this->model = new \Game();
     }
 
     public function create($data) {
-        $errors = Validator::validate($data,  [
+        $errors = \Validator::validate($data,  [
             'titulo' => ['required'],
             'nota'   => ['required', 'number', 'min:0', 'max:10']
         ]);
@@ -29,7 +30,7 @@ class GameService {
     }
 
     public function update(array $data) {
-        $errors = Validator::validate($data, [
+        $errors = \Validator::validate($data, [
             'titulo' => ['required'],
             'nota'   => ['required', 'number', 'min:0', 'max:10']
         ]);

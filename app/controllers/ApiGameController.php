@@ -1,6 +1,6 @@
 <?php
 
-require_once "../app/services/GameService.php";
+use App\Services\GameService;
 
 class ApiGameController {
 

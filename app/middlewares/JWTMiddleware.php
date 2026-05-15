@@ -1,5 +1,5 @@
-<?php 
-require_once "../app/helpers/JWT.php";
+<?php
+use App\Helpers\JWT;
 
 class JWTMiddleware {
 
