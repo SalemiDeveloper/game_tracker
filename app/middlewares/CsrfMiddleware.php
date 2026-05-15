@@ -1,5 +1,7 @@
 <?php 
 
+namespace App\Middlewares;
+
 class CrsfMiddleware {
 
     public function handle() {

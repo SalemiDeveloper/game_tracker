@@ -1,4 +1,7 @@
 <?php
+
+namespace App\Middlewares;
+
 use App\Helpers\JWT;
 
 class JWTMiddleware {

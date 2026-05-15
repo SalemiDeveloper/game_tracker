@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Core;
+namespace App\Middlewares;
 
 class Router {
     private $routes = array();
@@ -90,18 +91,15 @@ class Router {
 
         foreach ($route['middlewares'] as $middleware) {
             if ($middleware === 'csrf') {
-                require_once "../app/middlewares/CsrfMiddleware.php";
-                (new \CrsfMiddleware())->handle();
+                (new CrsfMiddleware())->handle();
             }
 
             if ($middleware === 'auth') {
-                require_once "../app/middlewares/AuthMiddleware.php";
-                (new \AuthMiddleware())->handle();
+                (new AuthMiddleware())->handle();
             }
 
             if ($middleware === 'jwt') {
-                require_once "../app/middlewares/JWTMiddleware.php";
-                (new \JWTMiddleware())->handle();
+                (new JWTMiddleware())->handle();
             }
         }
 
