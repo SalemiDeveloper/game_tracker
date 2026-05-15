@@ -1,13 +1,15 @@
 <?php
 namespace App\Services;
-require_once "../app/models/Game.php";
+
+use App\Models\Game;
+//require_once "../app/models/Game.php";
 use App\Core\Validator;
 
 class GameService {
     private $model;
 
     public function __construct() {
-        $this->model = new \Game();
+        $this->model = new Game();
     }
 
     public function create($data) {

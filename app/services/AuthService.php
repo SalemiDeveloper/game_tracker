@@ -1,13 +1,15 @@
 <?php
 namespace App\Services;
-require_once "../app/models/User.php";
+
+use App\Models\User;
+//require_once "../app/models/User.php";
 
 class AuthService {
 
     private $model;
 
     public function __construct() {
-        $this->model = new \User();
+        $this->model = new User();
     }
 
     public function register($data) {

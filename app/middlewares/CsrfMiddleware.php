@@ -2,7 +2,7 @@
 
 namespace App\Middlewares;
 
-class CrsfMiddleware {
+class CsrfMiddleware {
 
     public function handle() {
         if (!isset($_POST['csrf']) || $_POST['csrf'] !== $_SESSION['csrf']) {
