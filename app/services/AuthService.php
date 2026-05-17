@@ -8,8 +8,8 @@ class AuthService {
 
     private $model;
 
-    public function __construct() {
-        $this->model = new User();
+    public function __construct($db) {
+        $this->model = new User($db);
     }
 
     public function register($data) {

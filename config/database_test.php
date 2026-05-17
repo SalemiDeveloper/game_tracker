@@ -1,6 +1,6 @@
 <?php
 
-class Database {
+class TestDatabase {
     public static function connect() {
         $pdo = new PDO ("mysql:host=localhost;dbname=game_tracker_test", "root", "");
 
