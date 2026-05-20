@@ -1,0 +1,12 @@
+✔ CRUD web
+✔ CRUD API
+✔ Auth web
+✔ JWT auth API
+✔ Refresh token
+✔ Logout API
+✔ Ownership
+✔ PHPUnit
+✔ Validator tests
+✔ Auth tests
+✔ CRUD tests
+✔ Ownership tests
