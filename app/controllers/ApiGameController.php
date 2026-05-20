@@ -3,14 +3,21 @@
 namespace App\Controllers;
 
 use App\Services\GameService;
+require_once "../config/database.php";
 
 class ApiGameController {
 
+    private $db, $service;
+
+    public function __construct() {
+        $this->db = \Database::connect();
+        $this->service = new GameService($this->db);
+    }
+
     public function index() {
-        $service = new GameService();
 
         $userId = $_SERVER['user']['id'];
-        $games = $service->all($userId);
+        $games = $this->service->all($userId);
 
         header('Content-Type: application/json');
 
@@ -23,9 +30,7 @@ class ApiGameController {
         $input = json_decode(file_get_contents('php://input'), true);
         $input['user_id'] = $_SERVER['user']['id'];
 
-        $service = new GameService();
-
-        $result = $service->create($input);
+        $result = $this->service->create($input);
 
         if (!$result['success']) {
             http_response_code(422);
@@ -48,9 +53,8 @@ class ApiGameController {
     public function show($id) {
         header('Content-Type: application/json');
 
-        $userId  = $_SERVER['user']['id'];
-        $service = new GameService();        
-        $game    = $service->findOwned($id, $userId);
+        $userId  = $_SERVER['user']['id'];   
+        $game    = $this->service->findOwned($id, $userId);
 
         if (!$game) {
             http_response_code(403);
@@ -73,9 +77,7 @@ class ApiGameController {
         $input = json_decode(file_get_contents('php://input'), true);
         $input['id'] = $id;
 
-        $service = new GameService();
-
-        $game = $service->findOwned($id, $userId);
+        $game = $this->service->findOwned($id, $userId);
 
         if (!$game) {
 
@@ -88,7 +90,7 @@ class ApiGameController {
             return;
         }
 
-        $result = $service->update($input);
+        $result = $this->service->update($input);
 
         if (!$result['success']) {
             http_response_code(422);
@@ -111,9 +113,7 @@ class ApiGameController {
 
         $userId = $_SERVER['user']['id'];
 
-        $service = new GameService();
-
-        $game = $service->findOwned($id, $userId);
+        $game = $this->service->findOwned($id, $userId);
 
         if (!$game) {
 
@@ -126,7 +126,7 @@ class ApiGameController {
             return;
         }
 
-        $result = $service->delete($id);
+        $result = $this->service->delete($id);
 
         if (!$result['success']) {
             http_response_code(404);

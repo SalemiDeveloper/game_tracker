@@ -7,8 +7,16 @@ use App\Models\Game;
 use App\Core\Controller;
 use App\Core\Validator;
 use App\Services\GameService;
+require_once "../config/database.php";
 
 class GameController extends Controller{
+
+    private $db, $service;
+
+    public function __construct() {
+        $this->db = \Database::connect();
+        $this->service = new GameService($this->db);
+    }
     
     public function index() {
 
@@ -25,10 +33,8 @@ class GameController extends Controller{
             die('CSRF token inválido.');
         }
 
-        $service = new GameService();
-
         $_POST['user_id'] = $_SESSION['user']['id'];
-        $result = $service->create($_POST);
+        $result = $this->service->create($_POST);
 
         if (!$result['success']) {
             $_SESSION['errors'] = $result['errors'];
@@ -73,8 +79,7 @@ class GameController extends Controller{
         }
         
         $userId = $_SESSION['user']['id'];
-        $service = new GameService();
-        $game = $service->findOwned($_POST['id'], $userId);
+        $game = $this->service->findOwned($_POST['id'], $userId);
 
         if (!$game) {
             http_response_code(403);
@@ -82,7 +87,7 @@ class GameController extends Controller{
             exit;
         }
 
-        $result = $service->update($_POST);
+        $result = $this->service->update($_POST);
 
         if (!$result['success']) {
             $_SESSION['errors'] = $result['errors'];
@@ -101,8 +106,7 @@ class GameController extends Controller{
     public function delete() {
 
         $userId = $_SESSION['user']['id'];
-        $service = new GameService();
-        $game = $service->findOwned($_POST['id'], $userId);
+        $game = $this->service->findOwned($_POST['id'], $userId);
 
         if (!$game) {
             http_response_code(403);
@@ -110,7 +114,7 @@ class GameController extends Controller{
             exit;
         }
 
-        $service->delete($_POST['id']);
+        $this->service->delete($_POST['id']);
 
         header('Location: /games');
         exit;

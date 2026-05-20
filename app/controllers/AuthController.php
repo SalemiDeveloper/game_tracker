@@ -3,8 +3,16 @@
 namespace App\Controllers;
 
 use App\Services\AuthService;
+require_once "../config/database.php";
 
 class AuthController {
+
+    private $db, $service;
+
+    public function __construct() {
+        $this->db = \Database::connect();
+        $this->service = new AuthService($this->db);
+    }
 
     public function showRegister() {
         require "../app/views/auth/register.php";
@@ -12,9 +20,7 @@ class AuthController {
 
     public function register() {
 
-        $service = new AuthService();
-
-        $result = $service->register($_POST);
+        $result = $this->service->register($_POST);
 
         if (!$result['success']) {
 
@@ -36,8 +42,7 @@ class AuthController {
 
     public function login() {
 
-        $service = new AuthService();
-        $result = $service->login($_POST);
+        $result = $this->service->login($_POST);
 
         if (!$result['success']) {
             $_SESSION['errors'] = $result['errors'];

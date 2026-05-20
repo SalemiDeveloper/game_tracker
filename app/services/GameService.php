@@ -13,8 +13,8 @@ class GameService {
 
     public function create($data) {
         $errors = Validator::validate($data,  [
-            'titulo' => ['required'],
-            'nota'   => ['required', 'number', 'min:0', 'max:10']
+            'titulo'  => ['required'],
+            'nota'    => ['required', 'number', 'min:0', 'max:10']
         ]);
 
         if (!empty($errors)) {
@@ -32,8 +32,8 @@ class GameService {
 
     public function update(array $data) {
         $errors = Validator::validate($data, [
-            'titulo' => ['required'],
-            'nota'   => ['required', 'number', 'min:0', 'max:10']
+            'titulo'  => ['required'],
+            'nota'    => ['required', 'number', 'min:0', 'max:10']
         ]);
 
         if (!empty($errors)) {

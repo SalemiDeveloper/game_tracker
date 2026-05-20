@@ -5,9 +5,16 @@ namespace App\Controllers;
 use App\Services\AuthService;
 use App\Helpers\JWT;
 use App\Models\RefreshToken;
-//require_once "../app/models/RefreshToken.php";
+require_once "../config/database.php";
 
 class ApiAuthController {
+
+private $db, $service;
+
+    public function __construct() {
+        $this->db = \Database::connect();
+        $this->service = new AuthService($this->db);
+    }
 
     public function login() {
         header('Content-Type: application/json');
@@ -17,9 +24,7 @@ class ApiAuthController {
             true
         );
 
-        $service = new AuthService();
-
-        $result = $service->login($input);
+        $result = $this->service->login($input);
 
         if (!$result['success']) {
             http_response_code(401);
@@ -53,6 +58,60 @@ class ApiAuthController {
             'refresh_token' => $refreshToken
         ]);
     }
+    // Testar register -----------------------
+    public function register() {
+        header('Content-Type: application/json');
+
+        $input = json_decode(
+            file_get_contents('php://input'),
+            true
+        );
+
+        $result = $this->service->register($input);
+
+        if (!$result['success']) {
+            http_response_code(400);
+
+            echo json_encode($result);
+
+            return;
+        }
+
+        // Busca usuário recém criado
+        $userModel = new \App\Models\User($this->db);
+
+        $user = $userModel->findByEmail($input['email']);
+
+        // Gera Access Token
+        $token = JWT::generate([
+            'id'    => $user['id'],
+            'email' => $user['email']
+        ]);
+
+        // Gera Refresh Token
+        $refreshToken = bin2hex(random_bytes(64));
+        $refreshModel = new RefreshToken();
+        $refreshModel->deleteExpired();
+
+        $refreshModel->create([
+            'user_id' => $user['id'],
+            'token' => $refreshToken,
+            'expires_at' => date(
+                'Y-m-d H:i:s',
+                strtotime('+7 days')
+            )
+        ]);
+
+        http_response_code(201);
+
+        echo json_encode([
+            'success' => true,
+            'message' => 'Usuário cadastrado com sucesso.',
+            'access_token' => $token,
+            'refresh_token' => $refreshToken
+        ]);
+    }
+    // ---------------------------------------
 
     public function refresh() {
         header('Content-Type: application/json');
