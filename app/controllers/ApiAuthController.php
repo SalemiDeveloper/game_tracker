@@ -58,60 +58,13 @@ private $db, $service;
             'refresh_token' => $refreshToken
         ]);
     }
-    // Testar register -----------------------
     public function register() {
-        header('Content-Type: application/json');
+        $data = json_decode(file_get_contents("php://input" ), true);
+        $result = $this->service->register($data);
 
-        $input = json_decode(
-            file_get_contents('php://input'),
-            true
-        );
-
-        $result = $this->service->register($input);
-
-        if (!$result['success']) {
-            http_response_code(400);
-
-            echo json_encode($result);
-
-            return;
-        }
-
-        // Busca usuário recém criado
-        $userModel = new \App\Models\User($this->db);
-
-        $user = $userModel->findByEmail($input['email']);
-
-        // Gera Access Token
-        $token = JWT::generate([
-            'id'    => $user['id'],
-            'email' => $user['email']
-        ]);
-
-        // Gera Refresh Token
-        $refreshToken = bin2hex(random_bytes(64));
-        $refreshModel = new RefreshToken();
-        $refreshModel->deleteExpired();
-
-        $refreshModel->create([
-            'user_id' => $user['id'],
-            'token' => $refreshToken,
-            'expires_at' => date(
-                'Y-m-d H:i:s',
-                strtotime('+7 days')
-            )
-        ]);
-
-        http_response_code(201);
-
-        echo json_encode([
-            'success' => true,
-            'message' => 'Usuário cadastrado com sucesso.',
-            'access_token' => $token,
-            'refresh_token' => $refreshToken
-        ]);
+        http_response_code($result['success'] ? 201 : 422);
+        echo json_encode($result);
     }
-    // ---------------------------------------
 
     public function refresh() {
         header('Content-Type: application/json');

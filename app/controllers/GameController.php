@@ -7,7 +7,8 @@ use App\Models\Game;
 use App\Core\Controller;
 use App\Core\Validator;
 use App\Services\GameService;
-require_once "../config/database.php";
+//require_once "../config/database.php";
+require_once __DIR__ . '/../../config/database.php';
 
 class GameController extends Controller{
 

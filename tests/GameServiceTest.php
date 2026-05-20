@@ -129,6 +129,94 @@ class GameServiceTest extends TestCase {
         $game = $this->gameService->find($gameId);
         $this->assertFalse($game);
     }
+
+    public function testOwnershipBloqueiaOutroUsuario() {
+        // cria usuário 1
+        $stmt = $this->db->prepare("
+            INSERT INTO users (name, email, password)
+            VALUES (:name, :email, :password)
+        ");
+
+        $stmt->execute([
+            'name' => 'Usuario 1',
+            'email' => 'u1@test.com',
+            'password' => '123'
+        ]);
+
+        $user1Id = $this->db->lastInsertId();
+
+        // cria usuário 2
+        $stmt->execute([
+            'name' => 'Usuario 2',
+            'email' => 'u2@test.com',
+            'password' => '123'
+        ]);
+
+        $user2Id = $this->db->lastInsertId();
+
+        // cria jogo do user 1
+        $stmtGame = $this->db->prepare("
+            INSERT INTO games (titulo, nota, user_id)
+            VALUES (:titulo, :nota, :user_id)
+        ");
+
+        $stmtGame->execute([
+            'titulo' => 'Zelda',
+            'nota' => 10,
+            'user_id' => $user1Id
+        ]);
+
+        $gameId = $this->db->lastInsertId();
+
+        // user 2 tenta acessar jogo do user 1
+        $game = $this->gameService->findOwned($gameId, $user2Id);
+        $this->assertFalse($game);
+    }
+
+    public function testOwnershipBloqueiaUpdateOutroUsuario() {
+        // cria usuário 1
+        $stmt = $this->db->prepare("
+            INSERT INTO users (name, email, password)
+            VALUES (:name, :email, :password)
+        ");
+
+        $stmt->execute([
+            'name' => 'Usuario 1',
+            'email' => 'u1@test.com',
+            'password' => '123'
+        ]);
+
+        $user1Id = $this->db->lastInsertId();
+
+        // cria usuário 2
+        $stmt->execute([
+            'name' => 'Usuario 2',
+            'email' => 'u2@test.com',
+            'password' => '123'
+        ]);
+
+        $user2Id = $this->db->lastInsertId();
+
+        // cria jogo do user 1
+        $stmtGame = $this->db->prepare("
+            INSERT INTO games (titulo, nota, user_id)
+            VALUES (:titulo, :nota, :user_id)
+        ");
+
+        $stmtGame->execute([
+            'titulo' => 'Zelda',
+            'nota' => 10,
+            'user_id' => $user1Id
+        ]);
+
+        $gameId = $this->db->lastInsertId();
+
+        // user 2 tenta acessar ownership
+        $game = $this->gameService->findOwned($gameId, $user2Id);
+
+        // ownership deve bloquear
+        $this->assertFalse($game);
+    }
 }
 
 ?>
