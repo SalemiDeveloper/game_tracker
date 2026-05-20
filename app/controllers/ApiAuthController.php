@@ -5,7 +5,8 @@ namespace App\Controllers;
 use App\Services\AuthService;
 use App\Helpers\JWT;
 use App\Models\RefreshToken;
-require_once "../config/database.php";
+//require_once "../config/database.php";
+require_once __DIR__ . '/../../config/database.php';
 
 class ApiAuthController {
 
