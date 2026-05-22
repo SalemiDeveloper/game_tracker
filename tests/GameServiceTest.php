@@ -181,8 +181,8 @@ class GameServiceTest extends TestCase {
         ");
 
         $stmt->execute([
-            'name' => 'Usuario 1',
-            'email' => 'u1@test.com',
+            'name'     => 'Usuario 1',
+            'email'    => 'u1@test.com',
             'password' => '123'
         ]);
 
@@ -190,8 +190,8 @@ class GameServiceTest extends TestCase {
 
         // cria usuário 2
         $stmt->execute([
-            'name' => 'Usuario 2',
-            'email' => 'u2@test.com',
+            'name'     => 'Usuario 2',
+            'email'    => 'u2@test.com',
             'password' => '123'
         ]);
 
@@ -204,8 +204,8 @@ class GameServiceTest extends TestCase {
         ");
 
         $stmtGame->execute([
-            'titulo' => 'Zelda',
-            'nota' => 10,
+            'titulo'  => 'Zelda',
+            'nota'    => 10,
             'user_id' => $user1Id
         ]);
 
