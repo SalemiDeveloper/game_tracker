@@ -67,6 +67,9 @@ class ApiAuthTest extends TestCase {
         $this->assertStringContainsString('Token', $response);
     }
 
+
+    // login real -> gera JWT -> Authorization: Bearer -> middleware aceita -> endpoint protegido funciona -> 200 ok
+    //JWT válido -> middleware aceita -> controller executa
     public function testEndPointProtegidoComToken() {
 
         // login
@@ -105,6 +108,8 @@ class ApiAuthTest extends TestCase {
         $this->assertStringContainsString('200', $statusLine);
     }
 
+
+    // Bearer fake -> JWT middleware -> 401
     public function testEndpointProtegidoComTokenInvalido() {
         $token = 'token_fake';
 
@@ -128,6 +133,9 @@ class ApiAuthTest extends TestCase {
         $this->assertStringContainsString('token não enviado', strtolower($data['message']));
     }
 
+
+
+    // JWT expirado -> middleware rejeita -> 401
     public function testEndpointProtegidoComTokenExpirado() {
         $payload = [
             'id' => 1,
@@ -153,6 +161,83 @@ class ApiAuthTest extends TestCase {
         $statusLine = $http_response_header[0];
 
         $this->assertStringContainsString('401', $statusLine);
+    }
+
+
+    // Valida: login real -> refresh token real -> refresh endpoint -> novo jwt
+    public function testRefreshTokenValido() {
+        // LOGIN
+        $loginData = [
+            'email' => 'marina@gmail.com',
+            'password' => '111222'
+        ];
+
+        $loginOptions = [
+            'http' => [
+                'header' =>
+                    "Content-Type: application/json\r\n",
+                'method' => 'POST',
+                'content' =>
+                    json_encode($loginData)
+            ]
+        ];
+
+        $loginContext = stream_context_create($loginOptions);
+        $loginResponse = file_get_contents('http://localhost:8000/api/login', false, $loginContext);
+        $loginJson = json_decode($loginResponse, true);
+        $refreshToken = $loginJson['refresh_token'];
+
+        // REFRESH
+        $refreshData = ['refresh_token' => $refreshToken];
+
+        $refreshOptions = [
+            'http' => [
+                'header' =>
+                    "Content-Type: application/json\r\n",
+                'method' => 'POST',
+                'content' =>
+                    json_encode($refreshData),
+                'ignore_errors' => true
+            ]
+        ];
+
+        $refreshContext = stream_context_create($refreshOptions);
+        $refreshResponse = file_get_contents('http://localhost:8000/api/refresh', false, $refreshContext);
+        $statusLine = $http_response_header[0];
+        $json = json_decode($refreshResponse, true);
+
+        $this->assertStringContainsString('200', $statusLine);
+        $this->assertArrayHasKey('access_token', $json);
+    }
+
+
+    // O que valida: refresh fake -> controller -> RefreshToken::find() -> não encontrou -> 401
+    public function testRefreshTokenInvalido() {
+        $data = [
+            'refresh_token' =>
+                'token_fake'
+        ];
+
+        $options = [
+            'http' => [
+                'header' =>
+                    "Content-Type: application/json\r\n",
+                'method' => 'POST',
+                'content' =>
+                    json_encode($data),
+                'ignore_errors' => true
+            ]
+        ];
+
+        $context = stream_context_create($options);
+        $response = file_get_contents('http://localhost:8000/api/refresh', false, $context);
+
+        $statusLine = $http_response_header[0];
+
+        $json = json_decode($response, true);
+
+        $this->assertStringContainsString('401', $statusLine);
+        $this->assertFalse($json['success']);
     }
 }
 
