@@ -1,10 +1,22 @@
 <?php
-require_once "../vendor/autoload.php";
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Dotenv\Dotenv;
+$envFile = '.env';
+
+if (trim(getenv('APP_ENV')) === 'testing') {
+    $envFile = '.env.testing';
+}
+
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../',$envFile);
+$dotenv->load();
 
 session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-// Código para rodar servidor no terminal: php -S localhost:8000 -t public
+// PARA REAL(CMD/PowerShell):   php -S localhost:8000 -t public
+// PARA TESTES(CMD): set APP_ENV=testing && php -S localhost:8000 -t public
 
 if (empty($_SESSION['csrf'])) {
     $_SESSION['csrf'] = bin2hex(random_bytes(32));
