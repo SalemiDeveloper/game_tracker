@@ -25,9 +25,13 @@ class GameService {
             ];
         }
 
-        $this->model->create($data);
+        // $this->model->create($data);
+        $gameId = $this->model->create($data);
     
-        return ['success' => true];
+        return [
+            'success' => true,
+            'id'      => $gameId
+        ];
     }
 
     public function update(array $data) {

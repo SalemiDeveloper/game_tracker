@@ -47,7 +47,8 @@ class ApiGameController {
         http_response_code(201);
 
         echo json_encode([
-            'success' => true
+            'success' => true,
+            'id'      => $result['id']
         ]);
     }
 

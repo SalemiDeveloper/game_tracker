@@ -1,12 +1,18 @@
-✔ CRUD web
-✔ CRUD API
-✔ Auth web
-✔ JWT auth API
-✔ Refresh token
-✔ Logout API
-✔ Ownership
-✔ PHPUnit
-✔ Validator tests
-✔ Auth tests
-✔ CRUD tests
-✔ Ownership tests
+Unit tests
+
+✔ validator
+✔ auth service
+✔ CRUD service
+✔ ownership service
+
+Integration/API tests
+
+✔ login
+✔ JWT válido
+✔ JWT inválido
+✔ JWT expirado
+✔ middleware sem token
+✔ refresh válido
+✔ refresh inválido
+✔ logout invalida refresh
+✔ ownership real

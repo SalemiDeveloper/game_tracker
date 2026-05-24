@@ -83,8 +83,8 @@ class GameServiceTest extends TestCase {
         ");
 
         $stmt->execute([
-            'titulo' => 'testUpdateGame',
-            'nota' => 10,
+            'titulo'  => 'testUpdateGame',
+            'nota'    => 10,
             'user_id' => $this->userId
         ]);
 
@@ -93,9 +93,9 @@ class GameServiceTest extends TestCase {
         // atualiza jogo
         $result = $this->gameService->update(
             [
-                'id' => $gameId,
-                'titulo' => 'God of War',
-                'nota' => 9,
+                'id'      => $gameId,
+                'titulo'  => 'God of War',
+                'nota'    => 9,
                 'user_id' => $this->userId
             ]
         );
@@ -216,6 +216,94 @@ class GameServiceTest extends TestCase {
 
         // ownership deve bloquear
         $this->assertFalse($game);
+    }
+
+    public function testOwnershipApiBloqueiaOutroUsuario() {
+
+        // login usuário A
+        $loginA = [
+            'email'    => 'marina@gmail.com',
+            'password' => '111222'
+        ];
+
+        $optionsA = [
+            'http' => [
+                'header'  => "Content-Type: application/json\r\n",
+                'method'  => 'POST',
+                'content' => json_encode($loginA),
+                'ignore_errors' => true
+            ]
+        ];
+
+        $contextA  = stream_context_create($optionsA);
+        $responseA = file_get_contents('http://localhost:8000/api/login', false, $contextA);
+
+        $jsonA = json_decode($responseA, true);
+        $this->assertArrayHasKey('access_token',$jsonA);
+        $tokenA = $jsonA['access_token'];
+
+        $gameData = [
+            'titulo' => 'Zelda Ownership',
+            'nota'   => '9'
+        ];
+
+        $createOptions = [
+            'http' => [
+                'header'  => "Authorization: Bearer {$tokenA}\r\n" . "Content-Type: application/json\r\n",
+                'method'  => 'POST',
+                'content' => json_encode($gameData)
+            ]
+        ];
+
+        $createContext = stream_context_create($createOptions);
+        file_get_contents('http://localhost:8000/api/games', false, $createContext);
+
+        $createResponse = file_get_contents('http://localhost:8000/api/games', false, $createContext);
+        $createJson = json_decode($createResponse, true);
+        $gameId = $createJson['id'];
+    
+        
+
+        // LOGIN USER B
+        $loginB = [
+            'email'    => 'pedro@test.com',
+            'password' => '123456'
+        ];
+
+        $optionsB = [
+            'http' => [
+                'header'  => "Content-Type: application/json\r\n",
+                'method'  => 'POST',
+                'content' => json_encode($loginB),
+                'ignore_errors' => true
+            ]
+        ];
+
+        $contextB = stream_context_create($optionsB);
+        $responseB = file_get_contents('http://localhost:8000/api/login', false, $contextB);
+        $jsonB = json_decode($responseB, true);
+        $this->assertArrayHasKey('access_token', $jsonB);
+        $tokenB = $jsonB['access_token'];
+
+        $updateData = [
+            'titulo' => 'Hack Ownership',
+            'nota'   => 1
+        ];
+
+        $updateOptions = [
+            'http' => [
+                'header'  => "Authorization: Bearer {$tokenB}\r\n" . "Content-Type: application/json\r\n",
+                'method'  => 'PUT',
+                'content' => json_encode($updateData),
+                'ignore_errors' => true
+            ]
+        ];
+
+        $updateContext = stream_context_create($updateOptions);
+        file_get_contents("http://localhost:8000/api/games/{$gameId}", false, $updateContext);
+        $statusLine = $http_response_header[0];
+
+        $this->assertStringContainsString('403', $statusLine);
     }
 }
 
