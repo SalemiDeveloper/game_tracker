@@ -9,7 +9,7 @@ class JWTMiddleware {
     public function handle() {
         $headers = getallheaders();
 
-        $authHeader = $headers['Authorization'] ?? $headers['authorization'] ?? null;
+        $authHeader = $headers['Authorization'] ?? $headers['authorization'] ?? $_SERVER['HTTP_AUTHORIZATION'] ?? null;
 
         if (!$authHeader) {
             http_response_code(401);

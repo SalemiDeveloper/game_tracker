@@ -16,3 +16,36 @@ Integration/API tests
 ✔ refresh inválido
 ✔ logout invalida refresh
 ✔ ownership real
+
+Auth
+✅ register
+✅ login
+✅ refresh token
+✅ logout
+✅ JWT middleware
+✅ token expirado
+✅ ownership
+
+Games CRUD
+✅ create
+✅ update
+✅ delete
+✅ index
+✅ show
+
+Novos campos
+✅ plataforma
+✅ status
+✅ horas_jogadas
+✅ review
+✅ genero
+✅ ano_lancamento
+✅ updated_at
+
+Qualidade
+✅ PHPUnit
+✅ validator tests
+✅ service tests
+✅ ownership tests
+✅ API HTTP real
+✅ env testing isolado

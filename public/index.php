@@ -1,5 +1,13 @@
 <?php
 
+/* 
+    PARA REAL(CMD/PowerShell):   
+        php -S localhost:8000 -t public
+
+    PARA TESTES(CMD): 
+        set APP_ENV=testing && php -S localhost:8000 -t public
+ */
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Dotenv\Dotenv;
@@ -15,8 +23,6 @@ $dotenv->load();
 session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-// PARA REAL(CMD/PowerShell):   php -S localhost:8000 -t public
-// PARA TESTES(CMD): set APP_ENV=testing && php -S localhost:8000 -t public
 
 if (empty($_SESSION['csrf'])) {
     $_SESSION['csrf'] = bin2hex(random_bytes(32));

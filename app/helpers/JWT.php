@@ -10,7 +10,7 @@ class JWT {
     public static function generate($payload) {
 
         $payload['iat'] = $payload['iat'] ?? time();
-        $payload['exp'] = $payload['iat'] ?? time() + (60 * 15);
+        $payload['exp'] = $payload['exp'] ?? time() + (60 * 15);
         //$payload['exp'] = time() + 20;
 
         $header = json_encode([
