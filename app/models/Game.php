@@ -188,7 +188,17 @@ class Game extends Model{
 
         $stmt->execute(['user_id' => $userId]);
 
-        return $stmt->fetch();
+        $stats = $stmt->fetch();
+
+        $stats['total_games'] = (int) $stats['total_games'];
+        $stats['jogando']     = (int) $stats['jogando'];
+        $stats['zerados']     = (int) $stats['zerados'];
+        $stats['platinados']  = (int) $stats['platinados'];
+        $stats['abandonados'] = (int) $stats['abandonados'];
+        $stats['horas_total'] = (float) $stats['horas_total'];
+        $stats['nota_media']  = (float) ($stats['nota_media'] ?? 0);
+
+        return $stats;
     }
 }
 
