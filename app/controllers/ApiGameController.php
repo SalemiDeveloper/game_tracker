@@ -18,7 +18,16 @@ class ApiGameController {
     public function index() {
 
         $userId = $_SERVER['user']['id'];
-        $games = $this->service->all($userId);
+
+        $filters = [
+            'status'     => $_GET['status']     ?? null,
+            'plataforma' => $_GET['plataforma'] ?? null,
+            'genero'     => $_GET['genero']     ?? null,
+            'q'          => $_GET['q']          ?? null,
+            'sort'       => $_GET['sort']       ?? null
+        ];
+
+        $games = $this->service->all($userId, $filters);
 
         header('Content-Type: application/json');
 
@@ -140,6 +149,16 @@ class ApiGameController {
         echo json_encode([
             'success' => true
         ]);
+    }
+
+    public function dashboard() {
+        header('Content-Type: application/json');
+
+        $userId = $_SERVER['user']['id'];
+
+        $stats = $this->service->stats($userId);
+
+        echo json_encode($stats);
     }
 }
 

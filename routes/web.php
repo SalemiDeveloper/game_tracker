@@ -24,5 +24,6 @@ $router->delete('/api/games/{id}', 'ApiGameController@destroy')->middleware('jwt
 $router->post('/api/refresh', 'ApiAuthController@refresh');
 $router->post('/api/logout', 'ApiAuthController@logout');
 $router->post('/api/register', 'ApiAuthController@register');
+$router->get('/api/dashboard', 'ApiGameController@dashboard')->middleware('jwt');
 
 ?>

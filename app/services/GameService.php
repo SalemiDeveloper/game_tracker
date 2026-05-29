@@ -71,8 +71,8 @@ class GameService {
         ];
     }
 
-    public function all($userId) {
-        return $this->model->all($userId);
+    public function all($userId, $filters = []) {
+        return $this->model->all($userId, $filters);
     }
 
     public function find($id) {
@@ -81,6 +81,10 @@ class GameService {
 
     public function findOwned($id, $userId) {
         return $this->model->findOwned($id, $userId);
+    }
+
+    public function stats($userId) {
+        return $this->model->stats($userId);
     }
 }
 ?>

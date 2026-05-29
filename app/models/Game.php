@@ -6,34 +6,77 @@ use App\Core\Model;
 
 class Game extends Model{
 
-    public function all($userId) {
-        $stmt = $this->db->prepare("
-            SELECT * FROM games
-            WHERE user_id = :user_id
-        ");
+    // public function all($userId) {
+    //     $stmt = $this->db->prepare("
+    //         SELECT * FROM games
+    //         WHERE user_id = :user_id
+    //     ");
 
-        $stmt->execute([
-            'user_id' => $userId
-        ]);
+    //     $stmt->execute([
+    //         'user_id' => $userId
+    //     ]);
+
+    //     return $stmt->fetchAll();
+    // }
+
+    public function all($userId, $filters = []) {
+        $sql = "SELECT * 
+                FROM games 
+                WHERE user_id = :user_id ";
+
+        $params = ['user_id' => $userId];
+
+        //filtro status
+        if (!empty($filters['status'])) {
+            $sql .= "AND status = :status ";
+            $params['status'] = $filters['status'];
+        }
+
+        // filtro plataforma
+        if (!empty($filters['plataforma'])) {
+            $sql .= "AND plataforma = :plataforma ";
+            $params['plataforma'] = $filters['plataforma'];
+        }
+
+        // filtro gênero
+        if (!empty($filters['genero'])) {
+            $sql .= "AND genero = :genero ";
+            $params['genero'] = $filters['genero'];
+        }
+
+        // filtro título
+        if (!empty($filters['q'])) {
+            $sql .= "AND titulo LIKE :titulo ";
+            $params['titulo'] = "%".$filters['q']."%";
+        }
+
+
+        // ordenação
+        $allowedSorts = ['nota', 'updated_at', 'ano_lancamento', 'titulo'];
+
+        // evitando códigos maliciosos pelo SQL.
+        if (!empty($filters['sort']) && in_array($filters['sort'], $allowedSorts)) {
+            $sql .= " ORDER BY ". $filters['sort'] ." DESC";
+        }
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
 
         return $stmt->fetchAll();
     }
 
     public function create($data) {
         $stmt = $this->db->prepare("
-            INSERT INTO games (titulo, nota, user_id
-            , plataforma, status, horas_jogadas, review, genero, ano_lancamento
-            )
+            INSERT INTO games 
+                (titulo, nota, user_id, 
+                plataforma, status, horas_jogadas, 
+                review, genero, ano_lancamento)
             
-            VALUES (:titulo, :nota, :user_id
-            , :plataforma, :status, :horas_jogadas, :review, :genero, :ano_lancamento
-            )
+            VALUES 
+                (:titulo, :nota, :user_id, 
+                :plataforma, :status, :horas_jogadas, 
+                :review, :genero, :ano_lancamento)
         ");
-
-        /*
-        , plataforma, status, horas_jogadas, review, genero, ano_lancamento
-        , :plataforma, :status, :horas_jogadas, :review, :genero, :ano_lancamento
-        */
 
         $stmt->execute([
             'titulo'  => $data['titulo'],
@@ -115,6 +158,37 @@ class Game extends Model{
             $data['updated_at'] ?? null,
             $data['id']
         ]);
+    }
+
+    public function stats($userId) {
+        $stmt = $this->db->prepare("
+            SELECT 
+                COUNT(*) as total_games,
+                SUM(CASE WHEN status = 'jogando' 
+                         THEN 1 
+                         ELSE 0
+                         END) as jogando,
+                SUM(CASE WHEN status IN ('zerei_so_camp', 'zerei_fiz_tudo')
+                         THEN 1
+                         ELSE 0
+                         END) as zerados,
+                SUM(CASE WHEN status = 'platinei'
+                         THEN 1
+                         ELSE 0
+                         END) as platinados,
+                SUM(CASE WHEN status = 'abandonei'
+                         THEN 1
+                         ELSE 0
+                        END) as 'abandonados',
+                COALESCE(SUM(horas_jogadas),0) as horas_total,
+                ROUND(AVG(nota), 1) as nota_media
+            FROM games 
+            WHERE user_id = :user_id
+        ");
+
+        $stmt->execute(['user_id' => $userId]);
+
+        return $stmt->fetch();
     }
 }
 
