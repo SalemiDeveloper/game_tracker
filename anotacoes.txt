@@ -49,3 +49,49 @@ Qualidade
 ✅ ownership tests
 ✅ API HTTP real
 ✅ env testing isolado
+
+------------------------------------------------
+31/05/2026
+Auth
+✅ register
+✅ login
+✅ JWT auth
+✅ refresh token
+✅ logout
+
+Games
+✅ create
+✅ update
+✅ delete
+✅ show
+✅ index
+✅ ownership
+
+Filtros
+✅ status
+✅ plataforma
+✅ genero
+
+Busca
+✅ q=titulo
+
+Ordenação
+✅ nota
+✅ updated_at
+✅ ano_lancamento
+✅ titulo
+
+Analytics
+✅ dashboard
+
+Support endpoints
+✅ platforms
+✅ generos
+✅ status-options
+
+Infra
+✅ PHPUnit
+✅ API tests reais
+✅ JWT middleware tests
+✅ ownership tests
+✅ banco de teste isolado
