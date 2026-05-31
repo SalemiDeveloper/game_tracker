@@ -25,5 +25,8 @@ $router->post('/api/refresh', 'ApiAuthController@refresh');
 $router->post('/api/logout', 'ApiAuthController@logout');
 $router->post('/api/register', 'ApiAuthController@register');
 $router->get('/api/dashboard', 'ApiGameController@dashboard')->middleware('jwt');
+$router->get('/api/platforms', 'ApiGameController@platforms')->middleware('jwt');
+$router->get('/api/generos', 'ApiGameController@generos')->middleware('jwt');
+$router->get('/api/status-options', 'ApiGameController@statusOptions')->middleware('jwt');
 
 ?>

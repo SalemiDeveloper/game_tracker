@@ -160,6 +160,31 @@ class ApiGameController {
 
         echo json_encode($stats);
     }
+
+    public function platforms() {
+        header('Content-Type: application/json');
+
+        $userId = $_SERVER['user']['id'];
+        $plataforms = $this->service->getPlatforms($userId);
+
+        echo json_encode($plataforms);
+    }
+
+    public function generos() {
+        header('Content-Type: application/json');
+
+        $userId = $_SERVER['user']['id'];
+        $generos = $this->service->getGeneros($userId);
+
+        echo json_encode($generos);
+    }
+
+    public function statusOptions() {
+        header('Content-Type: application/json');
+
+        $statusOptions = $this->service->getStatusOptions();
+        echo json_encode($statusOptions);
+    }
 }
 
 ?>

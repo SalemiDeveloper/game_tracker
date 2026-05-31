@@ -200,6 +200,47 @@ class Game extends Model{
 
         return $stats;
     }
+
+    public function getPlatforms($userId) {
+        $stmt = $this->db->prepare("
+            SELECT DISTINCT plataforma
+            FROM games
+            WHERE user_id = :user_id
+            AND plataforma IS NOT NULL
+            AND plataforma != ''
+            ORDER BY plataforma ASC
+        ");
+
+        $stmt->execute(['user_id' => $userId]);
+
+        return array_column($stmt->fetchAll(), 'plataforma');
+    }
+
+    public function getGeneros($userId) {
+        $stmt = $this->db->prepare("
+            SELECT DISTINCT genero
+            FROM games
+            WHERE user_id = :user_id
+            AND genero IS NOT NULL
+            AND genero != ''
+            ORDER BY genero ASC
+        ");
+
+        $stmt->execute(['user_id' => $userId]);
+
+        return array_column($stmt->fetchAll(), 'genero');
+    }
+
+    public function getStatusOptions() {
+        return [
+            'vou_jogar',
+            'jogando',
+            'zerei',
+            '100_porcento',
+            'platinei',
+            'abandonei'
+        ];
+    }
 }
 
 ?>

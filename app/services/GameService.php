@@ -86,5 +86,17 @@ class GameService {
     public function stats($userId) {
         return $this->model->stats($userId);
     }
+
+    public function getPlatforms($userId) {
+        return $this->model->getPlatforms($userId);
+    }
+
+    public function getGeneros($userId) {
+        return $this->model->getGeneros($userId);
+    }
+
+    public function getStatusOptions() {
+        return $this->model->getStatusOptions();
+    }
 }
 ?>
