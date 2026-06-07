@@ -31,20 +31,27 @@ if (empty($_SESSION['csrf'])) {
 use App\Core\Router;
 $router = new Router();
 
-require "../routes/web.php";
+require __DIR__ . '/../routes/web.php';
 
-// Garantindo que vai rodar a URL no Laragon -------
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$uri = parse_url(
+    $_SERVER['REQUEST_URI'],
+    PHP_URL_PATH
+);
 
-// remove a pasta do projeto da URL
+// Para Laragon/web
 $basePath = '/game_tracker/public';
-$uri = str_replace($basePath, '', $uri);
 
-// garante que pelo menos seja "/"
+if (str_starts_with($uri, $basePath)) {
+    $uri = str_replace(
+        $basePath,
+        '',
+        $uri
+    );
+}
+
 if ($uri === '') {
     $uri = '/';
 }
-// -----------------------------------------------
 
 $method = $_SERVER['REQUEST_METHOD'];
 $action = $router->dispatch($uri, $method);

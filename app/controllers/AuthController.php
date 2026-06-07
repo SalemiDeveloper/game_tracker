@@ -16,7 +16,8 @@ class AuthController {
     }
 
     public function showRegister() {
-        require "../app/views/auth/register.php";
+        // require "../app/views/auth/register.php";
+        require __DIR__ . '/../views/auth/register.php';
     }
 
     public function register() {
@@ -38,7 +39,8 @@ class AuthController {
     }
 
     public function showLogin() {
-        require "../app/views/auth/login.php";
+        // require "../app/views/auth/login.php";
+        require __DIR__ . '/../views/auth/login.php';
     }
 
     public function login() {

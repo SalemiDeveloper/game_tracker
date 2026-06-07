@@ -16,8 +16,11 @@ class Controller {
         // converte "games.index" -> "games/index.php"
         $path = str_replace('.', '/', $path);
         
-        $content = "../app/views/{$path}.php";
-        require "../app/views/layouts/app.php";
+        // $content = "../app/views/{$path}.php";
+        $content = __DIR__ . "/../views/{$path}.php";
+
+        //require "../app/views/layouts/app.php";
+        require __DIR__ . "/../views/layouts/app.php";
     }
 }
 
