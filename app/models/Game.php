@@ -6,19 +6,6 @@ use App\Core\Model;
 
 class Game extends Model{
 
-    // public function all($userId) {
-    //     $stmt = $this->db->prepare("
-    //         SELECT * FROM games
-    //         WHERE user_id = :user_id
-    //     ");
-
-    //     $stmt->execute([
-    //         'user_id' => $userId
-    //     ]);
-
-    //     return $stmt->fetchAll();
-    // }
-
     public function all($userId, $filters = []) {
         $sql = "SELECT * 
                 FROM games 
@@ -140,11 +127,6 @@ class Game extends Model{
             genero = ?, ano_lancamento = ?, updated_at = ?
             WHERE id = ?
         ");
-
-        /*
-        , plataforma = ?, status = ?, horas_jogadas = ?, review = ?,
-                genero = ?, ano_lancamento = ?, updated_at = ?
-        */
 
         return $stmt->execute([
             $data['titulo'],

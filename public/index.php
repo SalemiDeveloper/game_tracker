@@ -33,25 +33,19 @@ $router = new Router();
 
 require __DIR__ . '/../routes/web.php';
 
-$uri = parse_url(
-    $_SERVER['REQUEST_URI'],
-    PHP_URL_PATH
-);
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-// Para Laragon/web
+// Para Laragon/web ----------------
 $basePath = '/game_tracker/public';
 
 if (str_starts_with($uri, $basePath)) {
-    $uri = str_replace(
-        $basePath,
-        '',
-        $uri
-    );
+    $uri = str_replace($basePath, '', $uri);
 }
 
 if ($uri === '') {
     $uri = '/';
 }
+// ---------------------------------
 
 $method = $_SERVER['REQUEST_METHOD'];
 $action = $router->dispatch($uri, $method);
