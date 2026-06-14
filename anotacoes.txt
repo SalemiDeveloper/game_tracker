@@ -1,97 +1,19 @@
-Unit tests
+- Coisas para fazer:
+1.    No Validator.php -> na função validate() -> no segundo foreach() só temos as verificações
+    para título e nota. Preciso acrescentar para os novos campos criados no db games. Consultar
+    no banco de dados.
 
-✔ validator
-✔ auth service
-✔ CRUD service
-✔ ownership service
+    PLATAFORMA: Melhor fazer um AutoComplete com todas as opções do que sempre ter que escrever.
 
-Integration/API tests
+    STATUS: "vou_jogar" e "jogando" não precisa ter horas jogadas. O resto ("zerei", "100_porcento", 
+    "platinei" e "abandonei" tem que preencher as horas que jogou).
 
-✔ login
-✔ JWT válido
-✔ JWT inválido
-✔ JWT expirado
-✔ middleware sem token
-✔ refresh válido
-✔ refresh inválido
-✔ logout invalida refresh
-✔ ownership real
+    HORAS JOGADAS: Vai depender do status.
 
-Auth
-✅ register
-✅ login
-✅ refresh token
-✅ logout
-✅ JWT middleware
-✅ token expirado
-✅ ownership
+    REVIEW (opcional): Acho que pode ser durante e depois também.
 
-Games CRUD
-✅ create
-✅ update
-✅ delete
-✅ index
-✅ show
+    GÊNERO: 
 
-Novos campos
-✅ plataforma
-✅ status
-✅ horas_jogadas
-✅ review
-✅ genero
-✅ ano_lancamento
-✅ updated_at
+    ANO LANÇAMENTO: numérico
 
-Qualidade
-✅ PHPUnit
-✅ validator tests
-✅ service tests
-✅ ownership tests
-✅ API HTTP real
-✅ env testing isolado
 
-------------------------------------------------
-31/05/2026
-Auth
-✅ register
-✅ login
-✅ JWT auth
-✅ refresh token
-✅ logout
-
-Games
-✅ create
-✅ update
-✅ delete
-✅ show
-✅ index
-✅ ownership
-
-Filtros
-✅ status
-✅ plataforma
-✅ genero
-
-Busca
-✅ q=titulo
-
-Ordenação
-✅ nota
-✅ updated_at
-✅ ano_lancamento
-✅ titulo
-
-Analytics
-✅ dashboard
-
-Support endpoints
-✅ platforms
-✅ generos
-✅ status-options
-
-Infra
-✅ PHPUnit
-✅ API tests reais
-✅ JWT middleware tests
-✅ ownership tests
-✅ banco de teste isolado
