@@ -71,6 +71,30 @@ function error($field) {
             <?php endif; ?>
         </div>
 
+        <div style="margin-bottom: 10px;">
+            <input name="status" placeholder="Vou jogar"
+                value="<?= htmlspecialchars($_SESSION['old']['status'] ?? '') ?>">
+            <?php if ($msg = error('status')): ?>
+                <p style="color:red;"><?= htmlspecialchars($msg) ?></p>
+            <?php endif; ?>
+        </div>
+
+        <div style="margin-bottom: 10px;">
+            <input name="plataforma" placeholder="Digite a plataforma"
+                value="<?= htmlspecialchars($_SESSION['old']['plataforma'] ?? '') ?>">
+            <?php if ($msg = error('plataforma')): ?>
+                <p style="color:red;"><?= htmlspecialchars($msg) ?></p>
+            <?php endif; ?>
+        </div>
+
+        <div style="margin-bottom: 10px;">
+            <input name="genero" placeholder="Digite o gênero"
+                value="<?= htmlspecialchars($_SESSION['old']['genero'] ?? '') ?>">
+            <?php if ($msg = error('genero')): ?>
+                <p style="color:red;"><?= htmlspecialchars($msg) ?></p>
+            <?php endif; ?>
+        </div>
+
         <button type="submit">Salvar</button>
     </form>
     <?php 

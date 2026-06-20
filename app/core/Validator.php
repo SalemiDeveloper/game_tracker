@@ -22,6 +22,11 @@ class Validator {
                     $errors[$field][] = "O campo {$field} deve ser numérico (0 a 10).";
                 }
 
+                // string
+                if ($rule === 'string' && !is_string($value)) {
+                    $errors[$field][] = "O campo {$field} deve ser um texto.";
+                }
+
                 //min:0
                 if (str_starts_with($rule, 'min:')) {
                     $min = explode(':', $rule)[1];

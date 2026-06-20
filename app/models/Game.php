@@ -124,7 +124,7 @@ class Game extends Model{
         $stmt = $this->db->prepare("
             UPDATE games
             SET titulo = ?, nota = ?, plataforma = ?, status = ?, horas_jogadas = ?, review = ?,
-            genero = ?, ano_lancamento = ?, updated_at = ?
+            genero = ?, ano_lancamento = ?, updated_at = NOW()
             WHERE id = ?
         ");
 
@@ -137,7 +137,6 @@ class Game extends Model{
             $data['review'] ?? null,
             $data['genero'] ?? null,
             $data['ano_lancamento'] ?? null,
-            $data['updated_at'] ?? null,
             $data['id']
         ]);
     }

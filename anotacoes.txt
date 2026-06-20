@@ -1,4 +1,9 @@
 - Coisas para fazer:
+
+Na tela principal, onde adiciono jogo, tenho que fazer um combo para o status para mandar um dos mesmo valores
+que tenho no banco porém o combo aparecer da forma certa.
+
+
 1.    No Validator.php -> na função validate() -> no segundo foreach() só temos as verificações
     para título e nota. Preciso acrescentar para os novos campos criados no db games. Consultar
     no banco de dados.
