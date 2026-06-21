@@ -41,7 +41,9 @@ class GameService {
             'titulo'     => ['required'],
             'nota'       => ['required', 'number', 'min:0', 'max:10'],
             'plataforma' => ['required', 'string'],
-            'genero'     => ['required', 'string']
+            'genero'     => ['required', 'string'],
+            'ano_lancamento' => ['number'],
+            'horas_jogadas'  => ['number', 'min:0']
         ]);
 
         if (!empty($errors)) {

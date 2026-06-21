@@ -72,11 +72,13 @@ function error($field) {
         </div>
 
         <div style="margin-bottom: 10px;">
+            <p>TENHO QUE TRATAR STATUS</p>
             <input name="status" placeholder="Vou jogar"
                 value="<?= htmlspecialchars($_SESSION['old']['status'] ?? '') ?>">
             <?php if ($msg = error('status')): ?>
                 <p style="color:red;"><?= htmlspecialchars($msg) ?></p>
             <?php endif; ?>
+            <P>--------------------------------</P>
         </div>
 
         <div style="margin-bottom: 10px;">
