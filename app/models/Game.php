@@ -150,7 +150,7 @@ class Game extends Model{
                          THEN 1 
                          ELSE 0
                          END) as jogando,
-                SUM(CASE WHEN status IN ('zerei_so_camp', 'zerei_fiz_tudo')
+                SUM(CASE WHEN status IN ('zerado', '100_porcento')
                          THEN 1
                          ELSE 0
                          END) as zerados,
@@ -158,10 +158,10 @@ class Game extends Model{
                          THEN 1
                          ELSE 0
                          END) as platinados,
-                SUM(CASE WHEN status = 'abandonei'
+                SUM(CASE WHEN status = 'dropado'
                          THEN 1
                          ELSE 0
-                        END) as 'abandonados',
+                        END) as 'dropados',
                 COALESCE(SUM(horas_jogadas),0) as horas_total,
                 ROUND(AVG(nota), 1) as nota_media
             FROM games 
@@ -176,7 +176,7 @@ class Game extends Model{
         $stats['jogando']     = (int) $stats['jogando'];
         $stats['zerados']     = (int) $stats['zerados'];
         $stats['platinados']  = (int) $stats['platinados'];
-        $stats['abandonados'] = (int) $stats['abandonados'];
+        $stats['dropados'] = (int) $stats['dropados'];
         $stats['horas_total'] = (float) $stats['horas_total'];
         $stats['nota_media']  = (float) ($stats['nota_media'] ?? 0);
 

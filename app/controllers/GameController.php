@@ -21,17 +21,19 @@ class GameController extends Controller{
     
     public function index() {
 
-        $gameModel = new Game();
         $userId = $_SESSION['user']['id'];
-        $games = $gameModel->all($userId);
+
+        $games = $this->service->all($userId);
+        $stats = $this->service->stats($userId);
+
         $this->view('games.index', [
-            'games' => $games
+            'games' => $games,
+            'stats' => $stats
         ]);
     }
 
     public function create() {
-        $gameModel = new Game();
-        $statusOptions = $gameModel->getStatusOptions();
+        $statusOptions = $this->service->getStatusOptions();
         $this->view('games.create', ['statusOptions' => $statusOptions]);
     }
 
@@ -67,7 +69,7 @@ class GameController extends Controller{
             exit;
         }
 
-        $game = (new Game())->findOwned($id, $userId);
+        $game = $this->service->findOwned($id, $userId);
 
         if (!$game) {
             http_response_code(403);

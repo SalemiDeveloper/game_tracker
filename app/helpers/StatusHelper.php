@@ -5,12 +5,12 @@ namespace App\Helpers;
 class StatusHelper {
 
     private static array $statusMap = [
-        'vou_jogar'    => 'Vou jogar',
+        'backlog'    => 'Vou jogar',
         'jogando'      => 'Jogando',
-        'zerei'        => 'Zerei',
+        'zerado'        => 'Zerei',
         '100_porcento' => '100%',
-        'platinei'     => 'Platinado',
-        'abandonei'    => 'Abandonado',
+        'platina'     => 'Platinado',
+        'dropado'    => 'Dropado',
     ];
 
     public static function all(): array {

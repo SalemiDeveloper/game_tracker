@@ -104,5 +104,61 @@ class GameService {
     public function getStatusOptions() {
         return $this->model->getStatusOptions();
     }
+
+    public function getDashboardData(array $games): array {
+        $totalGames = count($games);
+
+        $jogando = 0;
+        $zerado = 0;
+        $porcento = 0;
+        $platina = 0;
+        $backlog = 0;
+        $dropado = 0;
+        $totalHours = 0;
+        $ratingSum = 0;
+
+        foreach($games as $game) {
+            switch ($game['status']) {
+                case 'backlog':
+                    $backlog++;
+                    break;
+
+                case 'jogando':
+                    $jogando++;
+                    break;
+
+                case 'zerado':
+                    $zerado++;
+                    break;
+
+                case '100_porcento':
+                    $porcento++;
+                    break;
+
+                case 'platina':
+                    $platina++;
+                    break;
+
+                case 'dropado':
+                    $dropado++;
+                    break;
+            }
+
+            $ratingSum += (float) $game['nota'];
+            $totalHours += (int) ($game['horas_jogadas'] ?? 0);
+        }
+
+        return [
+            'totalGames' => $totalGames,
+            'backlog' => $backlog,
+            'jogando' => $jogando,
+            'zerado' => $zerado,
+            '100_porcento' => $porcento,
+            'platina' => $platina,
+            'dropado' => $dropado,
+            'totalHours' => $totalHours,
+            'averageRating' => $totalGames ? round($ratingSum / $totalGames, 1) : 0
+        ];
+    }
 }
 ?>

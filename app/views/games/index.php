@@ -43,6 +43,50 @@
         <?php endforeach; ?>
     </ul>
 
+    <div style="
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 30px;
+    ">
+
+        <div class="card">
+            <h3>Total</h3>
+            <p><?= $stats['total_games'] ?></p>
+        </div>
+
+        <div class="card">
+            <h3>Jogando</h3>
+            <p><?= $stats['jogando'] ?></p>
+        </div>
+
+        <div class="card">
+            <h3>Zerados</h3>
+            <p><?= $stats['zerados'] ?></p>
+        </div>
+
+        <div class="card">
+            <h3>Platinas</h3>
+            <p><?= $stats['platinados'] ?></p>
+        </div>
+
+        <div class="card">
+            <h3>Dropados</h3>
+            <p><?= $stats['dropados'] ?></p>
+        </div>
+
+        <div class="card">
+            <h3>Média das notas</h3>
+            <p><?= $stats['nota_media'] ?></p>
+        </div>
+
+        <div class="card">
+            <h3>Horas</h3>
+            <p><?= $stats['horas_total'] ?></p>
+        </div>
+
+    </div>
+
     
 
     <h2>Adicionar novo jogo</h2>
@@ -69,3 +113,27 @@
     ?>
 </body>
 </html>
+
+<style>
+
+.card{
+    width:160px;
+    padding:20px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    background:#fafafa;
+    text-align:center;
+}
+
+.card h3{
+    margin:0 0 10px;
+    font-size:16px;
+}
+
+.card p{
+    margin:0;
+    font-size:28px;
+    font-weight:bold;
+}
+
+</style>
