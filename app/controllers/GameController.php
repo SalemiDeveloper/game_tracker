@@ -24,10 +24,8 @@ class GameController extends Controller{
         $gameModel = new Game();
         $userId = $_SESSION['user']['id'];
         $games = $gameModel->all($userId);
-        $statusOptions = $gameModel->getStatusOptions();
         $this->view('games.index', [
-            'games' => $games,
-            'statusOptions' => $statusOptions
+            'games' => $games
         ]);
     }
 
