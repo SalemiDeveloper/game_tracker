@@ -21,11 +21,20 @@ class GameController extends Controller{
     
     public function index() {
 
+        $gameModel = new Game();
         $userId = $_SESSION['user']['id'];
-        $games = (new Game())->all($userId);
+        $games = $gameModel->all($userId);
+        $statusOptions = $gameModel->getStatusOptions();
         $this->view('games.index', [
-            'games' => $games
+            'games' => $games,
+            'statusOptions' => $statusOptions
         ]);
+    }
+
+    public function create() {
+        $gameModel = new Game();
+        $statusOptions = $gameModel->getStatusOptions();
+        $this->view('games.create', ['statusOptions' => $statusOptions]);
     }
 
     public function store() {
@@ -120,6 +129,8 @@ class GameController extends Controller{
         header('Location: /games');
         exit;
     }
+
+
 }
 
 ?>

@@ -1,4 +1,8 @@
 <?php
+
+use App\Helpers\StatusHelper;
+
+
 function error($field) {
     return $_SESSION['errors'][$field][0] ?? null;
 }
@@ -72,13 +76,28 @@ function error($field) {
         </div>
 
         <div style="margin-bottom: 10px;">
-            <p>TENHO QUE TRATAR STATUS</p>
-            <input name="status" placeholder="Vou jogar"
-                value="<?= htmlspecialchars($_SESSION['old']['status'] ?? '') ?>">
+            <select name="status">
+
+                <option value="">Selecione um status</option>
+
+                <?php foreach ($statusOptions as $status): ?>
+
+                    <option
+                        value="<?= htmlspecialchars($status) ?>"
+                        <?= (($_SESSION['old']['status'] ?? '') === $status) ? 'selected' : '' ?>
+                    >
+                        <?= htmlspecialchars(StatusHelper::format($status)) ?>
+                    </option>
+
+                <?php endforeach; ?>
+
+            </select>
+
             <?php if ($msg = error('status')): ?>
-                <p style="color:red;"><?= htmlspecialchars($msg) ?></p>
+                <p style="color:red;">
+                    <?= htmlspecialchars($msg) ?>
+                </p>
             <?php endif; ?>
-            <P>--------------------------------</P>
         </div>
 
         <div style="margin-bottom: 10px;">

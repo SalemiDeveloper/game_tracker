@@ -1,6 +1,9 @@
 <?php
 
 $router->get('/games', 'GameController@index')->middleware('auth');
+
+$router->get('/games/create', 'GameController@create')->middleware('auth');
+
 $router->post('/games','GameController@store')->middleware('auth')->middleware('csrf');
 $router->post('/games/delete', 'GameController@delete')->middleware('csrf');
 $router->get('/games/edit', 'GameController@edit');

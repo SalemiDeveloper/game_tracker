@@ -1,5 +1,7 @@
 <?php
 
+// Acho que não estou utilizando mais este arquivo, vou deixar o die() para confirmar.
+die('entrou no router');
 $path = parse_url(
     $_SERVER['REQUEST_URI'],
     PHP_URL_PATH

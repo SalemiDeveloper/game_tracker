@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Core\Model;
+use App\Helpers\StatusHelper;
 
 class Game extends Model{
 
@@ -213,14 +214,7 @@ class Game extends Model{
     }
 
     public function getStatusOptions() {
-        return [
-            'vou_jogar',
-            'jogando',
-            'zerei',
-            '100_porcento',
-            'platinei',
-            'abandonei'
-        ];
+        return StatusHelper::options();
     }
 }
 
