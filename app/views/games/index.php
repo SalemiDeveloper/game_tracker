@@ -1,17 +1,32 @@
-
+<?php 
+use App\Helpers\StatusHelper;
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teste View</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-
+<div class="container">
     <p>Olá,
         <?=  htmlspecialchars($_SESSION['user']['name']) ?>
     </p>
 
+    <div class="actions">
+
+        <h2>Seus jogos</h2>
+
+        <a
+            href="/games/create"
+            class="btn btn-primary"
+        >
+            + Novo jogo
+        </a>
+
+    </div>
     <form method="POST" action="/logout">
         <input type="hidden"
                name="csrf"
@@ -22,118 +37,98 @@
         </button>
     </form>
 
-    <h1>Meus jogos</h1>
-
-    <p>Lista de jogos que já zerei.</p>
-
-    <ul>
-        <?php foreach($games as $game): ?>
-            <li>
-                <?= htmlspecialchars($game['titulo']) ?> 
-            - Nota: <?= htmlspecialchars($game['nota']) ?>
-
-                <a href="/games/edit?id=<?= htmlspecialchars($game['id'] ?? '') ?>">Editar</a>
-
-                <form method="POST" action="/games/delete">
-                    <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
-                    <input type="hidden" name="id" value="<?= htmlspecialchars($game['id']) ?>">
-                    <button type="submit">Deletar</button>
-                </form>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-
-    <div style="
-        display: flex;
-        gap: 16px;
-        flex-wrap: wrap;
-        margin-bottom: 30px;
-    ">
+    <div class="dashboard">
 
         <div class="card">
             <h3>Total</h3>
-            <p><?= $stats['total_games'] ?></p>
+            <span><?= $stats['total_games'] ?></span>
         </div>
 
         <div class="card">
             <h3>Jogando</h3>
-            <p><?= $stats['jogando'] ?></p>
+            <span><?= $stats['jogando'] ?></span>
         </div>
 
         <div class="card">
             <h3>Zerados</h3>
-            <p><?= $stats['zerados'] ?></p>
+            <span><?= $stats['zerados'] ?></span>
         </div>
 
         <div class="card">
             <h3>Platinas</h3>
-            <p><?= $stats['platinados'] ?></p>
+            <span><?= $stats['platinados'] ?></span>
         </div>
 
         <div class="card">
             <h3>Dropados</h3>
-            <p><?= $stats['dropados'] ?></p>
+            <span><?= $stats['dropados'] ?></span>
         </div>
 
         <div class="card">
-            <h3>Média das notas</h3>
-            <p><?= $stats['nota_media'] ?></p>
+            <h3>Média</h3>
+            <span><?= $stats['nota_media'] ?></span>
         </div>
 
         <div class="card">
             <h3>Horas</h3>
-            <p><?= $stats['horas_total'] ?></p>
+            <span><?= $stats['horas_total'] ?></span>
         </div>
-
     </div>
 
-    
+    <div class="games-list">
+    <?php foreach ($games as $game): ?>
 
-    <h2>Adicionar novo jogo</h2>
+        <div class="game-card">
+            <div class="game-info">
+                <h3><?= htmlspecialchars($game['titulo']) ?></h3>
 
-    <p>
-        <a
-            href="/games/create"
-            style="
-                display:inline-block;
-                padding:10px 16px;
-                background:#2563eb;
-                color:white;
-                text-decoration:none;
-                border-radius:6px;
-                margin-bottom:20px;
-            "
-        >
-            + Novo jogo
-        </a>
-    </p>
+                <div class="game-meta">
+                    <span>⭐ <?= htmlspecialchars($game['nota']) ?></span>
+                    <span>🎮 <?= htmlspecialchars($game['plataforma']) ?></span>
+                    <span>🗂 <?= htmlspecialchars($game['genero']) ?></span>
+                </div>
+
+                <span class="badge badge-<?= htmlspecialchars($game['status']) ?>">
+                    <?= htmlspecialchars(StatusHelper::format($game['status'])) ?>
+                </span>
+            </div>
+
+            <div class="game-actions">
+
+                <a class="btn btn-primary" href="/games/edit?id=<?= $game['id'] ?>">
+                    Editar
+                </a>
+
+                <form method="POST" action="/games/delete">
+
+                    <input
+                        type="hidden"
+                        name="csrf"
+                        value="<?= $_SESSION['csrf'] ?>"
+                    >
+
+                    <input
+                        type="hidden"
+                        name="id"
+                        value="<?= $game['id'] ?>"
+                    >
+
+                    <button
+                        class="btn btn-danger"
+                    >
+                        Excluir
+                    </button>
+
+                </form>
+            </div>
+        </div>
+    <?php endforeach; ?>
+
+</div>
     <?php 
     unset($_SESSION['old']); 
     unset($_SESSION['errors']);
     ?>
+</div>
 </body>
 </html>
-
-<style>
-
-.card{
-    width:160px;
-    padding:20px;
-    border:1px solid #ddd;
-    border-radius:8px;
-    background:#fafafa;
-    text-align:center;
-}
-
-.card h3{
-    margin:0 0 10px;
-    font-size:16px;
-}
-
-.card p{
-    margin:0;
-    font-size:28px;
-    font-weight:bold;
-}
-
-</style>

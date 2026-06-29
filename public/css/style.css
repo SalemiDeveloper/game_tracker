@@ -1,0 +1,217 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===========================
+   Layout
+=========================== */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fb;
+    color: #333;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+/* ===========================
+   Parágrafos
+=========================== */
+h1,
+h2,
+h3 {
+    margin-bottom: 20px;
+}
+
+/* ===========================
+   Links
+=========================== */
+a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ===========================
+   Dashboard
+=========================== */
+.dashboard{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+    margin:40px 0;
+}
+
+/* ===========================
+   Cards
+=========================== */
+.card{
+    background:#fff;
+    border-radius:14px;
+    padding:24px;
+    border:1px solid #e5e7eb;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+    transition:.2s;
+}
+
+.card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.card h3{
+    color:#6b7280;
+    font-size:15px;
+    font-weight:500;
+    margin-bottom:18px;
+}
+
+.card span{
+    font-size:42px;
+    font-weight:bold;
+    color:#2563eb;
+}
+
+/* ===========================
+   Botões
+=========================== */
+.btn {
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: .2s;
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: white;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+}
+
+.btn-edit{
+    background:#2563eb;
+    color:white;
+}
+
+.btn-danger{
+    background:#dc2626;
+    color:white;
+    cursor: pointer;
+}
+
+.actions{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+/* ===========================
+   Games
+=========================== */
+.games-list{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.game-card{
+    background:white;
+    border-radius:14px;
+    padding:18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+    transition:.2s;
+}
+
+.game-card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 18px rgba(0,0,0,.08);
+}
+
+.game-info h3{
+    margin-bottom:10px;
+}
+
+.game-info p{
+    color:#64748b;
+}
+
+.game-actions{
+    display:flex;
+    gap:12px;
+}
+
+.game-meta{
+    display:flex;
+    gap:20px;
+    margin-top:12px;
+    color:#6b7280;
+    font-size:14px;
+}
+
+/* ===========================
+   Badge
+=========================== */
+.badge{
+    display:inline-block;
+    padding:6px 14px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.badge-vou_jogar{
+    margin-top: 10px;
+    background:#dbeafe;
+    color:#2563eb;
+}
+
+.badge-jogando{
+    margin-top: 10px;
+    background:#dcfce7;
+    color:#15803d;
+}
+
+.badge-zerado{
+    margin-top: 10px;
+    background:#ede9fe;
+    color:#7c3aed;
+}
+
+.badge-100_porcento{
+    margin-top: 10px;
+    background:#fef3c7;
+    color:#d97706;
+}
+
+.badge-platina{
+    margin-top: 10px;
+    background:#ede9fe;
+    color:#6d28d9;
+}
+
+.badge-dropado{
+    margin-top: 10px;
+    background:#fee2e2;
+    color:#dc2626;
+}
