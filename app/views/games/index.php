@@ -8,8 +8,27 @@ use App\Helpers\StatusHelper;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teste View</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
 </head>
 <body>
+
+<header class="header">
+
+    <div class="logo">🎮 Game Tracker</div>
+
+    <div class="header-right">
+        <span>Olá,<?= htmlspecialchars($_SESSION['user']['name']) ?></span>
+
+        <form method="POST" action="/logout">
+
+            <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
+            <button class="btn btn-danger" type="submit">
+                Sair
+            </button>
+        </form>
+    </div>
+</header>
+
 <div class="container">
     <p>Olá,
         <?=  htmlspecialchars($_SESSION['user']['name']) ?>
@@ -27,51 +46,68 @@ use App\Helpers\StatusHelper;
         </a>
 
     </div>
-    <form method="POST" action="/logout">
-        <input type="hidden"
-               name="csrf"
-               value="<?= $_SESSION['csrf'] ?>">
-
-        <button type="submit">
-            Sair
-        </button>
-    </form>
 
     <div class="dashboard">
+        <div class="dashboard-row">
+            <div class="stats-card">
+                <div class="stats-card-icon total"><i class="fa-solid fa-gamepad"></i></div>
+                <div class="stats-card-content">
+                    <h3>+Total</h3>
+                    <span><?= $stats['total_games'] ?></span>
+                </div>
+            </div>
 
-        <div class="card">
-            <h3>Total</h3>
-            <span><?= $stats['total_games'] ?></span>
+            <div class="stats-card">
+                <div class="stats-card-icon playing"><i class="fa-solid fa-play"></i></div>
+                <div class="stats-card-content">
+                    <h3>Jogando</h3>
+                    <span><?= $stats['jogando'] ?></span>
+                </div>
+            </div>
+
+            <div class="stats-card">
+                <div class="stats-card-icon finished"><i class="fa-solid fa-check"></i></div>
+                <div class="stats-card-content">
+                    <h3>Zerados</h3>
+                    <span><?= $stats['zerados'] ?></span>
+                </div>
+            </div>
+
+            <div class="stats-card">
+                <div class="stats-card-icon platinum"><i class="fa-solid fa-trophy"></i></div>
+                <div class="stats-card-content">
+                    <h3>Platinas</h3>
+                    <span><?= $stats['platinados'] ?></span>
+                </div>
+            </div>
+
         </div>
+        <div class="dashboard-row three">
 
-        <div class="card">
-            <h3>Jogando</h3>
-            <span><?= $stats['jogando'] ?></span>
-        </div>
+            <div class="stats-card">
+                <div class="stats-card-icon hours"><i class="fa-regular fa-clock"></i></div>
+                <div class="stats-card-content">
+                    <h3>Horas</h3>
+                    <span><?= $stats['horas_total'] ?></span>
+                </div>
+            </div>
 
-        <div class="card">
-            <h3>Zerados</h3>
-            <span><?= $stats['zerados'] ?></span>
-        </div>
+            <div class="stats-card">
+                <div class="stats-card-icon rating"><i class="fa-solid fa-star"></i></div>
+                <div class="stats-card-content">
+                    <h3>Média</h3>
+                    <span><?= $stats['nota_media'] ?></span>
+                </div>
+            </div>
 
-        <div class="card">
-            <h3>Platinas</h3>
-            <span><?= $stats['platinados'] ?></span>
-        </div>
-
-        <div class="card">
-            <h3>Dropados</h3>
-            <span><?= $stats['dropados'] ?></span>
-        </div>
-
-        <div class="card">
-            <h3>Média</h3>
-            <span><?= $stats['nota_media'] ?></span>
-        </div>
-
-        <div class="card">
-            <h3>Horas</h3>
-            <span><?= $stats['horas_total'] ?></span>
+            <div class="stats-card">
+                
+                <div class="stats-card-icon dropped"><i class="fa-solid fa-xmark"></i></div>
+                <div class="stats-card-content">
+                    <h3>Dropados</h3>
+                    <span><?= $stats['dropados'] ?></span>
+                </div>
+            </div>
         </div>
     </div>
 
