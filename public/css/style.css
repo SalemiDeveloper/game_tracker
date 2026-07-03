@@ -55,6 +55,9 @@ body {
     margin-bottom:25px;
 }
 
+/* ===========================
+   Search
+=========================== */
 .search-form{
     display:flex;
     gap:12px;
@@ -66,6 +69,14 @@ body {
     border:1px solid #d1d5db;
     border-radius:8px;
     font-size:15px;
+}
+
+.search-select{
+    padding:12px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    min-width:180px;
+    background:white;
 }
 
 /* ===========================

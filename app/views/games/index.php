@@ -104,10 +104,23 @@ use App\Helpers\StatusHelper;
                 class="search-input"
             >
 
+            
+            <select name="status" class="search-select">
+                <option value="">Todos os status</option>
+                <?php foreach (StatusHelper::options() as $status): ?>
+                    <option
+                        value="<?= $status ?>"
+                        <?= (($_GET['status'] ?? '') === $status) ? 'selected' : '' ?>
+                    >
+                        <?= StatusHelper::format($status) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
             <button type="submit" class="btn btn-primary">
                 Buscar
             </button>
         </form>
+
     </div>
 
     <div class="games-list">

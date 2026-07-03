@@ -21,13 +21,17 @@ class GameController extends Controller{
     
     public function index() {
 
+    // var_dump($_GET);
+    //     die();
         $userId = $_SESSION['user']['id'];
 
         $search = trim($_GET['search'] ?? '');
         $filters = [];
+
         if ($search !== '') {
             $filters['q'] = $search;
         }
+        
         if (!empty($_GET['status'])) {
             $filters['status'] = $_GET['status'];
         }
@@ -35,6 +39,7 @@ class GameController extends Controller{
             $filters['sort'] = $_GET['sort'];
         }
 
+        
         $stats  = $this->service->stats($userId);
         $games  = $this->service->all($userId, $filters);
 
