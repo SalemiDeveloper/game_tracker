@@ -46,7 +46,7 @@ class Game extends Model{
         if (!empty($filters['sort']) && in_array($filters['sort'], $allowedSorts)) {
             $sql .= " ORDER BY ". $filters['sort'] ." DESC";
         }
-
+        
         $stmt = $this->db->prepare($sql);
         $stmt->execute($params);
 

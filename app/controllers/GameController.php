@@ -23,12 +23,24 @@ class GameController extends Controller{
 
         $userId = $_SESSION['user']['id'];
 
-        $games = $this->service->all($userId);
-        $stats = $this->service->stats($userId);
+        $search = trim($_GET['search'] ?? '');
+        $filters = [];
+        if ($search !== '') {
+            $filters['q'] = $search;
+        }
+        if (!empty($_GET['status'])) {
+            $filters['status'] = $_GET['status'];
+        }
+        if (!empty($_GET['sort'])) {
+            $filters['sort'] = $_GET['sort'];
+        }
+
+        $stats  = $this->service->stats($userId);
+        $games  = $this->service->all($userId, $filters);
 
         $this->view('games.index', [
-            'games' => $games,
-            'stats' => $stats
+            'games'  => $games,
+            'stats'  => $stats
         ]);
     }
 

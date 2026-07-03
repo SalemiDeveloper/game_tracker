@@ -94,6 +94,22 @@ use App\Helpers\StatusHelper;
         </div>
     </div>
 
+    <div class="toolbar">
+        <form method="GET" action="/games" class="search-form">
+            <input
+                type="text"
+                name="search"
+                placeholder="Buscar jogo..."
+                value="<?= htmlspecialchars($_GET['search'] ?? '') ?>"
+                class="search-input"
+            >
+
+            <button type="submit" class="btn btn-primary">
+                Buscar
+            </button>
+        </form>
+    </div>
+
     <div class="games-list">
     <?php foreach ($games as $game): ?>
 

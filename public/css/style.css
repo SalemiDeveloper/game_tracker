@@ -46,6 +46,29 @@ body {
 }
 
 /* ===========================
+   Toolbar
+=========================== */
+.toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.search-form{
+    display:flex;
+    gap:12px;
+}
+
+.search-input{
+    width:320px;
+    padding:12px 16px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    font-size:15px;
+}
+
+/* ===========================
    Parágrafos
 =========================== */
 h1,
