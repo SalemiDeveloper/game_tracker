@@ -242,6 +242,7 @@ a:hover {
 .btn-primary {
     background: #2563eb;
     color: white;
+    cursor: pointer;
 }
 
 .btn:hover{

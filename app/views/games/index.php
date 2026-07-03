@@ -1,5 +1,7 @@
 <?php 
 use App\Helpers\StatusHelper;
+
+$currentSort = $filters['sort'] ?? '';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -116,6 +118,51 @@ use App\Helpers\StatusHelper;
                     </option>
                 <?php endforeach; ?>
             </select>
+
+            <!-- <select name="sort" class="search-select">
+                <option value="">Mais recentes</option>
+                <option value="titulo">Título (A-Z)</option>
+                <option value="nota">Maior nota</option>
+                <option value="ano_lancamento">Ano de lançamento</option>
+                <option value="updated_at">Última atualização</option>
+            </select> -->
+
+            <select name="sort" class="search-select">
+
+                <option value="">Mais recentes</option>
+
+                <option value="title_asc"
+                    <?= $currentSort === 'title_asc' ? 'selected' : '' ?>>
+                    Título (A-Z)
+                </option>
+
+                <option value="title_desc"
+                    <?= $currentSort === 'title_desc' ? 'selected' : '' ?>>
+                    Título (Z-A)
+                </option>
+
+                <option value="rating_desc"
+                    <?= $currentSort === 'rating_desc' ? 'selected' : '' ?>>
+                    Maior nota
+                </option>
+
+                <option value="rating_asc"
+                    <?= $currentSort === 'rating_asc' ? 'selected' : '' ?>>
+                    Menor nota
+                </option>
+
+                <option value="hours_desc"
+                    <?= $currentSort === 'hours_desc' ? 'selected' : '' ?>>
+                    Mais horas
+                </option>
+
+                <option value="hours_asc"
+                    <?= $currentSort === 'hours_asc' ? 'selected' : '' ?>>
+                    Menos horas
+                </option>
+
+            </select>
+
             <button type="submit" class="btn btn-primary">
                 Buscar
             </button>
