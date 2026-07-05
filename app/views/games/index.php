@@ -37,7 +37,7 @@ $currentSort = $filters['sort'] ?? '';
             <div class="stats-card">
                 <div class="stats-card-icon total"><i class="fa-solid fa-gamepad"></i></div>
                 <div class="stats-card-content">
-                    <h3>+Total</h3>
+                    <h3>Total</h3>
                     <span><?= $stats['total_games'] ?></span>
                 </div>
             </div>
@@ -80,7 +80,7 @@ $currentSort = $filters['sort'] ?? '';
             <div class="stats-card">
                 <div class="stats-card-icon rating"><i class="fa-solid fa-star"></i></div>
                 <div class="stats-card-content">
-                    <h3>Média</h3>
+                    <h3>Média das notas</h3>
                     <span><?= $stats['nota_media'] ?></span>
                 </div>
             </div>
@@ -118,14 +118,6 @@ $currentSort = $filters['sort'] ?? '';
                     </option>
                 <?php endforeach; ?>
             </select>
-
-            <!-- <select name="sort" class="search-select">
-                <option value="">Mais recentes</option>
-                <option value="titulo">Título (A-Z)</option>
-                <option value="nota">Maior nota</option>
-                <option value="ano_lancamento">Ano de lançamento</option>
-                <option value="updated_at">Última atualização</option>
-            </select> -->
 
             <select name="sort" class="search-select">
 
