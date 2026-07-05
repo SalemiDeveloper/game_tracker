@@ -97,7 +97,7 @@ $currentSort = $filters['sort'] ?? '';
     </div>
 
     <div class="toolbar">
-        <form method="GET" action="/games" class="search-form">
+        <form method="GET" action="/games" class="search-form"  onsubmit="sessionStorage.setItem('scrollPosition', window.scrollY)">
             <input
                 type="text"
                 name="search"
@@ -162,7 +162,7 @@ $currentSort = $filters['sort'] ?? '';
 
     </div>
 
-    <div class="games-list">
+    <div class="games-list" id="games-list">
     <?php foreach ($games as $game): ?>
 
         <div class="game-card">

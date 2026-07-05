@@ -36,5 +36,21 @@
     <?php endif; ?>
     <?php require $content; ?>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const scrollPosition = sessionStorage.getItem('scrollPosition');
+    if (scrollPosition !== null) {
+        window.scrollTo({
+            top: Number(scrollPosition),
+            behavior: 'smooth'
+        });
+
+        sessionStorage.removeItem('scrollPosition');
+    }
+});
+</script>
+
 </body>
 </html>
