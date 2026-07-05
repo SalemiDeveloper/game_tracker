@@ -93,6 +93,10 @@ class GameService {
         return $this->model->stats($userId);
     }
 
+    public function highlights($userId) {
+        return $this->model->highlights($userId);
+    }
+
     public function getPlatforms($userId) {
         return $this->model->getPlatforms($userId);
     }

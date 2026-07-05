@@ -190,6 +190,26 @@ class Game extends Model{
         return $stats;
     }
 
+    public function highlights($userId) {
+        $highlights = [];
+
+        // Melhor jogo
+        $stmt = $this->db->prepare("
+            SELECT titulo, nota
+            FROM games
+            WHERE user_id = :user_id
+            ORDER BY nota DESC
+            LIMIT 1
+        ");
+
+        $stmt->execute([
+            'user_id' => $userId
+        ]);
+
+        $highlights['best_game'] = $stmt->fetch();
+        return $highlights;
+    }
+
     public function getPlatforms($userId) {
         $stmt = $this->db->prepare("
             SELECT DISTINCT plataforma

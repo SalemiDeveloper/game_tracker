@@ -28,12 +28,15 @@ class GameController extends Controller{
         $filters['status'] = $_GET['status'] ?? '';
         $filters['sort'] = $_GET['sort'] ?? '';
 
-        $stats  = $this->service->stats($userId);
         $games  = $this->service->all($userId, $filters);
+        $stats  = $this->service->stats($userId);
+        $highlights = $this->service->highlights($userId);
 
         $this->view('games.index', [
             'games'  => $games,
-            'stats'  => $stats
+            'stats'  => $stats,
+            'highlights' => $highlights,
+            'filters' => $filters
         ]);
     }
 

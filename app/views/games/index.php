@@ -3,6 +3,7 @@ use App\Helpers\StatusHelper;
 
 $currentSort = $filters['sort'] ?? '';
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -13,7 +14,7 @@ $currentSort = $filters['sort'] ?? '';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
 </head>
 <body>
-
+    
 <div class="container">
     <p>Olá,
         <?=  htmlspecialchars($_SESSION['user']['name']) ?>
