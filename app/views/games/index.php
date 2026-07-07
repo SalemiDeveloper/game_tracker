@@ -1,5 +1,6 @@
 <?php 
 use App\Helpers\StatusHelper;
+use App\Helpers\DateHelper;
 
 $currentSort = $filters['sort'] ?? '';
 ?>
@@ -136,7 +137,7 @@ $currentSort = $filters['sort'] ?? '';
             <div class="highlight-content">
                 <h3>Último jogo finalizado</h3>
                 <strong><?= htmlspecialchars($highlights['last_finished']['titulo']) ?></strong>
-                <span><?= date('d/m/Y', strtotime($highlights['last_finished']['updated_at'])) ?></span>
+                <span><?= DateHelper::human($highlights['last_finished']['updated_at']) ?></span>
             </div>
         </div>
 
