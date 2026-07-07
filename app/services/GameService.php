@@ -97,12 +97,12 @@ class GameService {
         return $this->model->highlights($userId);
     }
 
-    public function getPlatforms($userId) {
-        return $this->model->getPlatforms($userId);
+    public function getUserPlatforms($userId) {
+        return $this->model->getUserPlatforms($userId);
     }
 
-    public function getGeneros($userId) {
-        return $this->model->getGeneros($userId);
+    public function getUserGeneros($userId) {
+        return $this->model->getUserGeneros($userId);
     }
 
     public function getStatusOptions() {

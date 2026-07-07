@@ -165,7 +165,7 @@ class ApiGameController {
         header('Content-Type: application/json');
 
         $userId = $_SERVER['user']['id'];
-        $plataforms = $this->service->getPlatforms($userId);
+        $plataforms = $this->service->getUserPlatforms($userId);
 
         echo json_encode($plataforms);
     }
@@ -174,7 +174,7 @@ class ApiGameController {
         header('Content-Type: application/json');
 
         $userId = $_SERVER['user']['id'];
-        $generos = $this->service->getGeneros($userId);
+        $generos = $this->service->getUserGeneros($userId);
 
         echo json_encode($generos);
     }

@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Core\Model;
 use App\Helpers\StatusHelper;
+use App\Helpers\GenreHelper;
+use App\Helpers\PlatformHelper;
 
 class Game extends Model{
 
@@ -198,7 +200,7 @@ class Game extends Model{
             SELECT titulo, nota
             FROM games
             WHERE user_id = :user_id
-            ORDER BY nota DESC
+            ORDER BY nota DESC, horas_jogadas DESC
             LIMIT 1
         ");
 
@@ -206,11 +208,96 @@ class Game extends Model{
             'user_id' => $userId
         ]);
 
-        $highlights['best_game'] = $stmt->fetch();
+        $highlights['best_game'] = $stmt->fetch() ?: [
+            'titulo' => '-',
+            'nota' => null
+        ];
+
+
+        // Plataforma
+        $stmt = $this->db->prepare("
+            SELECT plataforma, COUNT(*) AS total
+            FROM games
+            WHERE user_id = :user_id
+            GROUP BY plataforma
+            ORDER BY total DESC
+            LIMIT 1
+        ");
+
+        $stmt->execute([
+            'user_id' => $userId
+        ]);
+
+        $highlights['favorite_platform'] = $stmt->fetch() ?: [
+            'plataforma' => '-',
+            'total' => 0
+        ] ;
+
+
+        // Gênero favorito - a tratar, pois se continuar sendo input podem ter muitos
+        // $stmt = $this->db->prepare("
+        //     SELECT genero, COUNT(*) AS total
+        //     FROM games
+        //     WHERE user_id = :user_id
+        //     AND genero IS NOT NULL
+        //     AND genero <> ''
+        //     GROUP BY genero
+        //     ORDER BY total DESC
+        //     LIMIT 1
+        // ");
+
+        // $stmt->execute([
+        //     'user_id' => $userId
+        // ]);
+
+        // $highlights['favorite_genre'] = $stmt->fetch() ?: [
+        //     'genero' => '-',
+        //     'total' => 0
+        // ] ;
+
+        // Último jogo finalizado
+        $stmt = $this->db->prepare("
+            SELECT titulo, updated_at, status
+            FROM games
+            WHERE user_id = :user_id
+            AND status IN ('zerado', '100_porcento', 'platina')
+            ORDER BY updated_at DESC
+            LIMIT 1
+        ");
+
+        $stmt->execute([
+            'user_id' => $userId
+        ]);
+
+        $highlights['last_finished'] = $stmt->fetch() ?: [
+            'titulo' => '-',
+            'updated_at' => null,
+            'status' => null
+        ];
+        
+        // Jogo mais jogado
+        $stmt = $this->db->prepare("
+            SELECT titulo, horas_jogadas
+            FROM games
+            WHERE user_id = :user_id
+            ORDER BY horas_jogadas DESC
+            LIMIT 1
+        ");
+
+        $stmt->execute([
+            'user_id' => $userId
+        ]);
+
+        $highlights['most_played'] = $stmt->fetch() ?: [
+            'titulo' => '-',
+            'horas_jogadas' => null
+        ];
+        
         return $highlights;
     }
 
-    public function getPlatforms($userId) {
+    // Retorna apenas as plataformas do usuário
+    public function getUserPlatforms($userId) {
         $stmt = $this->db->prepare("
             SELECT DISTINCT plataforma
             FROM games
@@ -225,7 +312,8 @@ class Game extends Model{
         return array_column($stmt->fetchAll(), 'plataforma');
     }
 
-    public function getGeneros($userId) {
+    // Retorna apenas os gêneros de jogo daquele usuário
+    public function getUserGeneros($userId) {
         $stmt = $this->db->prepare("
             SELECT DISTINCT genero
             FROM games
@@ -240,8 +328,19 @@ class Game extends Model{
         return array_column($stmt->fetchAll(), 'genero');
     }
 
+    // Retorna todas as opções de STATUS
     public function getStatusOptions() {
         return StatusHelper::options();
+    }
+
+    // Retorna todas as opções de PLATAFORMA
+    public function getPlatformOptions() {
+        return PlatformHelper::options();
+    }
+
+    // Retorna todas as opções de GÊNEROS
+    public function getGenreOptions() {
+        return GenreHelper::options();
     }
 }
 

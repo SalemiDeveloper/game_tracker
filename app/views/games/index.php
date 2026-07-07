@@ -14,7 +14,9 @@ $currentSort = $filters['sort'] ?? '';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
 </head>
 <body>
-    
+    <pre>
+<?php print_r($highlights); ?>
+</pre>
 <div class="container">
     <p>Olá,
         <?=  htmlspecialchars($_SESSION['user']['name']) ?>
