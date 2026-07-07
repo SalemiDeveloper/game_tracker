@@ -1,91 +1,179 @@
-# 🎮 Game Tracker (a ser atualizado)
+# 🎮 Game Tracker
 
-O **Game Tracker** é uma aplicação web desenvolvida em **PHP** com o objetivo de gerenciar os jogos que você já jogou, utilizando operações básicas de **CRUD (Create, Read, Update, Delete)**.
+O **Game Tracker** é uma aplicação web desenvolvida em **PHP** para gerenciar sua biblioteca de jogos. O projeto permite organizar sua coleção, acompanhar o progresso de cada jogo e visualizar estatísticas por meio de um dashboard.
 
-O projeto foi criado com foco em aprendizado de arquitetura, organização de código e manipulação de dados sem o uso de frameworks.
+Além da aplicação web, o projeto disponibiliza uma **API REST** protegida por autenticação JWT, utilizada pelo aplicativo **Game Tracker Mobile**.
 
----
-
-## 🎯 Objetivo do Projeto
-
-- Praticar desenvolvimento backend com PHP.
-- Implementar operações CRUD completas.
-- Trabalhar com banco de dados utilizando PDO.
-- Estruturar aplicação seguindo padrão MVC simplificado.
-- Entender fluxo de rotas e organização de código.
+O principal objetivo deste projeto foi aprofundar conhecimentos em desenvolvimento backend, arquitetura de software e boas práticas utilizando PHP puro, sem frameworks.
 
 ---
 
-## 🛠 Tecnologias Utilizadas
+# ✨ Funcionalidades
 
-- PHP
-- MySQL (phpMyAdmin)
-- PDO (PHP Data Objects)
-- HTML / CSS
-- Servidor PHP nativo (Laragon)
+### Aplicação Web
+
+* ✅ Cadastro de usuários
+* ✅ Login e autenticação
+* ✅ CRUD completo de jogos
+* ✅ Dashboard com estatísticas
+* ✅ Seção de destaques
+* ✅ Validação de formulários
+* ✅ Proteção contra CSRF
+* ✅ Controle de acesso por usuário
+* ✅ Organização dos jogos por status
+
+### API REST
+
+* ✅ Login com JWT
+* ✅ Refresh Token
+* ✅ Logout
+* ✅ CRUD completo de jogos
+* ✅ Proteção das rotas privadas
+* ✅ Validação das requisições
+* ✅ Controle de propriedade dos recursos (Ownership)
 
 ---
 
-## 🚀 Como Executar o Projeto
+# 🏗 Arquitetura
 
-### 1️⃣ Clone o repositório
-git clone https://github.com/SalemiDeveloper/game-tracker.git
+O projeto foi desenvolvido utilizando uma arquitetura inspirada no padrão **MVC**, com separação clara de responsabilidades.
 
+```
+app/
+├── Controllers/
+├── Core/
+├── Helpers/
+├── Middlewares/
+├── Models/
+├── Services/
+└── Views/
 
-### 2️⃣ Acesse a pasta do projeto
-cd game-tracker
+config/
+public/
+routes/
+tests/
+```
 
-### 3️⃣ Inicie o servidor PHP
-php -S localhost:8000 -t public
-
-### 4️⃣ Acesse no navegador
-http://localhost:8000/games
+Essa organização facilita manutenção, testes e evolução do sistema.
 
 ---
 
-## 🗄 Banco de Dados
-O projeto utiliza MySQL com conexão via PDO. A configuração está em:
+# 🛠 Tecnologias Utilizadas
 
+* PHP 8
+* MySQL
+* PDO
+* HTML5
+* CSS3
+* JavaScript
+* Composer
+* PHPUnit
+* JWT (JSON Web Token)
+
+---
+
+# 🚀 Principais Conceitos Aplicados
+
+* Arquitetura MVC
+* API REST
+* Programação Orientada a Objetos
+* Injeção de responsabilidades por camadas
+* Autenticação JWT
+* Refresh Tokens
+* Middleware
+* Validação de dados
+* Proteção contra CSRF
+* Testes unitários
+* Separação de responsabilidades
+* Organização em Services
+* Manipulação de banco de dados com PDO
+
+---
+
+# ▶️ Executando o Projeto
+
+## 1. Clone o repositório
+
+```bash
+git clone https://github.com/SalemiDeveloper/game_tracker.git
+```
+
+## 2. Entre na pasta
+
+```bash
+cd game_tracker
+```
+
+## 3. Configure o banco de dados
+
+Edite o arquivo:
+
+```
 config/database.php
+```
+
+informando as credenciais do seu MySQL.
+
+## 4. Inicie o servidor
+
+```bash
+php -S localhost:8000 -t public
+```
+
+## 5. Acesse
+
+```
+http://localhost:8000
+```
 
 ---
 
-## 🔄 Funcionalidades
-✅ Listar jogos.
-✅ Adicionar novo jogo.
-✅ Editar jogo existente.
-✅ Excluir jogo.
+# 🧪 Testes
+
+O projeto possui testes automatizados utilizando PHPUnit.
+
+Execute:
+
+```bash
+vendor/bin/phpunit
+```
 
 ---
 
-## 📚 Conceitos Praticados
-- CRUD completo em PHP.
-- Arquitetura MVC simplificada.
-- Roteamento manual.
-- Manipulação de banco com PDO.
-- Separação de responsabilidades.
-- Organização de projeto backend.
+# 📱 Integração
+
+Este projeto serve como backend para o **Game Tracker Mobile**, aplicação desenvolvida em React Native que consome esta API REST.
 
 ---
 
-## ⚠️ Observações
+# 🎯 Objetivos do Projeto
 
-Este projeto foi desenvolvido com fins educacionais.
+Este projeto foi desenvolvido para consolidar conhecimentos em:
 
-Possíveis melhorias futuras (26/04/2026):
-
-- Implementar validação de dados.
-- Adicionar autenticação de usuários.
-- Criar sistema de categorias/gêneros.
-- Adicionar paginação.
-- Melhorar UI/UX.
-- Criar API para integração futura.
+* Desenvolvimento Backend com PHP
+* Arquitetura de Software
+* APIs REST
+* Autenticação JWT
+* Testes automatizados
+* Segurança em aplicações web
+* Organização de projetos sem frameworks
 
 ---
 
-## 👨‍💻 Autor
+# 🚀 Próximos Passos
 
-Desenvolvido por Pedro Salemi.
+* Melhorias na interface do usuário (UI/UX)
+* Sistema de busca e filtros avançados
+* Integração com API externa para capa de jogos
+* Sistema de favoritos
+* Paginação
+* Dashboard com gráficos
+* Deploy em produção
 
-Projeto criado para aprimorar habilidades em PHP e desenvolvimento backend sem frameworks.
+---
 
+# 👨‍💻 Autor
+
+Desenvolvido por **Pedro Salemi**.
+
+Projeto criado com foco em estudos, boas práticas de desenvolvimento backend e construção de portfólio.
