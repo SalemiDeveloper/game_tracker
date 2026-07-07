@@ -29,7 +29,7 @@ O projeto foi criado com foco em aprendizado de arquitetura, organização de c�
 ## 🚀 Como Executar o Projeto
 
 ### 1️⃣ Clone o repositório
-git clone https://github.com/seu-usuario/game-tracker.git
+git clone https://github.com/SalemiDeveloper/game-tracker.git
 
 
 ### 2️⃣ Acesse a pasta do projeto
