@@ -14,9 +14,7 @@ $currentSort = $filters['sort'] ?? '';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
 </head>
 <body>
-    <pre>
-<?php print_r($highlights); ?>
-</pre>
+    
 <div class="container">
     <p>Olá,
         <?=  htmlspecialchars($_SESSION['user']['name']) ?>
@@ -75,7 +73,7 @@ $currentSort = $filters['sort'] ?? '';
             <div class="stats-card">
                 <div class="stats-card-icon hours"><i class="fa-regular fa-clock"></i></div>
                 <div class="stats-card-content">
-                    <h3>Horas</h3>
+                    <h3>Horas totais</h3>
                     <span><?= $stats['horas_total'] ?></span>
                 </div>
             </div>
@@ -98,6 +96,63 @@ $currentSort = $filters['sort'] ?? '';
             </div>
         </div>
     </div>
+
+
+    <h2 class="section-title">
+        <i class="fa-solid fa-chart-line"></i>
+        Destaques
+    </h2>
+
+    <div class="highlights">
+        <div class="highlight-card">
+            <div class="highlight-icon">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+
+            <div class="highlight-content">
+                <h3>Melhor jogo</h3>
+                <strong><?= htmlspecialchars($highlights['best_game']['titulo']) ?></strong>
+                <span>⭐ Nota <?= $highlights['best_game']['nota'] ?></span>
+            </div>
+        </div>
+
+        <div class="highlight-card">
+            <div class="highlight-icon">
+                <i class="fa-solid fa-gamepad"></i>
+            </div>
+
+            <div class="highlight-content">
+                <h3>Plataforma favorita</h3>
+                <strong><?= htmlspecialchars($highlights['favorite_platform']['plataforma']) ?></strong>
+                <span><?= $highlights['favorite_platform']['total'] ?> jogos</span>
+            </div>
+        </div>
+
+        <div class="highlight-card">
+            <div class="highlight-icon">
+                <i class="fa-solid fa-check"></i>
+            </div>
+
+            <div class="highlight-content">
+                <h3>Último jogo finalizado</h3>
+                <strong><?= htmlspecialchars($highlights['last_finished']['titulo']) ?></strong>
+                <span><?= date('d/m/Y', strtotime($highlights['last_finished']['updated_at'])) ?></span>
+            </div>
+        </div>
+
+        <div class="highlight-card">
+            <div class="highlight-icon">
+                <i class="fa-solid fa-clock"></i>
+            </div>
+
+            <div class="highlight-content">
+                <h3>Jogo mais jogado</h3>
+                <strong><?= htmlspecialchars($highlights['most_played']['titulo']) ?></strong>
+                <span><?= $highlights['most_played']['horas_jogadas'] ?> horas</span>
+            </div>
+        </div>
+    </div>
+
 
     <div class="toolbar">
         <form method="GET" action="/games" class="search-form"  onsubmit="sessionStorage.setItem('scrollPosition', window.scrollY)">
