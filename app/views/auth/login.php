@@ -15,7 +15,7 @@ function error($field) {
     <h1>Login</h1>
 
     <form method="POST" action="/login">
-        <input type="hidden"~
+        <input type="hidden"
             name="csrf"
             value="<?= $_SESSION['csrf'] ?>">
 
