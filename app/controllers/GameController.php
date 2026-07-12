@@ -2,12 +2,8 @@
 
 namespace App\Controllers;
 
-use App\Models\Game;
-//require_once "../app/models/Game.php";
 use App\Core\Controller;
-use App\Core\Validator;
 use App\Services\GameService;
-//require_once "../config/database.php";
 require_once __DIR__ . '/../../config/database.php';
 
 class GameController extends Controller{
@@ -88,7 +84,10 @@ class GameController extends Controller{
         }
 
         $this->view('games.edit', [
-            'game' => $game
+            'game' => $game,
+            'statusOptions' => $this->service->getStatusOptions(),
+            'platformOptions' => $this->service->getPlatformOptions(),
+            'genreOptions' => $this->service->getGenreOptions()
         ]);
     }
 

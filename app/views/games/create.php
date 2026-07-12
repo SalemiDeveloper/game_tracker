@@ -1,8 +1,6 @@
 <?php
 
 use App\Helpers\StatusHelper;
-use App\Helpers\PlatformHelper;
-use App\Helpers\GenreHelper;
 
 function error($field) {
     return $_SESSION['errors'][$field][0] ?? null;
@@ -38,6 +36,10 @@ function error($field) {
                 id="nota"
                 class="form-input"
                 name="nota"
+                type="number"
+                min="0"
+                max="10"
+                step="0.1"
                 placeholder="Ex.: 10"
                 value="<?= htmlspecialchars($_SESSION['old']['nota'] ?? '') ?>">
             <?php if ($msg = error('nota')): ?>
