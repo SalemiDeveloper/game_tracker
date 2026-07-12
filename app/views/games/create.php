@@ -1,45 +1,56 @@
 <?php
 
 use App\Helpers\StatusHelper;
-
+use App\Helpers\PlatformHelper;
+use App\Helpers\GenreHelper;
 
 function error($field) {
     return $_SESSION['errors'][$field][0] ?? null;
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Tracker</title>
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-    <h1>Novo Jogo</h1>
+<div class="form-page">
+    <div class="form-header">
+        <h1>Novo jogo</h1>
+        <p>Preencha as informações abaixo para adicionar um jogo à sua biblioteca.</p>
+    </div>
 
-    <form method="POST" action="/games">
+    <form method="POST" action="/games" class="game-form">
         <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
-        
-        <div style="margin-bottom: 10px;">
-            <input name="titulo" placeholder="Título"
-                value="<?= htmlspecialchars($_SESSION['old']['titulo'] ?? '') ?>">
+
+        <div class="form-group">
+            <label for="titulo">Título</label>
+            <input
+                id="titulo"
+                class="form-input"
+                name="titulo"
+                placeholder="Ex.: The Witcher 3"
+                value="<?= htmlspecialchars($_SESSION['old']['titulo'] ?? '') ?>"
+            >
             <?php if ($msg = error('titulo')): ?>
-                <p style="color:red;"><?= htmlspecialchars($msg) ?></p>
+                <p class="form-error"><?= htmlspecialchars($msg) ?></p>
             <?php endif; ?>
         </div>
 
-        <div style="margin-bottom: 10px;">
-            <input name="nota" placeholder="0 a 10"
+        <div class="form-group">
+            <label for="nota">Nota</label>
+            <input 
+                id="nota"
+                class="form-input"
+                name="nota"
+                placeholder="Ex.: 10"
                 value="<?= htmlspecialchars($_SESSION['old']['nota'] ?? '') ?>">
             <?php if ($msg = error('nota')): ?>
                 <p style="color:red;"><?= htmlspecialchars($msg) ?></p>
             <?php endif; ?>
         </div>
 
-        <div style="margin-bottom: 10px;">
-            <select name="status">
+        <div class="form-group">
+            <label for="status">Status</label>
+            <select 
+                id="status"
+                name="status"
+                class="form-select">
 
                 <option value="">Selecione um status</option>
 
@@ -63,30 +74,61 @@ function error($field) {
             <?php endif; ?>
         </div>
 
-        <div style="margin-bottom: 10px;">
-            <input name="plataforma" placeholder="Digite a plataforma"
-                value="<?= htmlspecialchars($_SESSION['old']['plataforma'] ?? '') ?>">
+        <div class="form-group">
+            <label for="plataforma">Plataforma</label>
+            <select
+                id="plataforma"
+                name="plataforma"
+                class="form-select"
+            >
+                <option value="">Selecione uma plataforma</option>
+                <?php foreach ($platformOptions as $platform): ?>
+                    <option
+                        value="<?= htmlspecialchars($platform) ?>"
+                        <?= (($_SESSION['old']['plataforma'] ?? '') === $platform) ? 'selected' : '' ?>
+                    >
+                        <?= htmlspecialchars($platform) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
             <?php if ($msg = error('plataforma')): ?>
-                <p style="color:red;"><?= htmlspecialchars($msg) ?></p>
+                <p class="form-error"><?= htmlspecialchars($msg) ?></p>
             <?php endif; ?>
         </div>
 
-        <div style="margin-bottom: 10px;">
-            <input name="genero" placeholder="Digite o gênero"
-                value="<?= htmlspecialchars($_SESSION['old']['genero'] ?? '') ?>">
+        <div class="form-group">
+
+            <label for="genero">Gênero</label>
+            <select
+                id="genero"
+                name="genero"
+                class="form-select"
+            >
+                <option value="">Selecione um gênero</option>
+                <?php foreach ($genreOptions as $genre): ?>
+                    <option
+                        value="<?= htmlspecialchars($genre) ?>"
+                        <?= (($_SESSION['old']['genero'] ?? '') === $genre) ? 'selected' : '' ?>
+                    >
+                        <?= htmlspecialchars($genre) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
             <?php if ($msg = error('genero')): ?>
-                <p style="color:red;"><?= htmlspecialchars($msg) ?></p>
+                <p class="form-error"><?= htmlspecialchars($msg) ?></p>
             <?php endif; ?>
         </div>
 
-        <button type="submit">Salvar</button>
+        <div class="form-actions">
+            <a href="/games" class="btn btn-secondary">Cancelar</a>
+            <button class="btn btn-primary" type="submit">
+                Salvar jogo
+            </button>
+        </div>
     </form>
-
-    <p>
-        <a href="/games">← Voltar para meus jogos</a>
-    </p>
-</body>
-</html>
+</div>
 
 <?php 
 unset($_SESSION['old']); 

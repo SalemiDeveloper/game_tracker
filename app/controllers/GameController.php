@@ -41,8 +41,11 @@ class GameController extends Controller{
     }
 
     public function create() {
-        $statusOptions = $this->service->getStatusOptions();
-        $this->view('games.create', ['statusOptions' => $statusOptions]);
+        $this->view('games.create', [
+            'statusOptions' => $this->service->getStatusOptions(),
+            'platformOptions' => $this->service->getPlatformOptions(),
+            'genreOptions' => $this->service->getGenreOptions()
+            ]);
     }
 
     public function store() {
@@ -53,12 +56,11 @@ class GameController extends Controller{
 
         $_POST['user_id'] = $_SESSION['user']['id'];
         $result = $this->service->create($_POST);
-
         if (!$result['success']) {
             $_SESSION['errors'] = $result['errors'];
             $_SESSION['old'] = $result['old'];
 
-            header("Location: /games");
+            header("Location: /games/create");
             exit;
         }
 

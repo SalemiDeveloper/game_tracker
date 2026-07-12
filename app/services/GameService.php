@@ -109,6 +109,14 @@ class GameService {
         return $this->model->getStatusOptions();
     }
 
+    public function getPlatformOptions() {
+        return $this->model->getPlatformOptions();
+    }
+
+    public function getGenreOptions() {
+        return $this->model->getGenreOptions();
+    }
+
     public function getDashboardData(array $games): array {
         $totalGames = count($games);
 
