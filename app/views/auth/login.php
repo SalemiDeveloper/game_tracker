@@ -9,43 +9,69 @@ function error($field) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <title>Login</title>
 </head>
 <body>
-    <h1>Login</h1>
+    <div class="auth-page">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>
+                    <i class="fa-solid fa-gamepad"></i>
+                    Game Tracker
+                </h1>
+                <p>Organize sua coleção de jogos.</p>
+            </div>
+            <form method="POST" action="/login" class="game-form">
+                <input type="hidden"
+                    name="csrf"
+                    value="<?= $_SESSION['csrf'] ?>">
 
-    <form method="POST" action="/login">
-        <input type="hidden"
-            name="csrf"
-            value="<?= $_SESSION['csrf'] ?>">
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input
+                        id="email"
+                        class="form-input"
+                        type="email"
+                        name="email"
+                        value="<?= htmlspecialchars($_SESSION['old']['email'] ?? '') ?>"
+                    >
 
-        <div>
-            <input
-                name="email"
-                placeholder="Email"
-                value="<?= htmlspecialchars($_SESSION['old']['email'] ?? '') ?>">
+                    <?php if ($msg = error('email')): ?>
+                        <p class="form-error"><?= htmlspecialchars($msg) ?></p>
+                    <?php endif; ?>
+                </div>
+
+                <?php if ($msg = error('email')): ?>
+                    <p><?= htmlspecialchars($msg) ?></p>
+                <?php endif; ?>
+
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input
+                        id="password"
+                        class="form-input"
+                        type="password"
+                        name="password"
+                    >
+                    <?php if ($msg = error('password')): ?>
+                        <p class="form-error"><?= htmlspecialchars($msg) ?></p>
+                    <?php endif; ?>
+                </div>
+
+                <?php if ($msg = error('password')): ?>
+                    <p><?= htmlspecialchars($msg) ?></p>
+                <?php endif; ?>
+
+                <button class="btn btn-primary auth-button" type="submit">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    Entrar
+                </button>
+
+            </form>
         </div>
-
-        <?php if ($msg = error('email')): ?>
-            <p><?= htmlspecialchars($msg) ?></p>
-        <?php endif; ?>
-
-        <div>
-            <input
-                type="password"
-                name="password"
-                placeholder="Senha">
-        </div>
-
-        <?php if ($msg = error('password')): ?>
-            <p><?= htmlspecialchars($msg) ?></p>
-        <?php endif; ?>
-
-        <button type="submit">
-            Entrar
-        </button>
-
-    </form>
+    </div>
 </body>
 </html>
 
