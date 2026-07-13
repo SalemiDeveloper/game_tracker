@@ -43,17 +43,20 @@ class Game extends Model{
 
         // ordenação
         $allowedSorts = [
-            'title_asc'   => 'titulo ASC',
-            'title_desc'  => 'titulo DESC',
-            'rating_desc' => 'nota DESC',
-            'rating_asc'  => 'nota ASC',
-            'hours_desc'  => 'horas_jogadas DESC',
-            'hours_asc'   => 'horas_jogadas ASC'
+            'recently_added' => 'created_at DESC',
+            'title_asc'      => 'titulo ASC',
+            'title_desc'     => 'titulo DESC',
+            'rating_desc'    => 'nota DESC',
+            'rating_asc'     => 'nota ASC',
+            'hours_desc'     => 'horas_jogadas DESC',
+            'hours_asc'      => 'horas_jogadas ASC'
         ];
 
         // evitando códigos maliciosos pelo SQL.
         if (!empty($filters['sort']) && isset($allowedSorts[$filters['sort']])) {
             $sql .= " ORDER BY " . $allowedSorts[$filters['sort']];
+        } else {
+            $sql .= " ORDER BY created_at DESC ";
         }
 
         $stmt = $this->db->prepare($sql);

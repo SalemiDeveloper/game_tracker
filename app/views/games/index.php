@@ -180,7 +180,7 @@ $currentSort = $filters['sort'] ?? '';
 
             <select name="sort" class="search-select">
 
-                <option value="">Mais recentes</option>
+                <option value="recently_added">Mais recentes</option>
 
                 <option value="title_asc"
                     <?= $currentSort === 'title_asc' ? 'selected' : '' ?>>
