@@ -188,7 +188,7 @@ class Game extends Model{
         $stats['jogando']     = (int) $stats['jogando'];
         $stats['zerados']     = (int) $stats['zerados'];
         $stats['platinados']  = (int) $stats['platinados'];
-        $stats['dropados'] = (int) $stats['dropados'];
+        $stats['dropados']    = (int) $stats['dropados'];
         $stats['horas_total'] = (float) $stats['horas_total'];
         $stats['nota_media']  = (float) ($stats['nota_media'] ?? 0);
 
