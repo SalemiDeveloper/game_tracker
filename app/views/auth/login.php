@@ -69,6 +69,10 @@ function error($field) {
                     Entrar
                 </button>
 
+                <p class="auth-footer">
+                    Ainda não possui uma conta?
+                    <a href="/register">Criar conta</a>
+                </p>
             </form>
         </div>
     </div>

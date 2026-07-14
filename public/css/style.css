@@ -546,3 +546,28 @@ button {
     text-decoration: none;
     font-weight: 600;
 }
+
+.auth-logo{
+    font-size:48px;
+    color:#4f46e5;
+    margin-bottom:15px;
+}
+
+.auth-footer {
+    margin-top: 24px;
+    text-align: center;
+    color: #6b7280;
+    font-size: 15px;
+}
+
+.auth-footer a {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color .2s;
+}
+
+.auth-footer a:hover {
+    color: #4338ca;
+    text-decoration: underline;
+}
