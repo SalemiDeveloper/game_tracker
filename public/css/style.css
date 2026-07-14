@@ -400,10 +400,10 @@ button {
     font-weight:600;
 }
 
-.badge-vou_jogar{
+.badge-backlog{
     margin-top: 10px;
-    background:#dbeafe;
-    color:#2563eb;
+    background:#46a1ec;
+    color:#fbfbfc;
 }
 
 .badge-jogando{
