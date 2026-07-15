@@ -1,4 +1,6 @@
 <?php
+// Arquivo responsável por ações de CRUD.
+
 
 namespace App\Controllers;
 
@@ -138,8 +140,6 @@ class GameController extends Controller{
         header('Location: /games');
         exit;
     }
-
-
 }
 
 ?>

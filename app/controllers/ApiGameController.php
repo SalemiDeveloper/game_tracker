@@ -1,4 +1,6 @@
 <?php
+// Arquivo responsável por ações de CRUD no Mobile.
+
 
 namespace App\Controllers;
 
