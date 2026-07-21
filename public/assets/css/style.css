@@ -571,3 +571,44 @@ button {
     color: #4338ca;
     text-decoration: underline;
 }
+
+.search-group{
+    display:flex;
+    gap:12px;
+    align-items:center;
+}
+
+.search-group .form-input{
+    flex:1;
+}
+
+/* ===================================
+   Game Preview
+=================================== */
+.game-preview-card {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+}
+
+.game-preview-cover img {
+    width: 180px;
+    border-radius: 8px;
+}
+
+.game-preview-info {
+    flex: 1;
+}
+
+.game-preview-info h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.game-preview-info p {
+    margin: 8px 0;
+}

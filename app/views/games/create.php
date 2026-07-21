@@ -25,10 +25,21 @@ function error($field) {
                 placeholder="Ex.: The Witcher 3"
                 value="<?= htmlspecialchars($_SESSION['old']['titulo'] ?? '') ?>"
             >
+
+             <button
+                type="button"
+                id="search-game"
+                class="btn btn-secondary"
+            >
+                <i class="fa-solid fa-magnifying-glass"></i>
+                Buscar
+            </button>
             <?php if ($msg = error('titulo')): ?>
                 <p class="form-error"><?= htmlspecialchars($msg) ?></p>
             <?php endif; ?>
         </div>
+
+        <div id="game-preview"></div>
 
         <div class="form-group">
             <label for="nota">Nota</label>
@@ -131,6 +142,8 @@ function error($field) {
         </div>
     </form>
 </div>
+
+<script src="/assets/js/game-create.js"></script>
 
 <?php 
 unset($_SESSION['old']); 
