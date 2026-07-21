@@ -12,15 +12,19 @@ O principal objetivo deste projeto foi aprofundar conhecimentos em desenvolvimen
 
 ### Aplicação Web
 
-* ✅ Cadastro de usuários
-* ✅ Login e autenticação
-* ✅ CRUD completo de jogos
-* ✅ Dashboard com estatísticas
-* ✅ Seção de destaques
-* ✅ Validação de formulários
-* ✅ Proteção contra CSRF
-* ✅ Controle de acesso por usuário
-* ✅ Organização dos jogos por status
+- ✅ Cadastro e autenticação de usuários
+- ✅ CRUD completo de jogos
+- ✅ Dashboard com estatísticas
+- ✅ Seção de destaques
+- ✅ Integração com a API RAWG
+- ✅ Busca inteligente de jogos
+- ✅ Seleção do jogo antes do cadastro
+- ✅ Preenchimento automático dos dados
+- ✅ Preview completo do jogo
+- ✅ Organização dos jogos por status
+- ✅ Validação de formulários
+- ✅ Proteção contra CSRF
+- ✅ Controle de acesso por usuário
 
 ### API REST
 
@@ -31,6 +35,54 @@ O principal objetivo deste projeto foi aprofundar conhecimentos em desenvolvimen
 * ✅ Proteção das rotas privadas
 * ✅ Validação das requisições
 * ✅ Controle de propriedade dos recursos (Ownership)
+
+# 🌐 Integração com a RAWG API
+
+Uma das principais funcionalidades do projeto é a integração com a API da RAWG, utilizada para enriquecer automaticamente os dados dos jogos cadastrados.
+
+O fluxo funciona da seguinte forma:
+
+```text
+Usuário pesquisa um jogo
+        ↓
+API da aplicação
+        ↓
+RAWG API
+        ↓
+Lista de resultados
+        ↓
+Usuário seleciona o jogo
+        ↓
+Detalhes completos
+        ↓
+Formulário preenchido automaticamente
+```
+
+Com essa integração é possível obter automaticamente:
+
+- 🎮 Título
+- 🖼️ Capa
+- ⭐ Nota
+- 📅 Data de lançamento
+- 🎯 Plataformas
+- 🏷️ Gêneros
+
+O identificador da RAWG também é armazenado na aplicação (`external_id`), permitindo futuras sincronizações e consultas sem depender do título do jogo.
+
+## Fluxo de cadastro de jogos
+
+```mermaid
+flowchart TD
+
+A[Pesquisar jogo] --> B[API Game Tracker]
+B --> C[RAWG API]
+C --> D[Lista de resultados]
+D --> E[Usuário seleciona]
+E --> F[Busca detalhes]
+F --> G[Preview]
+G --> H[Preenchimento automático]
+H --> I[Salvar jogo]
+```
 
 ---
 
@@ -54,7 +106,9 @@ routes/
 tests/
 ```
 
-Essa organização facilita manutenção, testes e evolução do sistema.
+A arquitetura do projeto separa claramente as responsabilidades entre as camadas da aplicação.
+
+Os Services concentram regras de negócio e integrações externas, como a comunicação com a API da RAWG, enquanto Controllers, Models e Views permanecem desacoplados dessa lógica.
 
 ---
 
@@ -65,10 +119,13 @@ Essa organização facilita manutenção, testes e evolução do sistema.
 * PDO
 * HTML5
 * CSS3
-* JavaScript
+* JavaScript (ES6+)
+* Fetch API
+* cURL
+* API RAWG
 * Composer
 * PHPUnit
-* JWT (JSON Web Token)
+* JWT
 
 ---
 
@@ -87,6 +144,13 @@ Essa organização facilita manutenção, testes e evolução do sistema.
 * Separação de responsabilidades
 * Organização em Services
 * Manipulação de banco de dados com PDO
+* Consumo de APIs REST
+* Integração com APIs externas
+* Mapeamento de dados
+* Single Responsibility Principle (SRP)
+* Arquitetura em camadas
+* Manipulação de JSON
+* Programação assíncrona com Fetch API
 
 ---
 
@@ -162,15 +226,26 @@ Este projeto foi desenvolvido para consolidar conhecimentos em:
 
 # 🚀 Próximos Passos
 
-* Melhorias na interface do usuário (UI/UX)
-* Sistema de busca e filtros avançados
-* Integração com API externa para capa de jogos
+* Upload de capas personalizadas
 * Sistema de favoritos
+* Busca e filtros avançados
 * Paginação
 * Dashboard com gráficos
 * Deploy em produção
+* Integração com Steam API
+* Lista de desejos (Wishlist)
 
 ---
+
+## ⭐ Destaques Técnicos
+
+* Arquitetura MVC desenvolvida sem frameworks.
+* API REST própria protegida por JWT.
+* Integração com a API da RAWG para enriquecimento automático dos dados dos jogos.
+* Camada de Services para encapsular regras de negócio e integrações externas.
+* Testes automatizados com PHPUnit.
+* Frontend desacoplado utilizando Fetch API para comunicação assíncrona.
+* Organização do código seguindo princípios como Single Responsibility Principle (SRP).
 
 # 👨‍💻 Autor
 
