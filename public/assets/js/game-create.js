@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const game = await searchGame(title);
             renderGamePreview(game);
-            
+
         } catch (error) {
             preview.innerHTML = `
                 <div class="alert alert-error">
@@ -42,27 +42,47 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function renderGamePreview(game) {
+
+        const cover = game.cover || '/assets/images/default-cover.png';
         preview.innerHTML = `
             <div class="game-preview-card">
-                <div class="game-preview-cover">
-                    <img src="${game.cover}" alt="${game.title}">
-                </div>
+
+                <img
+                    class="game-preview-cover"
+                    src="${cover}"
+                    alt="${game.title}"
+                >
 
                 <div class="game-preview-info">
                     <h3>${game.title}</h3>
-                    <p><strong>⭐ Nota:</strong> ${game.rating}</p>
-                    <p><strong>📅 Lançamento:</strong> ${game.released}</p>
-                    <p>
-                        <strong>🎮 Plataformas:</strong>
-                        ${game.platforms.join(', ')}
-                    </p>
+                    <div class="game-preview-meta">
+                        ⭐ ${game.rating ? game.rating.toFixed(1) : 'N/A'}
+                    </div>
 
-                    <p>
-                        <strong>🕹 Gêneros:</strong>
-                        ${game.genres.join(', ')}
-                    </p>
+                    <div class="game-preview-meta">
+                        📅 ${formatDate(game.released)}
+                    </div>
+
+                    <div class="game-preview-meta">
+                        🎮 ${game.platforms.join(', ')}
+                    </div>
+
+                    <div class="game-preview-meta">
+                        🕹 ${game.genres.join(', ')}
+                    </div>
                 </div>
             </div>
         `;
     }
+
+    function formatDate(date) {
+        if (!date) {
+            return 'Não informado';
+        }
+
+        return new Date(date).toLocaleDateString('pt-BR');
+    }
+
 });
+
+

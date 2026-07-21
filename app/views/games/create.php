@@ -32,6 +32,7 @@ function error($field) {
                 class="btn btn-secondary"
             >
                 <i class="fa-solid fa-magnifying-glass"></i>
+                
                 Buscar
             </button>
             <?php if ($msg = error('titulo')): ?>
@@ -42,7 +43,7 @@ function error($field) {
         <div id="game-preview"></div>
 
         <div class="form-group">
-            <label for="nota">Nota</label>
+            <label for="nota">Sua Nota</label>
             <input 
                 id="nota"
                 class="form-input"
