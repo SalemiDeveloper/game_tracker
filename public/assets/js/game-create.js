@@ -1,88 +1,130 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', init);
+
+// incia a página
+function init() {
     const button = document.getElementById('search-game');
     const preview = document.getElementById('game-preview');
+    const titleInput = document.getElementById('titulo');
+    const platformSelect = document.getElementById('plataforma');
+    const genreSelect = document.getElementById('genero');
 
-    if (!button || !preview) {
+    if (!button || !preview || !titleInput) {
         return;
     }
 
-    async function searchGame(title) {
-        preview.innerHTML = '<p>Buscando informações...</p>';
-        const response = await fetch(
-            `/api/metadata/game?title=${encodeURIComponent(title)}`
-        );
+    button.addEventListener('click', () =>
+        handleSearch({
+            titleInput,
+            preview,
+            platformSelect,
+            genreSelect,
+        })
+    );
+}
 
-        if (!response.ok) {
-            throw new Error('Erro ao buscar informações do jogo.');
-        }
+// coordena a busca do jogo
+async function handleSearch({
+    titleInput,
+    preview,
+    platformSelect,
+    genreSelect,
+}) {
+    const title = titleInput.value.trim();
 
-        return await response.json();
+    if (!title) {
+        alert('Informe um título!');
+        return;
     }
 
-    button.addEventListener('click', async () => {
-        const title = document.getElementById('titulo').value;
+    try {
+        const game = await searchGame(title, preview);
+        updateUI(game, preview, platformSelect, genreSelect);
+    } catch (error) {
+        showError(preview);
+        console.error(error);
+    }
+}
 
-        if (!title.trim()) {
-            alert('Informe um título!');
-            return;
-        }
+// função que conversa com a API
+async function searchGame(title, preview) {
+    preview.innerHTML = '<p>Buscando informações...</p>';
 
-        try {
-            const game = await searchGame(title);
-            renderGamePreview(game);
+    const response = await fetch(
+        `/api/metadata/game?title=${encodeURIComponent(title)}`
+    );
 
-        } catch (error) {
-            preview.innerHTML = `
-                <div class="alert alert-error">
-                    Não foi possível encontrar esse jogo.
+    if (!response.ok) {
+        throw new Error('Erro ao buscar informações do jogo.');
+    }
+
+    return await response.json();
+}
+
+// atualiza a interface
+function updateUI(game, preview, platformSelect, genreSelect) {
+    renderGamePreview(game, preview);
+    fillForm(game, platformSelect, genreSelect);
+}
+
+// renderiza o card na tela
+function renderGamePreview(game, preview) {
+    const cover = game.cover || '/assets/images/default-cover.png';
+
+    preview.innerHTML = `
+        <div class="game-preview-card">
+
+            <img
+                class="game-preview-cover"
+                src="${cover}"
+                alt="${game.title}"
+            >
+
+            <div class="game-preview-info">
+                <h3>${game.title}</h3>
+
+                <div class="game-preview-meta">
+                    ⭐ ${game.rating ? game.rating.toFixed(1) : 'N/A'}
                 </div>
-            `;
-            console.log(error);
-        }
-    });
 
-    function renderGamePreview(game) {
+                <div class="game-preview-meta">
+                    📅 ${formatDate(game.released)}
+                </div>
 
-        const cover = game.cover || '/assets/images/default-cover.png';
-        preview.innerHTML = `
-            <div class="game-preview-card">
+                <div class="game-preview-meta">
+                    🎮 ${game.platforms.join(', ')}
+                </div>
 
-                <img
-                    class="game-preview-cover"
-                    src="${cover}"
-                    alt="${game.title}"
-                >
-
-                <div class="game-preview-info">
-                    <h3>${game.title}</h3>
-                    <div class="game-preview-meta">
-                        ⭐ ${game.rating ? game.rating.toFixed(1) : 'N/A'}
-                    </div>
-
-                    <div class="game-preview-meta">
-                        📅 ${formatDate(game.released)}
-                    </div>
-
-                    <div class="game-preview-meta">
-                        🎮 ${game.platforms.join(', ')}
-                    </div>
-
-                    <div class="game-preview-meta">
-                        🕹 ${game.genres.join(', ')}
-                    </div>
+                <div class="game-preview-meta">
+                    🕹 ${game.genres.join(', ')}
                 </div>
             </div>
-        `;
+        </div>
+    `;
+}
+
+// preenche os campos
+function fillForm(game, platformSelect, genreSelect) {
+    if (platformSelect && game.platforms.length > 0) {
+        platformSelect.value = game.platforms[0];
     }
 
-    function formatDate(date) {
-        if (!date) {
-            return 'Não informado';
-        }
+    if (genreSelect && game.genres.length > 0) {
+        genreSelect.value = game.genres[0];
+    }
+}
 
-        return new Date(date).toLocaleDateString('pt-BR');
+// as funções abaixo são autoexplicativas
+function showError(preview) {
+    preview.innerHTML = `
+        <div class="alert alert-error">
+            Não foi possível encontrar esse jogo.
+        </div>
+    `;
+}
+function formatDate(date) {
+    if (!date) {
+        return 'Não informado';
     }
 
-});
-
-
+    return new Date(date).toLocaleDateString('pt-BR');
+}

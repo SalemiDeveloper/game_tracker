@@ -14,14 +14,13 @@ class GameMetadataService {
         $this->apiKey  = $config['rawg']['api_key'];
     }
 
-    private function request(string $endpoint, array $params = []): array
-{
-    $params['key'] = $this->apiKey;
+    private function request(string $endpoint, array $params = []): array {
+        $params['key'] = $this->apiKey;
 
-    $url = $this->baseUrl
-        . $endpoint
-        . '?'
-        . http_build_query($params);
+        $url = $this->baseUrl
+            . $endpoint
+            . '?'
+            . http_build_query($params);
 
         $curl = curl_init($url);
 
@@ -51,24 +50,69 @@ class GameMetadataService {
             return [];
         }
 
-        $platforms = [];
-        foreach($game['platforms'] as $platform) {
-            $platforms[] = $platform['platform']['name'];
-        }
-
-        $genres = [];
-        foreach($game['genres'] as $genre) {
-            $genres[] = $genre['name'];
-        }
-
         return [
             'external_id' => $game['id'],
             'title'       => $game['name'],
             'cover'       => $game['background_image'],
             'released'    => $game['released'],
             'rating'      => $game['rating'],
-            'platforms'   => $platforms,
-            'genres'      => $genres
+            // 'platforms'   => $platforms,
+            // 'genres'      => $genres
+            'platforms' => $this->mapPlatforms($game['platforms'] ?? []),
+            'genres'    => $this->mapGenres($game['genres'] ?? [])
         ];
+    }
+
+    private function mapPlatforms(array $platforms): array {
+        $map = [
+            'Xbox Series S/X' => 'Xbox Series X/S',
+            'Android' => 'Mobile',
+            'iOS' => 'Mobile',
+        ];
+
+        $result = [];
+
+        foreach ($platforms as $item) {
+            $name = $item['platform']['name'] ?? null;
+
+            if (!$name) {
+                continue;
+            }
+
+            $result[] = $map[$name] ?? $name;
+        }
+
+        return array_values(array_unique($result));
+    }
+
+    private function mapGenres(array $genres): array {
+        $map = [
+            'Action' => 'Ação',
+            'Adventure' => 'Aventura',
+            'RPG' => 'RPG',
+            'Strategy' => 'Estratégia',
+            'Puzzle' => 'Puzzle',
+            'Racing' => 'Corrida',
+            'Sports' => 'Esporte',
+            'Fighting' => 'Luta',
+            'Simulation' => 'Simulação',
+            'Shooter' => 'FPS',
+        ];
+
+        $result = [];
+
+        foreach ($genres as $genre) {
+            $name = $genre['name'] ?? null;
+
+            if (!$name) {
+                continue;
+            }
+
+            if (isset($map[$name])) {
+                $result[] = $map[$name];
+            }
+        }
+
+        return array_values(array_unique($result));
     }
 }
