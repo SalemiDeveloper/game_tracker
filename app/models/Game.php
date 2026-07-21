@@ -68,12 +68,12 @@ class Game extends Model{
     public function create($data) {
         $stmt = $this->db->prepare("
             INSERT INTO games 
-                (titulo, nota, user_id, 
+                (titulo, nota, user_id, external_id,
                 plataforma, status, horas_jogadas, 
                 review, genero, ano_lancamento)
             
             VALUES 
-                (:titulo, :nota, :user_id, 
+                (:titulo, :nota, :user_id, :external_id,
                 :plataforma, :status, :horas_jogadas, 
                 :review, :genero, :ano_lancamento)
         ");
@@ -82,6 +82,7 @@ class Game extends Model{
             'titulo'  => $data['titulo'],
             'nota'    => $data['nota'],
             'user_id' => $data['user_id'],
+            'external_id'    => $data['external_id'] ?? null,
             'plataforma'     => $data['plataforma'] ?? null,
             'status'         => $data['status'] ?? null,
             'horas_jogadas'  => $data['horas_jogadas'] ?? null,

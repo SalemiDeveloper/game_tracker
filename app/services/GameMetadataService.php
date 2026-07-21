@@ -28,9 +28,7 @@ class GameMetadataService {
         curl_setopt($curl, CURLOPT_TIMEOUT, 10);
 
         $response = curl_exec($curl);
-
         curl_close($curl);
-        $response = curl_exec($curl);
 
         return json_decode($response, true);
     }
@@ -40,15 +38,29 @@ class GameMetadataService {
             'search' => $title
         ]);
 
-    return $this->mapGame($data);
-    }
+        $results = $data['results'] ?? [];
 
-    public function mapGame(array $data): array {
-        $game = $data['results'][0] ?? null;
-
-        if (!$game) {
+        if (empty($results)) {
             return [];
         }
+
+        return array_map(
+            [$this, 'mapSearchResult'],
+            $results
+        );
+    }
+
+    public function findById(int $id): array {
+        $game = $this->request("/games/{$id}");
+
+        if (empty($game) || isset($game['detail'])) {
+            return [];
+        }
+
+        return $this->mapGame($game);
+    }
+
+    private function mapGame(array $game): array {
 
         return [
             'external_id' => $game['id'],
@@ -56,10 +68,18 @@ class GameMetadataService {
             'cover'       => $game['background_image'],
             'released'    => $game['released'],
             'rating'      => $game['rating'],
-            // 'platforms'   => $platforms,
-            // 'genres'      => $genres
             'platforms' => $this->mapPlatforms($game['platforms'] ?? []),
             'genres'    => $this->mapGenres($game['genres'] ?? [])
+        ];
+    }
+
+    private function mapSearchResult(array $game): array {
+        return [
+            'external_id' => $game['id'],
+            'title'       => $game['name'],
+            'cover'       => $game['background_image'],
+            'released'    => $game['released'],
+            'rating'      => $game['rating'],
         ];
     }
 

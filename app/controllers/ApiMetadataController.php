@@ -29,4 +29,28 @@ class ApiMetadataController {
             $this->service->findByTitle($title)
         );
     }
+
+    public function show() {
+        $id = (int) ($_GET['id'] ?? 0);
+
+        if ($id <= 0) {
+            http_response_code(400);
+            echo json_encode([
+                'error' => 'ID inválido'
+            ]);
+            return;
+        }
+
+        $game = $this->service->findById($id);
+
+        if (empty($game)) {
+            http_response_code(400);
+            echo json_encode([
+                'error' => 'Jogo não encontrado'
+            ]);
+            return;
+        }
+
+        echo json_encode($game);
+    }
 }

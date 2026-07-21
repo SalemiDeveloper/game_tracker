@@ -124,7 +124,7 @@ body {
    Search
 =========================== */
 #search-game{
-    margin-top: 5px;
+    margin-top: 8px;
     cursor: pointer;
 }
 
@@ -148,6 +148,10 @@ body {
     min-width:180px;
     background:white;
     font-size: 15px;
+}
+
+.search-results {
+    margin-top: 12px;
 }
 
 /* ===========================

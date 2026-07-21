@@ -25,6 +25,13 @@ function error($field) {
                 placeholder="Ex.: The Witcher 3"
                 value="<?= htmlspecialchars($_SESSION['old']['titulo'] ?? '') ?>"
             >
+            <input
+                type="hidden"
+                id="external_id"
+                name="external_id"
+                value="<?= htmlspecialchars($_SESSION['old']['external_id'] ?? '') ?>"
+            >
+            <div id="search-results" class="search-results"></div>
 
              <button
                 type="button"

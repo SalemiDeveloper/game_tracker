@@ -26,4 +26,5 @@ $router->get('/api/generos', 'ApiGameController@generos')->middleware('jwt');
 $router->get('/api/status-options', 'ApiGameController@statusOptions')->middleware('jwt');
 
 $router->get('/api/metadata/game', 'ApiMetadataController@search');
+$router->get('/api/metadata/game/details', 'ApiMetadataController@show');
 ?>
