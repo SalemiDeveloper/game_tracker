@@ -31,5 +31,9 @@ class StatusHelper {
             'platinado'
         ]);
     }
+
+    public static function formatRating(?float $rating): string {
+        return $rating !== null ? (string) $rating : "N/A";
+    }
 }
 ?>

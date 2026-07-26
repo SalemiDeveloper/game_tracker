@@ -229,7 +229,7 @@ $currentSort = $filters['sort'] ?? '';
                 <h3><?= htmlspecialchars($game['titulo']) ?></h3>
 
                 <div class="game-meta">
-                    <span>⭐ <?= htmlspecialchars($game['nota']) ?></span>
+                    <span>⭐ <?= StatusHelper::formatRating($game['nota']) ?></span>
                     <span>🎮 <?= htmlspecialchars($game['plataforma']) ?></span>
                     <span>🗂 <?= htmlspecialchars($game['genero']) ?></span>
                 </div>

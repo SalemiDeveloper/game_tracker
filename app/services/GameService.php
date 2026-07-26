@@ -49,7 +49,6 @@ class GameService {
     public function update(array $data) {
         $errors = Validator::validate($data, [
             'titulo'     => ['required'],
-            'nota'       => ['required', 'number', 'min:0', 'max:10'],
             'status'     => ['required'],
             'plataforma' => ['required', 'string'],
             'genero'     => ['required', 'string']
@@ -57,12 +56,24 @@ class GameService {
             // 'horas_jogadas'  => ['number', 'min:0']
         ]);
 
+        // regra de negócio
+        if (!in_array($data['status'], ['backlog', 'jogando']) && empty($data['nota'])) {
+            $errors = Validator::validate($data, [
+                'nota' => ['required', 'number', 'min:0', 'max:10']
+            ]);
+        }
+
         if (!empty($errors)) {
             return [
                 'success' => false,
                 'errors'  => $errors, 
                 'old'     => $data
             ];
+        }
+
+        // Converte string vazia para NULL para não dar conflito no banco
+        if ($data['nota'] === '') {
+            $data['nota'] = null;
         }
 
         $this->model->update($data);

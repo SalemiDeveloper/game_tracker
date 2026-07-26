@@ -32,16 +32,7 @@ function error($field) {
                 value="<?= htmlspecialchars($_SESSION['old']['external_id'] ?? '') ?>"
             >
             <div id="search-results" class="search-results"></div>
-
-             <button
-                type="button"
-                id="search-game"
-                class="btn btn-secondary"
-            >
-                <i class="fa-solid fa-magnifying-glass"></i>
-                
-                Buscar
-            </button>
+            
             <?php if ($msg = error('titulo')): ?>
                 <p class="form-error"><?= htmlspecialchars($msg) ?></p>
             <?php endif; ?>

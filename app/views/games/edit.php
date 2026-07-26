@@ -2,8 +2,7 @@
 
 use App\Helpers\StatusHelper;
 
-function error($field)
-{
+function error($field) {
     return $_SESSION['errors'][$field][0] ?? null;
 }
 
@@ -134,6 +133,7 @@ function error($field)
 
     </form>
 </div>
+
 
 <?php
 unset($_SESSION['old']);

@@ -123,11 +123,6 @@ body {
 /* ===========================
    Search
 =========================== */
-#search-game{
-    margin-top: 8px;
-    cursor: pointer;
-}
-
 .search-form{
     display:flex;
     gap:12px;
@@ -141,17 +136,61 @@ body {
     font-size:15px;
 }
 
-.search-select{
-    padding:12px;
-    border:1px solid #d1d5db;
-    border-radius:8px;
-    min-width:180px;
-    background:white;
-    font-size: 15px;
+.search-result-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: .75rem;
+    cursor: pointer;
+    transition: background .2s ease;
+}
+
+.search-result-item:hover {
+    background: #f4f4f4;
 }
 
 .search-results {
-    margin-top: 12px;
+    margin-top: .5rem;
+    border: 1px solid #ddd;
+    border-radius: .5rem;
+    overflow: hidden;
+    background: #fff;
+}
+
+.search-result-cover {
+    width: 70px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: .4rem;
+    flex-shrink: 0;
+}
+
+.search-result-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-result-title {
+    font-weight: 600;
+}
+
+.search-result-date {
+    font-size: .85rem;
+    color: #777;
+}
+
+.search-result-empty {
+    padding: 1rem;
+    text-align: center;
+    color: #777;
+}
+
+.search-result-loading {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: 1rem;
+    color: #666;
 }
 
 /* ===========================

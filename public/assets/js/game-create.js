@@ -1,29 +1,51 @@
 document.addEventListener('DOMContentLoaded', init);
+let searchController = null;
 
 // incia a página
 function init() {
-    const button = document.getElementById('search-game');
     const preview = document.getElementById('game-preview');
     const titleInput = document.getElementById('titulo');
     const platformSelect = document.getElementById('plataforma');
     const genreSelect = document.getElementById('genero');
 
-    if (!button || !preview || !titleInput) {
+    if (!preview || !titleInput) {
         return;
     }
 
-    button.addEventListener('click', () =>
-        handleSearch({
-            titleInput,
-            preview,
-            platformSelect,
-            genreSelect,
-        })
-    );
+    let debounce;
+    titleInput.addEventListener('input', () => {
+        clearTimeout(debounce);
+        const title = titleInput.value.trim();
+        if (title.length < 3) {
+            document.getElementById('search-results').innerHTML = '';
+            return;
+        }
+
+        debounce = setTimeout(() => {
+            handleSearch({
+                titleInput,
+                preview,
+                platformSelect,
+                genreSelect
+            });
+        }, 800);
+    });
 
     const statusSelect = document.getElementById('status');
     statusSelect.addEventListener('change', toggleRatingRequirement);
     toggleRatingRequirement();
+
+    document.addEventListener('click', (event) => {
+        const container = document.getElementById('search-results');
+
+        if (!container.contains(event.target) &&event.target !== titleInput) {
+            container.innerHTML = '';
+
+            if (searchController) {
+                searchController.abort();
+            }
+        }
+    });
 }
 
 // coordena a busca do jogo
@@ -33,15 +55,23 @@ async function handleSearch({
     platformSelect,
     genreSelect,
 }) {
+
     const title = titleInput.value.trim();
-    
-    if (!title) {
-        alert('Informe um título!');
+
+    if (title.length < 3) {
+        document.getElementById('search-results').innerHTML = '';
         return;
     }
 
     try {
+        showLoading();
         const games = await searchGames(title);
+
+        if (games.length === 0) {
+            document.getElementById('search-results').innerHTML = '';
+            return;
+        }
+
         renderSearchResults({
             games,
             titleInput,
@@ -51,23 +81,47 @@ async function handleSearch({
         });
 
     } catch (error) {
-        showError(preview);
+
         console.error(error);
+        showError(preview);
+
     }
 }
 
 // função que conversa com a API
 async function searchGames(title) {
 
-    const response = await fetch(
-        `/api/metadata/game?title=${encodeURIComponent(title)}`
-    );
-
-    if (!response.ok) {
-        throw new Error('Erro ao buscar informações do jogo.');
+    // Cancela a busca anterior, se ainda estiver em andamento
+    if (searchController) {
+        searchController.abort();
     }
 
-    return await response.json();
+    // Cria um novo controller para esta requisição
+    searchController = new AbortController();
+
+    try {
+
+        const response = await fetch(
+            `/api/metadata/game?title=${encodeURIComponent(title)}`,
+            {
+                signal: searchController.signal
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error('Erro ao buscar informações do jogo.');
+        }
+
+        return await response.json();
+
+    } catch (error) {
+
+        // Ignora erros causados pelo cancelamento da requisição
+        if (error.name === 'AbortError') {
+            return [];
+        }
+        throw error;
+    }
 }
 
 async function loadGame(id) {
@@ -137,60 +191,69 @@ function renderSearchResults({
 
     if (games.length === 0) {
         container.innerHTML = `
-            <p>Nenhum jogo encontrado.</p>
+            <div class="search-result-empty">
+                Nenhum jogo encontrado.
+            </div>
         `;
-
         return;
     }
 
-    const select = document.createElement('select');
-
-    select.id = 'game-results';
-    select.className = 'form-select';
-
-    select.innerHTML = `
-        <option value="">
-            Selecione um jogo...
-        </option>
-    `;
-
     games.forEach(game => {
-        const option = document.createElement('option');
 
-        option.value = game.external_id;
+        const item = document.createElement('div');
+        item.className = 'search-result-item';
 
-        option.textContent =
-            `${game.title} (${game.released ?? 'Sem data'})`;
+        const cover = game.cover || '/assets/images/default-cover.png';
 
-        select.appendChild(option);
+        item.innerHTML = `
+            <img
+                src="${cover}"
+                alt="${game.title}"
+                class="search-result-cover"
+            >
+
+            <div class="search-result-info">
+                <div class="search-result-title">
+                    ${game.title}
+                </div>
+
+                <div class="search-result-date">
+                    ${formatDate(game.released)}
+                </div>
+            </div>
+        `;
+
+        item.addEventListener('click', async () => {
+
+            try {
+
+                const fullGame = await loadGame(game.external_id);
+
+                updateUI({
+                    game: fullGame,
+                    titleInput,
+                    preview,
+                    platformSelect,
+                    genreSelect
+                });
+
+                container.innerHTML = '';
+
+            } catch (error) {
+                console.error(error);
+            }
+
+        });
+
+        container.appendChild(item);
+
     });
-
-    select.addEventListener('change', async (event) => {
-
-        const id = event.target.value;
-
-        if (!id) {
-            return;
-        }
-
-        try {
-
-            const game = await loadGame(id);
-                // console.log(game);
-            updateUI({game, titleInput, preview, platformSelect, genreSelect});
-
-        } catch (error) {
-            console.error(error);
-        }
-
-    });
-
-    container.appendChild(select);
 }
 
 // preenche os campos
 function fillForm(game, titleInput, platformSelect, genreSelect) {
     titleInput.value = game.title;
+    document.getElementById('search-results').innerHTML = '';
     const externalIdInput = document.getElementById('external_id');
 
     if (externalIdInput) {
@@ -214,6 +277,19 @@ function showError(preview) {
         </div>
     `;
 }
+
+function showLoading() {
+
+    const container = document.getElementById('search-results');
+
+    container.innerHTML = `
+        <div class="search-result-loading">
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            Buscando jogos...
+        </div>
+    `;
+}
+
 function formatDate(date) {
     if (!date) {
         return 'Não informado';
