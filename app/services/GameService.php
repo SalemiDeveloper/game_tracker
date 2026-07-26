@@ -12,12 +12,18 @@ class GameService {
     }
 
     public function create($data) {
-        $errors = Validator::validate($data,  [
+        $errors = Validator::validate($data, [
             'titulo'     => ['required'],
-            'nota'       => ['required', 'number', 'min:0', 'max:10'],
             'plataforma' => ['required'],
             'genero'     => ['required']
         ]);
+
+        // regra de negócio
+        if (!in_array($data['status'], ['backlog', 'jogando']) && empty($data['nota'])) {
+            $errors = Validator::validate($data, [
+                'nota' => ['required', 'number', 'min:0', 'max:10']
+            ]);
+        }
 
         if (!empty($errors)) {
             return [
@@ -27,9 +33,13 @@ class GameService {
             ];
         }
 
-        // $this->model->create($data);
+        // Converte string vazia para NULL para não dar conflito no banco
+        if ($data['nota'] === '') {
+            $data['nota'] = null;
+        }
+
         $gameId = $this->model->create($data);
-    
+
         return [
             'success' => true,
             'id'      => $gameId

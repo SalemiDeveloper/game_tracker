@@ -24,5 +24,12 @@ class StatusHelper {
     public static function format(string $status): string {
         return self::$statusMap[$status] ?? $status;
     }
+
+    public static function requiresRating(string $status): bool {
+        return in_array($status, [
+            'zerado',
+            'platinado'
+        ]);
+    }
 }
 ?>

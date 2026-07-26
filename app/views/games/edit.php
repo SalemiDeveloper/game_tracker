@@ -38,23 +38,6 @@ function error($field)
         </div>
 
         <div class="form-group">
-            <label for="nota">Nota</label>
-            <input
-                id="nota"
-                class="form-input"
-                name="nota"
-                type="number"
-                min="0"
-                max="10"
-                step="0.1"
-                value="<?= htmlspecialchars($_SESSION['old']['nota'] ?? $game['nota']) ?>"
-            >
-            <?php if ($msg = error('nota')): ?>
-                <p class="form-error"><?= htmlspecialchars($msg) ?></p>
-            <?php endif; ?>
-        </div>
-
-        <div class="form-group">
             <label for="status">Status</label>
             <select
                 id="status"
@@ -121,6 +104,23 @@ function error($field)
                 <p class="form-error"><?= htmlspecialchars($msg) ?></p>
             <?php endif; ?>
 
+        </div>
+
+        <div class="form-group">
+            <label for="nota">Nota</label>
+            <input
+                id="nota"
+                class="form-input"
+                name="nota"
+                type="number"
+                min="0"
+                max="10"
+                step="0.1"
+                value="<?= htmlspecialchars($_SESSION['old']['nota'] ?? $game['nota']) ?>"
+            >
+            <?php if ($msg = error('nota')): ?>
+                <p class="form-error"><?= htmlspecialchars($msg) ?></p>
+            <?php endif; ?>
         </div>
 
         <div class="form-actions">
