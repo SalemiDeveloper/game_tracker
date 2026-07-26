@@ -20,6 +20,10 @@ function init() {
             genreSelect,
         })
     );
+
+    const statusSelect = document.getElementById('status');
+    statusSelect.addEventListener('change', toggleRatingRequirement);
+    toggleRatingRequirement();
 }
 
 // coordena a busca do jogo
@@ -172,7 +176,7 @@ function renderSearchResults({
         try {
 
             const game = await loadGame(id);
-                console.log(game);
+                // console.log(game);
             updateUI({game, titleInput, preview, platformSelect, genreSelect});
 
         } catch (error) {
@@ -216,4 +220,26 @@ function formatDate(date) {
     }
 
     return new Date(date).toLocaleDateString('pt-BR');
+}
+
+function toggleRatingRequirement() {
+    const statusSelect = document.getElementById('status');
+    const ratingInput = document.getElementById('nota');
+
+    if (!statusSelect || !ratingInput) {
+        return;
+    }
+
+    const status = statusSelect.value;
+
+    if (status === 'backlog' || status === 'jogando') {
+        ratingInput.required = false;
+        ratingInput.value = '';
+        ratingInput.disabled = true;
+        ratingInput.placeholder = 'Não se aplica';
+    } else {
+        ratingInput.required = true;
+        ratingInput.disabled = false;
+        ratingInput.placeholder = '0 a 10';
+    }
 }
