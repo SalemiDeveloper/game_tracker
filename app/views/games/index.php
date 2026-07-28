@@ -245,7 +245,12 @@ $currentSort = $filters['sort'] ?? '';
                     Editar
                 </a>
 
-                <form method="POST" action="/games/delete" class="delete-form">
+                <form 
+                    method="POST" 
+                    action="/games/delete" 
+                    class="delete-form"
+                    data-title="<?= htmlspecialchars($game['titulo']) ?>"    
+                >
 
                     <input
                         type="hidden"
@@ -284,7 +289,7 @@ $currentSort = $filters['sort'] ?? '';
             </div>
 
             <div class="modal-body">
-                <p>
+                <p id="modal-message">
                     Tem certeza que deseja excluir este jogo?
                 </p>
 
