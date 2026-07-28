@@ -222,7 +222,7 @@ $currentSort = $filters['sort'] ?? '';
     </div>
 
     <div class="games-list" id="games-list">
-    <?php foreach ($games as $game): ?>
+        <?php foreach ($games as $game): ?>
 
         <div class="game-card">
             <div class="game-info">
@@ -245,7 +245,7 @@ $currentSort = $filters['sort'] ?? '';
                     Editar
                 </a>
 
-                <form method="POST" action="/games/delete">
+                <form method="POST" action="/games/delete" class="delete-form">
 
                     <input
                         type="hidden"
@@ -268,13 +268,51 @@ $currentSort = $filters['sort'] ?? '';
                 </form>
             </div>
         </div>
-    <?php endforeach; ?>
-
-</div>
-    <?php 
+        <?php endforeach; ?>
+    </div>
+<?php 
     unset($_SESSION['old']); 
     unset($_SESSION['errors']);
-    ?>
+?>
 </div>
+
+    <div id="confirm-modal" class="modal">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Excluir jogo</h3>
+            </div>
+
+            <div class="modal-body">
+                <p>
+                    Tem certeza que deseja excluir este jogo?
+                </p>
+
+                <p class="modal-warning">
+                    Essa ação não poderá ser desfeita.
+                </p>
+            </div>
+
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    id="cancel-delete"
+                    class="btn btn-secondary"
+                >
+                    Cancelar
+                </button>
+
+                <button
+                    type="button"
+                    id="confirm-delete"
+                    class="btn btn-danger"
+                >
+                    Excluir
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
+
+<script src="/assets/js/modal.js"></script>
