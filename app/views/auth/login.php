@@ -37,15 +37,7 @@ function error($field) {
                         name="email"
                         value="<?= htmlspecialchars($_SESSION['old']['email'] ?? '') ?>"
                     >
-
-                    <?php if ($msg = error('email')): ?>
-                        <p class="form-error"><?= htmlspecialchars($msg) ?></p>
-                    <?php endif; ?>
                 </div>
-
-                <?php if ($msg = error('email')): ?>
-                    <p><?= htmlspecialchars($msg) ?></p>
-                <?php endif; ?>
 
                 <div class="form-group">
                     <label for="password">Senha</label>
@@ -55,13 +47,11 @@ function error($field) {
                         type="password"
                         name="password"
                     >
-                    <?php if ($msg = error('password')): ?>
-                        <p class="form-error"><?= htmlspecialchars($msg) ?></p>
-                    <?php endif; ?>
+                    
                 </div>
 
-                <?php if ($msg = error('password')): ?>
-                    <p><?= htmlspecialchars($msg) ?></p>
+                <?php if (($msg = error('email')) or ($msg = error('password'))): ?>
+                    <p class="form-error"><?= htmlspecialchars($msg) ?></p>
                 <?php endif; ?>
 
                 <button class="btn btn-primary auth-button" type="submit">
