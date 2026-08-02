@@ -36,13 +36,6 @@ $currentSort = $filters['sort'] ?? '';
 
     <div class="dashboard">
         <div class="dashboard-row">
-            <div class="stats-card">
-                <div class="stats-card-icon total"><i class="fa-solid fa-gamepad"></i></div>
-                <div class="stats-card-content">
-                    <h3>Total</h3>
-                    <span><?= $stats['total_games'] ?></span>
-                </div>
-            </div>
 
             <div class="stats-card">
                 <div class="stats-card-icon playing"><i class="fa-solid fa-play"></i></div>
@@ -68,14 +61,23 @@ $currentSort = $filters['sort'] ?? '';
                 </div>
             </div>
 
+            <div class="stats-card">
+                <div class="stats-card-icon dropped"><i class="fa-solid fa-xmark"></i></div>
+                <div class="stats-card-content">
+                    <h3>Dropados</h3>
+                    <span><?= $stats['dropados'] ?></span>
+                </div>
+            </div>
+
         </div>
         <div class="dashboard-row three">
 
-            <div class="stats-card">
-                <div class="stats-card-icon hours"><i class="fa-regular fa-clock"></i></div>
+
+        <div class="stats-card">
+                <div class="stats-card-icon total"><i class="fa-solid fa-gamepad"></i></div>
                 <div class="stats-card-content">
-                    <h3>Horas totais</h3>
-                    <span><?= $stats['horas_total'] ?></span>
+                    <h3>Total</h3>
+                    <span><?= $stats['total_games'] ?></span>
                 </div>
             </div>
 
@@ -88,11 +90,10 @@ $currentSort = $filters['sort'] ?? '';
             </div>
 
             <div class="stats-card">
-                
-                <div class="stats-card-icon dropped"><i class="fa-solid fa-xmark"></i></div>
+                <div class="stats-card-icon hours"><i class="fa-regular fa-clock"></i></div>
                 <div class="stats-card-content">
-                    <h3>Dropados</h3>
-                    <span><?= $stats['dropados'] ?></span>
+                    <h3>Horas totais</h3>
+                    <span><?= $stats['horas_total'] ?></span>
                 </div>
             </div>
         </div>

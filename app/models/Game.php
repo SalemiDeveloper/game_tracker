@@ -170,7 +170,7 @@ class Game extends Model{
                          THEN 1
                          ELSE 0
                          END) as finalizados,
-                SUM(CASE WHEN status = 'platinei'
+                SUM(CASE WHEN status = 'platina'
                          THEN 1
                          ELSE 0
                          END) as platinados,
