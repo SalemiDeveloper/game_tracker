@@ -9,7 +9,6 @@ class TestDatabase {
         $password = $_ENV['DB_PASS'];
 
         $pdo = new PDO ("mysql:host={$host};dbname={$db}", $user, $password);
-        //$pdo = new PDO ("mysql:host=localhost;dbname=game_tracker_test", "root", "");
 
         $pdo->setAttribute(
             PDO::ATTR_DEFAULT_FETCH_MODE,

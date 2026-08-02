@@ -35,5 +35,13 @@ class StatusHelper {
     public static function formatRating(?float $rating): string {
         return $rating !== null ? (string) $rating : "N/A";
     }
+
+    public static function formatHours(?string $status, ?float $hours): string {
+        if (in_array($status, ['backlog', 'jogando'])) {
+            return "N/A";
+        }
+
+        return $hours !== null ? "{$hours}h" : "N/A";
+    }
 }
 ?>

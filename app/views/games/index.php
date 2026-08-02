@@ -245,9 +245,11 @@ $currentSort = $filters['sort'] ?? '';
                 <h3><?= htmlspecialchars($game['titulo']) ?></h3>
 
                 <div class="game-meta">
-                    <span><i class="fa-solid fa-star"></i> <?= StatusHelper::formatRating($game['nota']) ?></span>
                     <span><i class="fa-solid fa-gamepad"></i> <?= htmlspecialchars($game['plataforma']) ?></span>
+                    <span><i class="fa-solid fa-clock"></i> <?= StatusHelper::formatHours($game['status'], $game['horas_jogadas']) ?></span>
+                    
                     <span><i class="fa-solid fa-tags"></i> <?= htmlspecialchars($game['genero']) ?></span>
+                    <span><i class="fa-solid fa-star"></i> <?= StatusHelper::formatRating($game['nota']) ?></span>
                 </div>
 
                 <span class="badge badge-<?= htmlspecialchars($game['status']) ?>">
