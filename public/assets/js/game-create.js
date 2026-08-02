@@ -1,16 +1,24 @@
 document.addEventListener('DOMContentLoaded', init);
 let searchController = null;
+let selectedTitle = '';
 
 // incia a página
 function init() {
     const preview = document.getElementById('game-preview');
     const titleInput = document.getElementById('titulo');
+    const externalIdInput = document.getElementById('external_id');
     const platformSelect = document.getElementById('plataforma');
     const genreSelect = document.getElementById('genero');
 
     if (!preview || !titleInput) {
         return;
     }
+
+    titleInput.addEventListener('input', () => {
+        if (externalIdInput && titleInput.value !== selectedTitle) {
+            externalIdInput = '';
+        }
+    });
 
     let debounce;
     titleInput.addEventListener('input', () => {
@@ -253,6 +261,7 @@ function renderSearchResults({
 // preenche os campos
 function fillForm(game, titleInput, platformSelect, genreSelect) {
     titleInput.value = game.title;
+    selectedTitle = game.title;
     document.getElementById('search-results').innerHTML = '';
     const externalIdInput = document.getElementById('external_id');
 

@@ -25,6 +25,10 @@ class GameService {
             ]);
         }
 
+        if (empty($data['external_id'])) {
+            $errors['titulo'][] = "Selecione um jogo da lista antes de salvar.";
+        }
+
         if (!empty($errors)) {
             return [
                 'success' => false,

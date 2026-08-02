@@ -697,7 +697,6 @@ button {
 
 .modal-content {
     width: min(420px, 90%);
-    /* background: var(--color-surface); */
     background: #ffffff;
     border-radius: 12px;
     padding: 1.5rem;
