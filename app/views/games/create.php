@@ -117,6 +117,23 @@ function error($field) {
         </div>
 
         <div class="form-group">
+            <label for="horas_jogadas">Horas jogadas</label>
+            <input 
+                id="horas_jogadas"
+                class="form-input"
+                name="horas_jogadas"
+                type="number"
+                min="0"
+                max=""
+                step="0.1"
+                placeholder="Ex.: 20 horas"
+                value="<?= htmlspecialchars($_SESSION['old']['horas_jogadas'] ?? '') ?>">
+            <?php if ($msg = error('horas_jogadas')): ?>
+                <p style="color:red;"><?= htmlspecialchars($msg) ?></p>
+            <?php endif; ?>
+        </div>
+
+        <div class="form-group">
             <label for="nota">Sua Nota</label>
             <input 
                 id="nota"

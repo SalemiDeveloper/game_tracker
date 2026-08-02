@@ -10,38 +10,40 @@ function init() {
     const platformSelect = document.getElementById('plataforma');
     const genreSelect = document.getElementById('genero');
 
-    if (!preview || !titleInput) {
+    if (!titleInput) {
         return;
     }
 
     titleInput.addEventListener('input', () => {
         if (externalIdInput && titleInput.value !== selectedTitle) {
-            externalIdInput = '';
+            externalIdInput.value = '';
         }
     });
 
-    let debounce;
-    titleInput.addEventListener('input', () => {
-        clearTimeout(debounce);
-        const title = titleInput.value.trim();
-        if (title.length < 3) {
-            document.getElementById('search-results').innerHTML = '';
-            return;
-        }
+    if (preview) {
+        let debounce;
+        titleInput.addEventListener('input', () => {
+            clearTimeout(debounce);
+            const title = titleInput.value.trim();
+            if (title.length < 3) {
+                document.getElementById('search-results').innerHTML = '';
+                return;
+            }
 
-        debounce = setTimeout(() => {
-            handleSearch({
-                titleInput,
-                preview,
-                platformSelect,
-                genreSelect
-            });
-        }, 800);
-    });
+            debounce = setTimeout(() => {
+                handleSearch({
+                    titleInput,
+                    preview,
+                    platformSelect,
+                    genreSelect
+                });
+            }, 800);
+        });
+    }
 
     const statusSelect = document.getElementById('status');
-    statusSelect.addEventListener('change', toggleRatingRequirement);
-    toggleRatingRequirement();
+    statusSelect.addEventListener('change', toggleGameFieldsRequirement);
+    toggleGameFieldsRequirement();
 
     document.addEventListener('click', (event) => {
         const container = document.getElementById('search-results');
@@ -307,24 +309,38 @@ function formatDate(date) {
     return new Date(date).toLocaleDateString('pt-BR');
 }
 
-function toggleRatingRequirement() {
+function toggleGameFieldsRequirement() {
     const statusSelect = document.getElementById('status');
     const ratingInput = document.getElementById('nota');
+    const hoursInput = document.getElementById('horas_jogadas');
 
-    if (!statusSelect || !ratingInput) {
+    if (!statusSelect) {
         return;
     }
 
-    const status = statusSelect.value;
+    const disabled = statusSelect.value === 'backlog' || statusSelect.value === 'jogando';
 
-    if (status === 'backlog' || status === 'jogando') {
-        ratingInput.required = false;
-        ratingInput.value = '';
-        ratingInput.disabled = true;
-        ratingInput.placeholder = 'Não se aplica';
-    } else {
-        ratingInput.required = true;
-        ratingInput.disabled = false;
-        ratingInput.placeholder = '0 a 10';
+    if (ratingInput) {
+        ratingInput.required = !disabled;
+        ratingInput.disabled = disabled;
+
+        if (disabled) {
+            ratingInput.value = '';
+            ratingInput.placeholder = 'Não se aplica';
+        } else {
+            ratingInput.placeholder = '0 a 10';
+        }
+    }
+
+    if (hoursInput) {
+        hoursInput.required = !disabled;
+        hoursInput.disabled = disabled;
+
+        if (disabled) {
+            hoursInput.value = '';
+            hoursInput.placeholder = 'Não se aplica';
+        } else {
+            hoursInput.placeholder = 'Horas jogadas';
+        }
     }
 }

@@ -24,6 +24,12 @@ class GameService {
                 'nota' => ['required', 'number', 'min:0', 'max:10']
             ]);
         }
+        if (!in_array($data['status'], ['backlog', 'jogando']) && empty($data['horas_jogadas'])) {
+            $errors = Validator::validate($data, [
+                'horas_jogadas' => ['required', 'number', 'min:0']
+            ]);
+        }
+
 
         if (empty($data['external_id'])) {
             $errors['titulo'][] = "Selecione um jogo da lista antes de salvar.";
@@ -50,34 +56,81 @@ class GameService {
         ];
     }
 
+    // public function update(array $data) {
+    //     $errors = Validator::validate($data, [
+    //         'titulo'     => ['required'],
+    //         'status'     => ['required'],
+    //         'plataforma' => ['required', 'string'],
+    //         'genero'     => ['required', 'string']
+    //     ]);
+
+    //     // regra de negócio
+    //     if (!in_array($data['status'], ['backlog', 'jogando']) && empty($data['nota'])) {
+    //         $errors = Validator::validate($data, [
+    //             'nota' => ['required', 'number', 'min:0', 'max:10']
+    //         ]);
+    //     }
+
+    //     if (!empty($errors)) {
+    //         return [
+    //             'success' => false,
+    //             'errors'  => $errors, 
+    //             'old'     => $data
+    //         ];
+    //     }
+
+    //     // Converte string vazia para NULL para não dar conflito no banco
+    //     if ($data['nota'] === '') {
+    //         $data['nota'] = null;
+    //     }
+
+    //     $this->model->update($data);
+
+    //     return ['success' => true];
+    // }
+
     public function update(array $data) {
+
         $errors = Validator::validate($data, [
             'titulo'     => ['required'],
             'status'     => ['required'],
             'plataforma' => ['required', 'string'],
             'genero'     => ['required', 'string']
-            // 'ano_lancamento' => ['number'],
-            // 'horas_jogadas'  => ['number', 'min:0']
         ]);
 
-        // regra de negócio
-        if (!in_array($data['status'], ['backlog', 'jogando']) && empty($data['nota'])) {
-            $errors = Validator::validate($data, [
-                'nota' => ['required', 'number', 'min:0', 'max:10']
-            ]);
+        // Regras de negócio
+        if (!in_array($data['status'], ['backlog', 'jogando'])) {
+
+            $errors = array_merge_recursive(
+                $errors,
+                Validator::validate($data, [
+                    'nota' => ['required', 'number', 'min:0', 'max:10']
+                ])
+            );
+
+            $errors = array_merge_recursive(
+                $errors,
+                Validator::validate($data, [
+                    'horas_jogadas' => ['required', 'number', 'min:0']
+                ])
+            );
         }
 
         if (!empty($errors)) {
             return [
                 'success' => false,
-                'errors'  => $errors, 
+                'errors'  => $errors,
                 'old'     => $data
             ];
         }
 
-        // Converte string vazia para NULL para não dar conflito no banco
+        // Converte string vazia para NULL
         if ($data['nota'] === '') {
             $data['nota'] = null;
+        }
+
+        if ($data['horas_jogadas'] === '') {
+            $data['horas_jogadas'] = null;
         }
 
         $this->model->update($data);

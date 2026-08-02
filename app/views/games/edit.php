@@ -98,11 +98,25 @@ function error($field) {
                     </option>
                 <?php endforeach; ?>
             </select>
-
             <?php if ($msg = error('genero')): ?>
                 <p class="form-error"><?= htmlspecialchars($msg) ?></p>
             <?php endif; ?>
+        </div>
 
+        <div class="form-group">
+            <label for="horas_jogadas">Horas jogadas</label>
+            <input
+                type="number"
+                id="horas_jogadas"
+                name="horas_jogadas"
+                class="form-input"
+                min="0"
+                step="0.1"
+                value="<?= htmlspecialchars($game['horas_jogadas'] ?? '') ?>"
+            >
+            <?php if ($msg = error('horas_jogadas')): ?>
+                <p class="form-error"><?= htmlspecialchars($msg) ?></p>
+            <?php endif; ?>
         </div>
 
         <div class="form-group">
@@ -133,7 +147,7 @@ function error($field) {
 
     </form>
 </div>
-
+<script src="/assets/js/game-create.js"></script>
 
 <?php
 unset($_SESSION['old']);

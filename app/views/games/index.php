@@ -55,8 +55,8 @@ $currentSort = $filters['sort'] ?? '';
             <div class="stats-card">
                 <div class="stats-card-icon finished"><i class="fa-solid fa-check"></i></div>
                 <div class="stats-card-content">
-                    <h3>Zerados</h3>
-                    <span><?= $stats['zerados'] ?></span>
+                    <h3>Finalizados</h3>
+                    <span><?= $stats['finalizados'] ?></span>
                 </div>
             </div>
 

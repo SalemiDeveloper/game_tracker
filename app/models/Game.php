@@ -166,7 +166,7 @@ class Game extends Model{
                 SUM(CASE WHEN status IN ('zerado', '100_porcento')
                          THEN 1
                          ELSE 0
-                         END) as zerados,
+                         END) as finalizados,
                 SUM(CASE WHEN status = 'platinei'
                          THEN 1
                          ELSE 0
@@ -187,7 +187,7 @@ class Game extends Model{
 
         $stats['total_games'] = (int) $stats['total_games'];
         $stats['jogando']     = (int) $stats['jogando'];
-        $stats['zerados']     = (int) $stats['zerados'];
+        $stats['finalizados']     = (int) $stats['finalizados'];
         $stats['platinados']  = (int) $stats['platinados'];
         $stats['dropados']    = (int) $stats['dropados'];
         $stats['horas_total'] = (float) $stats['horas_total'];

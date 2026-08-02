@@ -62,7 +62,7 @@ class GameController extends Controller{
             exit;
         }
 
-        $_SESSION['success'] = "Jogo criado com sucesso!";
+        //$_SESSION['success'] = "Jogo criado com sucesso!";
 
         header("Location: /games");
         exit;
