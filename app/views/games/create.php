@@ -31,6 +31,13 @@ function error($field) {
                 name="external_id"
                 value="<?= htmlspecialchars($_SESSION['old']['external_id'] ?? '') ?>"
             >
+            <input
+                type="hidden"
+                id="cover"
+                name="cover"
+                value="<?= htmlspecialchars($_SESSION['old']['cover'] ?? '') ?>"
+            >
+
             <div id="search-results" class="search-results"></div>
             
             <?php if ($msg = error('titulo')): ?>

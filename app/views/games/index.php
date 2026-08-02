@@ -225,13 +225,28 @@ $currentSort = $filters['sort'] ?? '';
         <?php foreach ($games as $game): ?>
 
         <div class="game-card">
+
+            <div class="game-cover">
+                <?php if (!empty($game['cover'])): ?>
+                    <img
+                        src="<?= htmlspecialchars($game['cover']) ?>"
+                        alt="<?= htmlspecialchars($game['titulo']) ?>"
+                    >
+                <?php else: ?>
+                    <img
+                        src="/assets/images/default-cover.png"
+                        alt="Sem capa"
+                    >
+                <?php endif; ?>
+            </div>
+
             <div class="game-info">
                 <h3><?= htmlspecialchars($game['titulo']) ?></h3>
 
                 <div class="game-meta">
-                    <span>⭐ <?= StatusHelper::formatRating($game['nota']) ?></span>
-                    <span>🎮 <?= htmlspecialchars($game['plataforma']) ?></span>
-                    <span>🗂 <?= htmlspecialchars($game['genero']) ?></span>
+                    <span><i class="fa-solid fa-star"></i> <?= StatusHelper::formatRating($game['nota']) ?></span>
+                    <span><i class="fa-solid fa-gamepad"></i> <?= htmlspecialchars($game['plataforma']) ?></span>
+                    <span><i class="fa-solid fa-tags"></i> <?= htmlspecialchars($game['genero']) ?></span>
                 </div>
 
                 <span class="badge badge-<?= htmlspecialchars($game['status']) ?>">

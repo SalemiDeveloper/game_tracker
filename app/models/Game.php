@@ -70,12 +70,12 @@ class Game extends Model{
             INSERT INTO games 
                 (titulo, nota, user_id, external_id,
                 plataforma, status, horas_jogadas, 
-                review, genero, ano_lancamento)
+                review, genero, ano_lancamento, cover)
             
             VALUES 
                 (:titulo, :nota, :user_id, :external_id,
                 :plataforma, :status, :horas_jogadas, 
-                :review, :genero, :ano_lancamento)
+                :review, :genero, :ano_lancamento, :cover)
         ");
 
         $stmt->execute([
@@ -88,7 +88,8 @@ class Game extends Model{
             'horas_jogadas'  => $data['horas_jogadas'] ?? null,
             'review'         => $data['review'] ?? null,
             'genero'         => $data['genero'] ?? null,
-            'ano_lancamento' => $data['ano_lancamento'] ?? null
+            'ano_lancamento' => $data['ano_lancamento'] ?? null,
+            'cover'          => $data['cover'] ?? null
         ]);
 
         return (int) $this->db->lastInsertId();
@@ -138,7 +139,7 @@ class Game extends Model{
         $stmt = $this->db->prepare("
             UPDATE games
             SET titulo = ?, nota = ?, plataforma = ?, status = ?, horas_jogadas = ?, review = ?,
-            genero = ?, ano_lancamento = ?, updated_at = NOW()
+            genero = ?, ano_lancamento = ?, external_id = ?, cover = ?, updated_at = NOW()
             WHERE id = ?
         ");
 
@@ -151,6 +152,8 @@ class Game extends Model{
             $data['review'] ?? null,
             $data['genero'] ?? null,
             $data['ano_lancamento'] ?? null,
+            $data['external_id'] ?? null,
+            $data['cover'] ?? null,
             $data['id']
         ]);
     }
@@ -236,28 +239,6 @@ class Game extends Model{
             'plataforma' => '-',
             'total' => 0
         ] ;
-
-
-        // Gênero favorito - a tratar, pois se continuar sendo input podem ter muitos
-        // $stmt = $this->db->prepare("
-        //     SELECT genero, COUNT(*) AS total
-        //     FROM games
-        //     WHERE user_id = :user_id
-        //     AND genero IS NOT NULL
-        //     AND genero <> ''
-        //     GROUP BY genero
-        //     ORDER BY total DESC
-        //     LIMIT 1
-        // ");
-
-        // $stmt->execute([
-        //     'user_id' => $userId
-        // ]);
-
-        // $highlights['favorite_genre'] = $stmt->fetch() ?: [
-        //     'genero' => '-',
-        //     'total' => 0
-        // ] ;
 
         // Último jogo finalizado
         $stmt = $this->db->prepare("

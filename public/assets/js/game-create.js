@@ -266,9 +266,13 @@ function fillForm(game, titleInput, platformSelect, genreSelect) {
     selectedTitle = game.title;
     document.getElementById('search-results').innerHTML = '';
     const externalIdInput = document.getElementById('external_id');
+    const coverInput = document.getElementById('cover');
 
     if (externalIdInput) {
         externalIdInput.value = game.external_id ?? '';
+    }
+    if (coverInput) {
+        coverInput.value = game.cover ?? '';
     }
 
     if (platformSelect && game.platforms.length > 0) {

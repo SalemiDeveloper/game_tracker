@@ -31,6 +31,20 @@ function error($field) {
                 name="titulo"
                 value="<?= htmlspecialchars($_SESSION['old']['titulo'] ?? $game['titulo']) ?>"
             >
+            <input
+                type="hidden"
+                id="external_id"
+                name="external_id"
+                value="<?= htmlspecialchars($game['external_id'] ?? '') ?>"
+            >
+
+            <input
+                type="hidden"
+                id="cover"
+                name="cover"
+                value="<?= htmlspecialchars($game['cover'] ?? '') ?>"
+            >
+            
             <?php if ($msg = error('titulo')): ?>
                 <p class="form-error"><?= htmlspecialchars($msg) ?></p>
             <?php endif; ?>
