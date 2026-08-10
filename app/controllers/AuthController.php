@@ -34,7 +34,7 @@ class AuthController {
 
         $_SESSION['success'] = "Usuário cadastrado.";
 
-        header('Location: /register');
+        header('Location: /login');
         exit;
     }
 

@@ -16,6 +16,15 @@ function error($field) {
 <body>
     <div class="auth-page">
         <div class="auth-card">
+            
+            <?php if (!empty($_SESSION['success'])): ?>
+            <div class="alert alert-success">
+                <i class="fa-solid fa-circle-check"></i>
+                <?= htmlspecialchars($_SESSION['success']) ?>
+            </div>
+            <?php unset($_SESSION['success']); ?>
+            <?php endif; ?>
+
             <div class="auth-header">
                 <h1>
                     <i class="fa-solid fa-gamepad"></i>

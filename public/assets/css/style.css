@@ -787,3 +787,46 @@ button {
         transform: translateY(0);
     }
 }
+
+/* ===========================
+   Alerts
+=========================== */
+.alert {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    font-size: .95rem;
+    font-weight: 500;
+}
+
+.alert i {
+    font-size: 1.1rem;
+}
+
+.alert-success {
+    background: #ecfdf5;
+    color: #166534;
+    border-color: #bbf7d0;
+}
+
+.alert-error {
+    background: #fef2f2;
+    color: #991b1b;
+    border-color: #fecaca;
+}
+
+.alert-warning {
+    background: #fffbeb;
+    color: #92400e;
+    border-color: #fde68a;
+}
+
+.alert-info {
+    background: #eff6ff;
+    color: #1e40af;
+    border-color: #bfdbfe;
+}

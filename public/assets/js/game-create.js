@@ -288,6 +288,7 @@ function fillForm(game, titleInput, platformSelect, genreSelect) {
 function showError(preview) {
     preview.innerHTML = `
         <div class="alert alert-error">
+            <i class="fa-solid fa-circle-xmark"></i>
             Não foi possível encontrar esse jogo.
         </div>
     `;

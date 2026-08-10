@@ -17,9 +17,6 @@ $currentSort = $filters['sort'] ?? '';
 <body>
     
 <div class="container">
-    <p>Olá,
-        <?=  htmlspecialchars($_SESSION['user']['name']) ?>
-    </p>
 
     <div class="actions">
 

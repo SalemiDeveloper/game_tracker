@@ -29,7 +29,8 @@
 
 <div class="container">
     <?php if (!empty($_SESSION['success'])): ?>
-        <div class="alert-success">
+        <div class="alert alert-success">
+            <i class="fa-solid fa-circle-check"></i>
             <?= htmlspecialchars($_SESSION['success']) ?>
         </div>
         <?php unset($_SESSION['success']); ?>
