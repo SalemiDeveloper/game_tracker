@@ -11,19 +11,20 @@
 <body>
 
 <header class="header">
+    <div class="header-container">
+        <div class="logo">🎮 Game Tracker</div>
 
-    <div class="logo">🎮 Game Tracker</div>
+        <div class="header-right">
+            <span>Olá,<?= htmlspecialchars($_SESSION['user']['name']) ?></span>
 
-    <div class="header-right">
-        <span>Olá,<?= htmlspecialchars($_SESSION['user']['name']) ?></span>
+            <form method="POST" action="/logout">
 
-        <form method="POST" action="/logout">
-
-            <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
-            <button class="btn btn-danger" type="submit">
-                Sair
-            </button>
-        </form>
+                <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
+                <button class="btn btn-danger" type="submit">
+                    Sair
+                </button>
+            </form>
+        </div>
     </div>
 </header>
 
