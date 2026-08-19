@@ -1,1 +1,2 @@
-- Coisas para fazer:
+git rm --cached config/services.php
+git commit -m "Stop tracking services config"
